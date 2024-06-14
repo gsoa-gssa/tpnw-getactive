@@ -27,8 +27,40 @@ class EventResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('date')
+                    ->native(false)
+                    ->displayFormat('d.m.Y')
                     ->required(),
-                Forms\Components\TextInput::make('canton')
+                Forms\Components\Select::make('canton')
+                    ->options([
+                        "AG" => "Aargau",
+                        "AR" => "Appenzell Ausserrhoden",
+                        "AI" => "Appenzell Innerrhoden",
+                        "BL" => "Basel-Landschaft",
+                        "BS" => "Basel-Stadt",
+                        "BE" => "Bern",
+                        "FR" => "Freiburg",
+                        "GE" => "Genf",
+                        "GL" => "Glarus",
+                        "GR" => "Graubünden",
+                        "JU" => "Jura",
+                        "LU" => "Luzern",
+                        "NE" => "Neuenburg",
+                        "NW" => "Nidwalden",
+                        "OW" => "Obwalden",
+                        "SG" => "St. Gallen",
+                        "SH" => "Schaffhausen",
+                        "SO" => "Solothurn",
+                        "SZ" => "Schwyz",
+                        "TG" => "Thurgau",
+                        "TI" => "Tessin",
+                        "UR" => "Uri",
+                        "VD" => "Waadt",
+                        "VS" => "Wallis",
+                        "ZG" => "Zug",
+                        "ZH" => "Zürich",
+                        "national" => "National"
+                    ])
+                    ->searchable()
                     ->required(),
                 Forms\Components\TextInput::make('location')
                     ->maxLength(255)
@@ -36,7 +68,12 @@ class EventResource extends Resource
                 Forms\Components\TextInput::make('contact')
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('type')
+                Forms\Components\Select::make('type')
+                    ->options([
+                        "signaturecollection" => "Signature Collection",
+                        "certification" => "Certification"
+                    ])
+                    ->native(false)
                     ->required(),
             ]);
     }
@@ -52,10 +89,17 @@ class EventResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('canton'),
                 Tables\Columns\TextColumn::make('location')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('type'),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\IconColumn::make('type')
+                    ->icon(fn (string $state): string => match ($state) {
+                        'signaturecollection' => 'heroicon-o-pencil',
+                        'certification' => 'heroicon-o-clipboard-check',
+                    })
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
