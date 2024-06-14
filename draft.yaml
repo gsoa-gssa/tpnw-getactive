@@ -1,0 +1,30 @@
+models:
+  Contact:
+    firstname: string, nullable
+    lastname: string, nullable
+    email: email
+    phone: string, nullable
+    zip: string, nullable
+    softDeletes
+
+  Event:
+    name: string
+    date: date
+    canton: enum:AG,AR,AI,BL,BS,BE,FR,GE,GL,GR,JU,LU,NE,NW,OW,SG,SH,SO,SZ,TG,TI,UR,VD,VS,ZG,ZH
+    location: string, nullable
+    contact: string, nullable
+    type: enum:signaturecollection,certification
+    softDeletes
+
+  Signup:
+    softDeletes
+    relationships:
+      belongsTo: Event, Contact
+
+  Oneclick:
+    fields: json
+    successmessages: json
+    softDeletes
+    relationships:
+      belongsTo: Event
+

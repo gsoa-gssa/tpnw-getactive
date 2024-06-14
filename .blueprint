@@ -1,0 +1,19 @@
+created:
+    - database/factories/ContactFactory.php
+    - database/factories/EventFactory.php
+    - database/factories/SignupFactory.php
+    - database/factories/OneclickFactory.php
+    - database/migrations/2024_06_14_102131_create_contacts_table.php
+    - database/migrations/2024_06_14_102132_create_events_table.php
+    - database/migrations/2024_06_14_102133_create_signups_table.php
+    - database/migrations/2024_06_14_102134_create_oneclicks_table.php
+    - app/Models/Contact.php
+    - app/Models/Event.php
+    - app/Models/Signup.php
+    - app/Models/Oneclick.php
+models:
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable default:NULL', password: string, remember_token: 'string:100 nullable default:NULL' }
+    Contact: { firstname: 'string, nullable', lastname: 'string, nullable', email: email, phone: 'string, nullable', zip: 'string, nullable', softdeletes: softDeletes }
+    Event: { name: string, date: date, canton: 'enum:AG,AR,AI,BL,BS,BE,FR,GE,GL,GR,JU,LU,NE,NW,OW,SG,SH,SO,SZ,TG,TI,UR,VD,VS,ZG,ZH', location: 'string, nullable', contact: 'string, nullable', type: 'enum:signaturecollection,certification', softdeletes: softDeletes }
+    Signup: { softdeletes: softDeletes, relationships: { belongsTo: 'Event, Contact' } }
+    Oneclick: { fields: json, successmessages: json, softdeletes: softDeletes, relationships: { belongsTo: Event } }
