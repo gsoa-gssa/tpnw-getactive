@@ -23,6 +23,19 @@ class EventResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Toggle::make('visibility')
+                    ->default(true)
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->label('Is public?'),
+                Forms\Components\ToggleButtons::make('language')
+                    ->options([
+                        'de' => 'German',
+                        'fr' => 'French',
+                        'it' => 'Italian',
+                    ])
+                    ->inline()
+                    ->default('de'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -75,6 +88,9 @@ class EventResource extends Resource
                     ])
                     ->native(false)
                     ->required(),
+                Forms\Components\RichEditor::make('description')
+                    ->columnSpanFull()
+                    ->nullable(),
             ]);
     }
 
