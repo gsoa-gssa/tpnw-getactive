@@ -22,7 +22,7 @@
     "signup.status.no-show": "Nicht erschienen",
     "actionlables.mailchimp_defaults": "Mailchimp Standardwerte setzen",
     "events.export.signups.title": "Anmeldungen für :eventname",
-    "events.export.signups.id": "Anmelde-ID",
+    "events.export.signups.id": "ID",
     "events.export.signups.firstname": "Vorname",
     "events.export.signups.lastname": "Nachname",
     "events.export.signups.email": "E-Mail",
