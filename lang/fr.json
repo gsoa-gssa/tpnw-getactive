@@ -1,5 +1,13 @@
 {
     "buttonlabels.print.signups": "Imprimer les inscriptions",
+    "actionlabels.signup.confirm": "Confirmer l'inscription",
+    "actionlabels.signup.cancel": "Annuler l'inscription",
+    "actionlabels.signup.no_show": "Non présent",
+    "actionlabels.signup.reset": "Réinitialiser l'inscription",
+    "actionlabels.signups.confirm": "Confirmer les inscriptions",
+    "actionlabels.signups.cancel": "Annuler les inscriptions",
+    "actionlabels.signups.no_show": "Non présent",
+    "actionlabels.signups.reset": "Réinitialiser les inscriptions",
     "filterlables.events.only_future": "Seulement les événements futurs",
     "filterlables.events.must_reassign": "Les inscriptions doivent être réassignées",
     "filterlables.events.my_events": "Mes événements",

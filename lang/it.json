@@ -1,5 +1,13 @@
 {
     "buttonlabels.print.signups": "Stampa iscrizioni",
+    "actionlabels.signup.confirm": "Conferma iscrizione",
+    "actionlabels.signup.cancel": "Annulla iscrizione",
+    "actionlabels.signup.no_show": "Assenza",
+    "actionlabels.signup.reset": "Resetta iscrizione",
+    "actionlabels.signups.confirm": "Conferma iscrizioni",
+    "actionlabels.signups.cancel": "Annulla iscrizioni",
+    "actionlabels.signups.no_show": "Assenze",
+    "actionlabels.signups.reset": "Resetta iscrizioni",
     "filterlables.events.only_future": "Solo eventi futuri",
     "filterlables.events.must_reassign": "Deve essere riassegnato",
     "filterlables.events.my_events": "I miei eventi",

@@ -1,5 +1,13 @@
 {
     "buttonlabels.print.signups": "Anmeldungen drucken",
+    "actionlabels.signup.confirm": "Anmeldung bestätigen",
+    "actionlabels.signup.cancel": "Anmeldung stornieren",
+    "actionlabels.signup.no_show": "Nicht erschienen",
+    "actionlabels.signup.reset": "Anmeldung zurücksetzen",
+    "actionlabels.signups.confirm": "Anmeldungen bestätigen",
+    "actionlabels.signups.cancel": "Anmeldungen stornieren",
+    "actionlabels.signups.no_show": "Nicht erschienen",
+    "actionlabels.signups.reset": "Anmeldungen zurücksetzen",
     "filterlables.events.only_future": "Nur zukünftige Events",
     "filterlables.events.must_reassign": "Anmeldungen müssen neu zugewiesen werden",
     "filterlables.events.my_events": "Meine Events",

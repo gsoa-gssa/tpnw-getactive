@@ -94,25 +94,25 @@ class SignupsRelationManager extends RelationManager
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make("confirm_signup")
-                        ->label('Confirm Signup')
+                        ->label(__("actionlabels.signup.confirm"))
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
                         ->action(fn ($record) => $record->update(['status' => 'confirmed'])),
                     Tables\Actions\Action::make("cancel_signup")
-                        ->label('Cancel Signup')
+                        ->label(__("actionlabels.signup.cancel"))
                         ->icon('heroicon-o-x-circle')
                         ->color('danger')
                         ->requiresConfirmation()
                         ->action(fn ($record) => $record->update(['status' => 'cancelled'])),
                     Tables\Actions\Action::make("no_show_signup")
-                        ->label('No Show Signup')
+                        ->label(__("actionlabels.signup.no_show"))
                         ->icon('heroicon-o-face-frown')
                         ->color('danger')
                         ->requiresConfirmation()
                         ->action(fn ($record) => $record->update(['status' => 'no-show'])),
                 ])->visible(fn ($record) => $record->status === 'signup'),
                 Tables\Actions\Action::make("reset_signup")
-                    ->label('Reset Signup')
+                    ->label(__("actionlabels.signup.reset"))
                     ->icon('heroicon-o-arrow-path')
                     ->color('warning')
                     ->action(fn ($record) => $record->update(['status' => 'signup']))
@@ -122,24 +122,24 @@ class SignupsRelationManager extends RelationManager
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\BulkAction::make("confirm_signups")
-                        ->label('Confirm Signups')
+                        ->label(__("actionlabels.signups.confirm"))
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
                         ->action(fn ($records) => $records->each->update(['status' => 'confirmed'])),
                     Tables\Actions\BulkAction::make("cancel_signups")
-                        ->label('Cancel Signups')
+                        ->label(__("actionlabels.signups.cancel"))
                         ->icon('heroicon-o-x-circle')
                         ->color('danger')
                         ->requiresConfirmation()
                         ->action(fn ($records) => $records->each->update(['status' => 'cancelled'])),
                     Tables\Actions\BulkAction::make("no_show_signups")
-                        ->label('No Show Signups')
+                        ->label(__("actionlabels.signups.no_show"))
                         ->icon('heroicon-o-face-frown')
                         ->color('danger')
                         ->requiresConfirmation()
                         ->action(fn ($records) => $records->each->update(['status' => 'no-show'])),
                     Tables\Actions\BulkAction::make("reset_signups")
-                        ->label('Reset Signups')
+                        ->label(__("actionlabels.signups.reset"))
                         ->icon('heroicon-o-arrow-path')
                         ->color('warning')
                         ->requiresConfirmation()
