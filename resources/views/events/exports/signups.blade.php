@@ -59,6 +59,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>{{__("events.export.signups.id")}}</th>
                     <th>{{__("events.export.signups.firstname")}}</th>
                     <th>{{__("events.export.signups.lastname")}}</th>
                     <th>{{__("events.export.signups.email")}}</th>
@@ -70,6 +71,7 @@
             </thead>
             @foreach($event->signups as $signup)
                 <tr>
+                    <td>{{$signup->id}}</td>
                     <td>{{$signup->contact->firstname}}</td>
                     <td>{{$signup->contact->lastname}}</td>
                     <td>{{$signup->contact->email}}</td>

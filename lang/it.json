@@ -22,6 +22,7 @@
     "signup.status.no-show": "Assente",
     "actionlables.mailchimp_defaults": "Imposta valori predefiniti di Mailchimp",
     "events.export.signups.title": "Iscrizioni per :eventname",
+    "events.export.signups.id": "ID Iscrizione",
     "events.export.signups.firstname": "Nome",
     "events.export.signups.lastname": "Cognome",
     "events.export.signups.email": "E-mail",
