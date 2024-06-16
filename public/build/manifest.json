@@ -1,0 +1,65 @@
+{
+  "resources/css/app.scss": {
+    "file": "assets/app-QWdUObMm.css",
+    "src": "resources/css/app.scss",
+    "isEntry": true
+  },
+  "resources/fonts/google-icons/google-icons.woff2": {
+    "file": "assets/google-icons-DctKMqBj.woff2",
+    "src": "resources/fonts/google-icons/google-icons.woff2"
+  },
+  "resources/fonts/uniform/UniformExtraCondensed/font.woff": {
+    "file": "assets/font-zsgCCsOY.woff",
+    "src": "resources/fonts/uniform/UniformExtraCondensed/font.woff"
+  },
+  "resources/fonts/uniform/UniformExtraCondensed/font.woff2": {
+    "file": "assets/font-DXjFRUGK.woff2",
+    "src": "resources/fonts/uniform/UniformExtraCondensed/font.woff2"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedBlack/font.woff": {
+    "file": "assets/font-CmUyj4Ig.woff",
+    "src": "resources/fonts/uniform/UniformExtraCondensedBlack/font.woff"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedBlack/font.woff2": {
+    "file": "assets/font-DDbYOMD2.woff2",
+    "src": "resources/fonts/uniform/UniformExtraCondensedBlack/font.woff2"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedBold/font.woff": {
+    "file": "assets/font-Ce92P4G3.woff",
+    "src": "resources/fonts/uniform/UniformExtraCondensedBold/font.woff"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedBold/font.woff2": {
+    "file": "assets/font-DTXYH5oZ.woff2",
+    "src": "resources/fonts/uniform/UniformExtraCondensedBold/font.woff2"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedLight/font.woff": {
+    "file": "assets/font-B1z5NPut.woff",
+    "src": "resources/fonts/uniform/UniformExtraCondensedLight/font.woff"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedLight/font.woff2": {
+    "file": "assets/font-ByvAdQov.woff2",
+    "src": "resources/fonts/uniform/UniformExtraCondensedLight/font.woff2"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedMedium/font.woff": {
+    "file": "assets/font-yxVBoUDT.woff",
+    "src": "resources/fonts/uniform/UniformExtraCondensedMedium/font.woff"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedMedium/font.woff2": {
+    "file": "assets/font-X4lvDwq8.woff2",
+    "src": "resources/fonts/uniform/UniformExtraCondensedMedium/font.woff2"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedUltra/font.woff": {
+    "file": "assets/font-DGBHNdbj.woff",
+    "src": "resources/fonts/uniform/UniformExtraCondensedUltra/font.woff"
+  },
+  "resources/fonts/uniform/UniformExtraCondensedUltra/font.woff2": {
+    "file": "assets/font-D2NSH11J.woff2",
+    "src": "resources/fonts/uniform/UniformExtraCondensedUltra/font.woff2"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-C1-XIpUa.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
