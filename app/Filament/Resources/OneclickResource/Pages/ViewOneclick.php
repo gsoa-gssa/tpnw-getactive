@@ -18,6 +18,9 @@ class ViewOneclick extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make("edit")
+                ->icon("heroicon-o-pencil")
+                ->url(fn () => route("filament.admin.resources.oneclicks.edit", $this->record)),
             CopyAction::make()->copyable(
                     function (Oneclick $oneclick) {
                         $url = route('oneclick.createSignup', $oneclick);
