@@ -117,7 +117,7 @@ class OneclickResource extends Resource
                     ])
                     ->columnSpanFull(),
                 Forms\Components\Select::make('event_id')
-                    ->relationship('event', 'name->de')
+                    ->relationship('event', "name->" . app()->getLocale())
                     ->searchable()
                     ->preload()
                     ->required(),
