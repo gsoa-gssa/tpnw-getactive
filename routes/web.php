@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\OnlickController;
+use App\Http\Controllers\OnelickController;
 use Livewire\Attributes\On;
 
 Route::get('/', function () {
@@ -9,6 +9,6 @@ Route::get('/', function () {
 });
 
 Route::get('/oneclick/{oneclick:uuid}', [
-    OnlickController::class,
+    OnelickController::class,
     'createSignup'
 ])->name('oneclick.createSignup');

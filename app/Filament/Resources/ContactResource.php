@@ -4,17 +4,19 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use Filament\Infolists;
 use App\Models\Contact;
+use Filament\Infolists;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use App\Filament\Exports\ContactExporter;
+use App\Filament\Imports\ContactImporter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Console\View\Components\Info;
 use App\Filament\Resources\ContactResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ContactResource\RelationManagers;
-use Illuminate\Console\View\Components\Info;
 use Parallax\FilamentComments\Infolists\Components\CommentsEntry;
 
 class ContactResource extends Resource
@@ -85,15 +87,16 @@ class ContactResource extends Resource
                     ->searchable(),
                 Forms\Components\Select::make("activities")
                     ->options([
-                        "signatureCollection" => "Signature Collection",
+                        "signaturecollection" => "Signature Collection",
                         "certification" => "Certification",
-                        "flyerDistribution" => "Flyer Distribution",
+                        "flyerdistribution" => "Flyer Distribution",
                         "supervision" => "Supervision",
                         "miscellaneous" => "Miscellaneous"
                     ])
                     ->multiple(),
                 Forms\Components\Select::make("user_responsible_id")
                     ->relationship("user", "name")
+                    ->preload()
                     ->searchable(),
             ]);
     }
@@ -127,6 +130,14 @@ class ContactResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->headerActions([
+                Tables\Actions\ImportAction::make()
+                    ->label(__('buttonlabels.import.contacts'))
+                    ->importer(ContactImporter::class),
+                Tables\Actions\ExportAction::make()
+                    ->label(__('buttonlabels.export.contacts'))
+                    ->exporter(ContactExporter::class),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

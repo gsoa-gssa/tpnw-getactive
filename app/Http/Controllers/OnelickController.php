@@ -7,7 +7,7 @@ use App\Models\Signup;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
-class OnlickController extends Controller
+class OnelickController extends Controller
 {
     /**
      * Create signup from onlick
@@ -28,6 +28,7 @@ class OnlickController extends Controller
             }
             $contact->$field = $value;
         }
+        $contact->activities = array_merge($contact->activities, [$event->type]);
         $contact->save();
         $signup = Signup::firstOrCreate([
             'event_id' => $event->id,
