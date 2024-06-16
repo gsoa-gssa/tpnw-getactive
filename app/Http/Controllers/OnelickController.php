@@ -31,7 +31,7 @@ class OnelickController extends Controller
         if (!is_array($contact->activities)) {
             $contact->activities = [];
         }
-        $contact->activities = array_merge($contact->activities, [$event->type]);
+        $contact->activities = array_unique(array_merge($contact->activities, [$event->type]));
         $contact->save();
         $signup = Signup::firstOrCreate([
             'event_id' => $event->id,
