@@ -16,7 +16,7 @@ class ViewSignup extends viewRecord
         return [
             CommentsAction::make(),
             Actions\Action::make("edit")
-                ->label("Edit Contact")
+                ->label("Edit Signup")
                 ->icon("heroicon-o-pencil")
                 ->url(fn () => route("filament.admin.resources.signups.edit", $this->record)),
         ];
