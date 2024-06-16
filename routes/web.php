@@ -5,7 +5,7 @@ use App\Http\Controllers\OnlickController;
 use Livewire\Attributes\On;
 
 Route::get('/', function () {
-    return view('welcome');
+    return null;
 });
 
 Route::get('/oneclick/{oneclick:uuid}', [

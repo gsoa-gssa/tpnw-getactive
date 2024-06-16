@@ -23,7 +23,7 @@ class SetAppLocale
             case 'go.interdiction-armes-nucleaires.ch':
                 app()->setLocale('fr');
                 break;
-            case 'go.interdizione-armi-nucleari.ch':
+            case 'go.divieto-armi-nucleari.ch':
                 app()->setLocale('it');
                 break;
             default:
