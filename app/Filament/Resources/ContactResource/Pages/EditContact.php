@@ -16,4 +16,12 @@ class EditContact extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    /**
+     * Redirect after successful update.
+     */
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
+    }
 }

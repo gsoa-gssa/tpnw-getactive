@@ -9,4 +9,12 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateContact extends CreateRecord
 {
     protected static string $resource = ContactResource::class;
+
+    /**
+     * Redirect after create
+     */
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
+    }
 }
