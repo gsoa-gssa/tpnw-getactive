@@ -3,12 +3,12 @@
 namespace App\Filament\Resources\EventResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class SignupsRelationManager extends RelationManager
 {
@@ -23,11 +23,19 @@ class SignupsRelationManager extends RelationManager
                     ->searchable()
                     ->preload()
                     ->required(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'signup' => 'Signup',
+                        'confirmed' => 'Confirmed',
+                        'cancelled' => 'Cancelled',
+                        'no-show' => 'No Show',
+                    ])
+                    ->default('signup')
+                    ->required(),
                 Forms\Components\Select::make('event_id')
                     ->relationship('event', 'name->de')
                     ->searchable()
                     ->preload()
-                    ->required(),
             ]);
     }
 
@@ -37,19 +45,43 @@ class SignupsRelationManager extends RelationManager
             ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\IconColumn::make("status")
+                    ->icon(fn (string $state): string => match ($state) {
+                        'signup' => 'heroicon-o-question-mark-circle',
+                        'confirmed' => 'heroicon-o-check-circle',
+                        'cancelled' => 'heroicon-o-x-circle',
+                        'no-show' => 'heroicon-o-face-frown',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'signup' => 'warning',
+                        'confirmed' => 'success',
+                        'cancelled' => 'warning',
+                        'no-show' => 'danger'
+                    })
+                    ->label('Status'),
                 Tables\Columns\TextColumn::make('contact.email')
                     ->label('Email'),
                 Tables\Columns\TextColumn::make('contact.firstname')
-                    ->label('First Name'),
+                    ->label('First Name')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('contact.lastname')
-                    ->label('Last Name'),
+                    ->label('Last Name')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('contact.zip')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('contact.phone')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        'signup' => 'Signup',
+                        'confirmed' => 'Confirmed',
+                        'cancelled' => 'Cancelled',
+                        'no-show' => 'No Show',
+                    ])
+                    ->default('signup')
+                    ->label('Status'),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
@@ -60,11 +92,67 @@ class SignupsRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make("confirm_signup")
+                        ->label('Confirm Signup')
+                        ->icon('heroicon-o-check-circle')
+                        ->color('success')
+                        ->action(fn ($record) => $record->update(['status' => 'confirmed'])),
+                    Tables\Actions\Action::make("cancel_signup")
+                        ->label('Cancel Signup')
+                        ->icon('heroicon-o-x-circle')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->action(fn ($record) => $record->update(['status' => 'cancelled'])),
+                    Tables\Actions\Action::make("no_show_signup")
+                        ->label('No Show Signup')
+                        ->icon('heroicon-o-face-frown')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->action(fn ($record) => $record->update(['status' => 'no-show'])),
+                ])->visible(fn ($record) => $record->status === 'signup'),
+                Tables\Actions\Action::make("reset_signup")
+                    ->label('Reset Signup')
+                    ->icon('heroicon-o-arrow-path')
+                    ->color('warning')
+                    ->action(fn ($record) => $record->update(['status' => 'signup']))
+                    ->visible(fn ($record) => $record->status !== 'signup'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make("confirm_signups")
+                        ->label('Confirm Signups')
+                        ->icon('heroicon-o-check-circle')
+                        ->color('success')
+                        ->action(fn ($records) => $records->each->update(['status' => 'confirmed'])),
+                    Tables\Actions\BulkAction::make("cancel_signups")
+                        ->label('Cancel Signups')
+                        ->icon('heroicon-o-x-circle')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->action(fn ($records) => $records->each->update(['status' => 'cancelled'])),
+                    Tables\Actions\BulkAction::make("no_show_signups")
+                        ->label('No Show Signups')
+                        ->icon('heroicon-o-face-frown')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->action(fn ($records) => $records->each->update(['status' => 'no-show'])),
+                    Tables\Actions\BulkAction::make("reset_signups")
+                        ->label('Reset Signups')
+                        ->icon('heroicon-o-arrow-path')
+                        ->color('warning')
+                        ->requiresConfirmation()
+                        ->action(fn ($records) => $records->each->update(['status' => 'signup'])),
                 ]),
             ]);
+    }
+
+    /**
+     * Turn of read only for view page
+     */
+    public function isReadOnly(): bool
+    {
+        return false;
     }
 }

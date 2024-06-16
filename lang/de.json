@@ -1,5 +1,19 @@
 {
+    "buttonlabels.print.signups": "Anmeldungen drucken",
+    "filterlables.events.only_future": "Nur zukünftige Events",
+    "filterlables.events.must_reassign": "Anmeldungen müssen neu zugewiesen werden",
+    "filterlables.events.my_events": "Meine Events",
+    "filterlables.contacts.my_contacts": "Meine Kontakte",
     "buttonlabels.import.contacts": "Kontakte importieren",
     "buttonlabels.export.contacts": "Kontakte exportieren",
+    "actionlables.mailchimp_defaults": "Mailchimp Standardwerte setzen",
+    "events.export.signups.title": "Anmeldungen für :eventname",
+    "events.export.signups.firstname": "Vorname",
+    "events.export.signups.lastname": "Nachname",
+    "events.export.signups.email": "E-Mail",
+    "events.export.signups.phone": "Telefon",
+    "events.export.signups.status": "Status",
+    "events.export.signups.attendance": "Teilnahme",
+    "events.export.signups.followup": "Nachfassen",
     "oneclick.og.title": "Danke für deine Anmeldung!"
 }

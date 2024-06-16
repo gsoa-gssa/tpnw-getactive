@@ -166,17 +166,17 @@ class EventResource extends Resource
             ])
             ->filters([
                 Filters\Filter::make("only_future")
-                    ->label("Only future events")
+                    ->label(__("filterlables.events.only_future"))
                     ->default(true)
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->where('date', '>=', now())),
                 Filters\Filter::make("must_reassign")
-                    ->label("Must reassign")
+                    ->label(__("filterlables.events.must_reassign"))
                     ->default(false)
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->where('reassign', true)),
                 Filters\Filter::make("my_events")
-                    ->label("My events")
+                    ->label(__("filterlables.events.my_events"))
                     ->default(true)
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->where('user_responsible_id', auth()->id())),

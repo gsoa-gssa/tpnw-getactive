@@ -131,7 +131,8 @@ class ContactResource extends Resource
             ])
             ->filters([
                 Filters\Filter::make("my_contacts")
-                    ->label("My Contacts")
+                    ->label(__("filterlables.contacts.my_contacts"))
+                    ->toggle()
                     ->query(fn (Builder $query) => $query->where('user_responsible_id', auth()->id())),
             ])
             ->headerActions([

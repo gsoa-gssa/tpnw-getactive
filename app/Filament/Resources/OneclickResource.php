@@ -54,7 +54,8 @@ class OneclickResource extends Resource
                     ])
                     ->minItems(1)
                     ->hintAction(
-                        Action::make('Apply Mailchimp Merge Tags')
+                        Action::make('mailchimp_defaults')
+                            ->label(__("actionlables.mailchimp_defaults"))
                             ->action(function (Set $set, $state){
                                 $fields[] = [
                                     'field' => 'firstname',
@@ -79,7 +80,6 @@ class OneclickResource extends Resource
                                 return $set('fields', $fields);
                             })
                     )
-                    ->helperText('Add fields that can be prefilled with the link e.g. Merge Tags from Mailchimp')
                     ->columns(2)
                     ->columnSpanFull(),
                 Forms\Components\Tabs::make("Successmessages")

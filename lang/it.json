@@ -1,5 +1,19 @@
 {
+    "buttonlabels.print.signups": "Stampa iscrizioni",
+    "filterlables.events.only_future": "Solo eventi futuri",
+    "filterlables.events.must_reassign": "Deve essere riassegnato",
+    "filterlables.events.my_events": "I miei eventi",
+    "filterlables.contacts.my_contacts": "I miei contatti",
     "buttonlabels.import.contacts": "Importa contatti",
     "buttonlabels.export.contacts": "Esporta contatti",
-    "oneclick.og.title": "Grazie per esserti registrato!"
+    "actionlables.mailchimp_defaults": "Imposta valori predefiniti di Mailchimp",
+    "events.export.signups.title": "Iscrizioni per :eventname",
+    "events.export.signups.firstname": "Nome",
+    "events.export.signups.lastname": "Cognome",
+    "events.export.signups.email": "E-mail",
+    "events.export.signups.phone": "Telefono",
+    "events.export.signups.status": "Stato",
+    "events.export.signups.attendance": "Partecipazione",
+    "events.export.signups.followup": "Follow-up",
+    "oneclick.og.title": "Grazie per la tua iscrizione!"
 }
