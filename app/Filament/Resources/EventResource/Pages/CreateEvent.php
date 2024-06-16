@@ -9,4 +9,12 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateEvent extends CreateRecord
 {
     protected static string $resource = EventResource::class;
+
+    /**
+     * Redirect after create
+     */
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
+    }
 }

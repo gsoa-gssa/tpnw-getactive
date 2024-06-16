@@ -8,4 +8,15 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    resolve: {
+        alias: {
+            '@fonts': '/resources/fonts',
+        },
+    },
+    server: {
+        hmr: {
+            host: "tpnw-go.ddev.site",
+            protocol: "wss"
+        }
+    }
 });

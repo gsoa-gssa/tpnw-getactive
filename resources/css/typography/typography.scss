@@ -1,0 +1,47 @@
+@import "./fonts.scss";
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Uniform', sans-serif;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-color: #f0f;
+    text-underline-offset: .2em;
+    text-decoration-thickness: .1em;
+}
+
+h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+h3 {
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+h4 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+
+h5 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+h6 {
+    font-size: 1rem;
+    line-height: 1.2;
+}

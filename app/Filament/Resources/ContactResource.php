@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ContactResource\Pages;
-use App\Filament\Resources\ContactResource\RelationManagers;
-use App\Models\Contact;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Infolists;
+use App\Models\Contact;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\ContactResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ContactResource\RelationManagers;
+use Illuminate\Console\View\Components\Info;
+use Parallax\FilamentComments\Infolists\Components\CommentsEntry;
 
 class ContactResource extends Resource
 {
@@ -40,6 +44,57 @@ class ContactResource extends Resource
                 Forms\Components\TextInput::make('zip')
                     ->maxLength(255)
                     ->default(null),
+                Forms\Components\ToggleButtons::make('language')
+                    ->options([
+                        "de" => "German",
+                        "fr" => "French",
+                        "it" => "Italian",
+                        "en" => "English"
+                    ])
+                    ->default("de"),
+                Forms\Components\Select::make("canton")
+                    ->options([
+                        "AG" => "Aargau",
+                        "AR" => "Appenzell Ausserrhoden",
+                        "AI" => "Appenzell Innerrhoden",
+                        "BL" => "Basel-Landschaft",
+                        "BS" => "Basel-Stadt",
+                        "BE" => "Bern",
+                        "FR" => "Freiburg",
+                        "GE" => "Genf",
+                        "GL" => "Glarus",
+                        "GR" => "Graubünden",
+                        "JU" => "Jura",
+                        "LU" => "Luzern",
+                        "NE" => "Neuenburg",
+                        "NW" => "Nidwalden",
+                        "OW" => "Obwalden",
+                        "SG" => "St. Gallen",
+                        "SH" => "Schaffhausen",
+                        "SO" => "Solothurn",
+                        "SZ" => "Schwyz",
+                        "TG" => "Thurgau",
+                        "TI" => "Tessin",
+                        "UR" => "Uri",
+                        "VD" => "Waadt",
+                        "VS" => "Wallis",
+                        "ZG" => "Zug",
+                        "ZH" => "Zürich"
+                    ])
+                    ->default("ZH")
+                    ->searchable(),
+                Forms\Components\Select::make("activities")
+                    ->options([
+                        "signatureCollection" => "Signature Collection",
+                        "certification" => "Certification",
+                        "flyerDistribution" => "Flyer Distribution",
+                        "supervision" => "Supervision",
+                        "miscellaneous" => "Miscellaneous"
+                    ])
+                    ->multiple(),
+                Forms\Components\Select::make("user_responsible_id")
+                    ->relationship("user", "name")
+                    ->searchable(),
             ]);
     }
 
@@ -74,7 +129,9 @@ class ContactResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('activities')->url(fn($record) => ContactResource::getUrl('activities', ['record' => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -86,7 +143,7 @@ class ContactResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\SignupsRelationManager::class,
         ];
     }
 
@@ -96,6 +153,36 @@ class ContactResource extends Resource
             'index' => Pages\ListContacts::route('/'),
             'create' => Pages\CreateContact::route('/create'),
             'edit' => Pages\EditContact::route('/{record}/edit'),
+            'view' => Pages\ViewContact::route('/{record}'),
+            'activities' => Pages\ActivityLogPage::route('/{record}/activities'),
         ];
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('Personal Information')
+                    ->schema([
+                        Infolists\Components\Fieldset::make('contact')
+                            ->label('Contact Information')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('firstname'),
+                                Infolists\Components\TextEntry::make('lastname'),
+                                Infolists\Components\TextEntry::make('email'),
+                                Infolists\Components\TextEntry::make('phone'),
+                                Infolists\Components\TextEntry::make('zip'),
+                                Infolists\Components\TextEntry::make('canton'),
+                                Infolists\Components\TextEntry::make('language'),
+                                Infolists\Components\TextEntry::make('activities'),
+                                Infolists\Components\TextEntry::make('user.name'),
+                            ]),
+                    ]),
+                Infolists\Components\Section::make('Comments')
+                    ->schema([
+                            CommentsEntry::make('filament_comments')
+                                ->columnSpanFull(),
+                    ]),
+            ]);
     }
 }

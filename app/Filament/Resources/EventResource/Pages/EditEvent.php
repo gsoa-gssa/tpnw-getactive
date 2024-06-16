@@ -16,4 +16,12 @@ class EditEvent extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    /**
+     * Redirect after update
+     */
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
+    }
 }

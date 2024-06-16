@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('oneclicks', function (Blueprint $table) {
             $table->id();
             $table->json('fields');
-            $table->json('successmessages');
-            $table->foreignId('event_id');
+            $table->json('successmessage');
+            $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

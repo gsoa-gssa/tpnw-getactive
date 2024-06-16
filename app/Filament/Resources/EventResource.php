@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\EventResource\Pages;
-use App\Filament\Resources\EventResource\RelationManagers;
-use App\Models\Event;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Event;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Tables\Filters;
+use Filament\Resources\Resource;
+use Filament\Tables\Enums\FiltersLayout;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\EventResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\EventResource\RelationManagers;
 
 class EventResource extends Resource
 {
@@ -23,22 +25,37 @@ class EventResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('visibility')
-                    ->default(true)
-                    ->onColor('success')
-                    ->offColor('danger')
-                    ->label('Is public?'),
-                Forms\Components\ToggleButtons::make('language')
-                    ->options([
-                        'de' => 'German',
-                        'fr' => 'French',
-                        'it' => 'Italian',
+                Forms\Components\Tabs::make("Event Content")
+                    ->tabs([
+                        Forms\Components\Tabs\Tab::make('German')
+                            ->schema([
+                                Forms\Components\TextInput::make('name.de')
+                                    ->label('Name'),
+                                Forms\Components\TextInput::make('location.de')
+                                    ->label('Location'),
+                                Forms\Components\RichEditor::make('description.de')
+                                    ->label('Description'),
+                            ]),
+                        Forms\Components\Tabs\Tab::make('French')
+                            ->schema([
+                                Forms\Components\TextInput::make('name.fr')
+                                    ->label('Name'),
+                                Forms\Components\TextInput::make('location.fr')
+                                    ->label('Location'),
+                                Forms\Components\RichEditor::make('description.fr')
+                                    ->label('Description'),
+                            ]),
+                        Forms\Components\Tabs\Tab::make('Italian')
+                            ->schema([
+                                Forms\Components\TextInput::make('name.it')
+                                    ->label('Name'),
+                                Forms\Components\TextInput::make('location.it')
+                                    ->label('Location'),
+                                Forms\Components\RichEditor::make('description.it')
+                                    ->label('Description'),
+                            ]),
                     ])
-                    ->inline()
-                    ->default('de'),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                    ->columnSpanFull(),
                 Forms\Components\DatePicker::make('date')
                     ->native(false)
                     ->displayFormat('d.m.Y')
@@ -75,12 +92,11 @@ class EventResource extends Resource
                     ])
                     ->searchable()
                     ->required(),
-                Forms\Components\TextInput::make('location')
-                    ->maxLength(255)
-                    ->default(null),
                 Forms\Components\TextInput::make('contact')
+                    ->email()
                     ->maxLength(255)
-                    ->default(null),
+                    ->helperText('Email address for contact person')
+                    ->default(auth()->user()->email),
                 Forms\Components\Select::make('type')
                     ->options([
                         "signaturecollection" => "Signature Collection",
@@ -88,9 +104,25 @@ class EventResource extends Resource
                     ])
                     ->native(false)
                     ->required(),
-                Forms\Components\RichEditor::make('description')
+                Forms\Components\Select::make("user_responsible_id")
+                    ->relationship("user", "name")
+                    ->preload()
+                    ->default(auth()->id())
+                    ->searchable(),
+                Forms\Components\Toggle::make('visibility')
+                    ->default(true)
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->helperText('Should people be able to signup for this event or is it assign only?')
                     ->columnSpanFull()
-                    ->nullable(),
+                    ->label('Is public?'),
+                Forms\Components\Toggle::make('reassign')
+                    ->default(false)
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->label('Must signups be reassigned?')
+                    ->columnSpanFull()
+                    ->helperText('If event is a placeholder for multiple smaller events.'),
             ]);
     }
 
@@ -116,6 +148,10 @@ class EventResource extends Resource
                         'certification' => 'heroicon-o-clipboard-check',
                     })
                     ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -130,10 +166,29 @@ class EventResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filters\Filter::make("only_future")
+                    ->label("Only future events")
+                    ->default(true)
+                    ->toggle()
+                    ->query(fn (Builder $query): Builder => $query->where('date', '>=', now())),
+                Filters\Filter::make("must_reassign")
+                    ->label("Must reassign")
+                    ->default(false)
+                    ->toggle()
+                    ->query(fn (Builder $query): Builder => $query->where('reassign', true)),
+                Filters\Filter::make("my_events")
+                    ->label("My events")
+                    ->default(true)
+                    ->toggle()
+                    ->query(fn (Builder $query): Builder => $query->where('user_responsible_id', auth()->id())),
+                Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('activities')->url(fn($record) => EventResource::getUrl('activities', ['record' => $record])),
+            ])
+            ->headerActions([
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -145,7 +200,7 @@ class EventResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\SignupsRelationManager::class,
         ];
     }
 
@@ -155,6 +210,8 @@ class EventResource extends Resource
             'index' => Pages\ListEvents::route('/'),
             'create' => Pages\CreateEvent::route('/create'),
             'edit' => Pages\EditEvent::route('/{record}/edit'),
+            'view' => Pages\ViewEvent::route('/{record}'),
+            'activities' => Pages\ActivityLogPage::route('/{record}/activities'),
         ];
     }
 }

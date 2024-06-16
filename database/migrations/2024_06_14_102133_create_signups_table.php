@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('signups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id');
-            $table->foreignId('contact_id');
+            $table->foreignId('contact_id')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -23,11 +23,29 @@ class SignupResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\ToggleButtons::make('status')
+                    ->options([
+                        'signup' => 'Signup',
+                        'confirmed' => 'Confirmed',
+                        'cancelled' => 'Cancelled',
+                        'no-show' => 'No Show',
+                    ])
+                    ->inline()
+                    ->default('signup')
+                    ->columnSpanFull()
+                    ->required(),
+                Forms\Components\RichEditor::make('comment')
+                    ->columnSpanFull()
+                    ->nullable(),
                 Forms\Components\Select::make('event_id')
-                    ->relationship('event', 'name')
+                    ->relationship('event', 'name->de')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 Forms\Components\Select::make('contact_id')
-                    ->relationship('contact', 'id')
+                    ->relationship('contact', 'email')
+                    ->searchable()
+                    ->preload()
                     ->required(),
             ]);
     }
@@ -39,7 +57,7 @@ class SignupResource extends Resource
                 Tables\Columns\TextColumn::make('event.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('contact.id')
+                Tables\Columns\TextColumn::make('contact.email')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -59,6 +77,7 @@ class SignupResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -81,6 +100,7 @@ class SignupResource extends Resource
             'index' => Pages\ListSignups::route('/'),
             'create' => Pages\CreateSignup::route('/create'),
             'edit' => Pages\EditSignup::route('/{record}/edit'),
+            'view' => Pages\ViewSignup::route('/{record}'),
         ];
     }
 }
