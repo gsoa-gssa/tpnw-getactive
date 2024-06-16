@@ -8,6 +8,7 @@ use App\Models\Contact;
 use Filament\Infolists;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Tables\Filters;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use App\Filament\Exports\ContactExporter;
@@ -129,7 +130,9 @@ class ContactResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filters\Filter::make("my_contacts")
+                    ->label("My Contacts")
+                    ->query(fn (Builder $query) => $query->where('user_responsible_id', auth()->id())),
             ])
             ->headerActions([
                 Tables\Actions\ImportAction::make()

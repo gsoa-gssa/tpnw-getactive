@@ -9,7 +9,6 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Tables\Filters;
 use Filament\Resources\Resource;
-use Filament\Tables\Enums\FiltersLayout;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\EventResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
