@@ -16,14 +16,14 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{url("")}}" />
     <meta property="og:title" content="{{__("frontend.og.title")}}" />
-    <meta property="og:description" content="{{__("pledge.lead")}}" />
+    <meta property="og:description" content="{{__("frontend.og.description")}}" />
     <meta property="og:image" content="{{url("images/og/og_{$locale}.png")}}" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="{{url("")}}" />
     <meta property="twitter:title" content="{{__("frontend.og.title")}}" />
-    <meta property="twitter:description" content="{{__("pledge.lead")}}" />
+    <meta property="twitter:description" content="{{__("frontend.og.description")}}" />
     <meta property="twitter:image" content="{{url("images/og/og_{$locale}.png")}}" />
 
     <!-- Meta Tags Generated with https://metatags.io -->
