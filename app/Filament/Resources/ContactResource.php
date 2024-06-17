@@ -39,7 +39,7 @@ class ContactResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
-                    ->unique('contacts', 'email')
+                    ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
