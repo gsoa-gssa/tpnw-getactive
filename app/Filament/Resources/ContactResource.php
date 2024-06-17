@@ -50,11 +50,12 @@ class ContactResource extends Resource
                     ->default(null),
                 Forms\Components\ToggleButtons::make('language')
                     ->options([
-                        "de" => "German",
-                        "fr" => "French",
-                        "it" => "Italian",
-                        "en" => "English"
+                        "de" => __("languages.de"),
+                        "fr" => __("languages.fr"),
+                        "it" => __("languages.it"),
+                        "en" => __("languages.en"),
                     ])
+                    ->inline()
                     ->default("de"),
                 Forms\Components\Select::make("canton")
                     ->options([
