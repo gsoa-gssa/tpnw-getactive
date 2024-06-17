@@ -23,7 +23,7 @@ class ViewEvent extends viewRecord
                 ->url(route('filament.admin.resources.events.edit', ['record' => $this->record])),
             CopyAction::make()->copyable(
                 function (Event $event) {
-                    return route('signup.events', ["event" => $event->id]);
+                    return route('signup.events', ["events" => $event->id]);
                 }
             )->label(__("buttonlabels.copy.signuplink")),
             Action::make("print")
