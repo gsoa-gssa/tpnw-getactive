@@ -34,5 +34,11 @@
     "events.export.signups.status": "Stato",
     "events.export.signups.attendance": "Partecipazione",
     "events.export.signups.followup": "Follow-up",
-    "oneclick.og.title": "Grazie per la tua iscrizione!"
+    "visual.subtitle": "visual.subtitle",
+    "visual.title": "visual.title",
+    "signup.lead": "signup.lead",
+    "oneclick.og.title": "Grazie per la tua iscrizione!",
+    "frontend.og.title": "frontend.og.title",
+    "frontend.og.description": "frontend.og.description",
+    "pledge.lead": "pledge.lead"
 }

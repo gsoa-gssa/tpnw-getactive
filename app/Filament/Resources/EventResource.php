@@ -32,6 +32,8 @@ class EventResource extends Resource
                                     ->label('Name'),
                                 Forms\Components\TextInput::make('location.de')
                                     ->label('Location'),
+                                Forms\Components\TextInput::make('time.de')
+                                    ->label('Time'),
                                 Forms\Components\RichEditor::make('description.de')
                                     ->label('Description'),
                             ]),
@@ -41,6 +43,8 @@ class EventResource extends Resource
                                     ->label('Name'),
                                 Forms\Components\TextInput::make('location.fr')
                                     ->label('Location'),
+                                Forms\Components\TextInput::make('time.fr')
+                                    ->label('Time'),
                                 Forms\Components\RichEditor::make('description.fr')
                                     ->label('Description'),
                             ]),
@@ -50,6 +54,8 @@ class EventResource extends Resource
                                     ->label('Name'),
                                 Forms\Components\TextInput::make('location.it')
                                     ->label('Location'),
+                                Forms\Components\TextInput::make('time.it')
+                                    ->label('Time'),
                                 Forms\Components\RichEditor::make('description.it')
                                     ->label('Description'),
                             ]),

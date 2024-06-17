@@ -50,4 +50,25 @@ class Event extends Model
         return $this->hasMany(\App\Models\Signup::class);
     }
 
+    /**
+     * Get a translatable String for the event or fallback to de, fr and it in that order.
+     */
+    public function getTranslatable(string $key, string $locale):string
+    {
+        $translations = $this->$key;
+        if (isset($translations[$locale])) {
+            return $translations[$locale];
+        }
+        if (isset($translations['de'])) {
+            return $translations['de'];
+        }
+        if (isset($translations['fr'])) {
+            return $translations['fr'];
+        }
+        if (isset($translations['it'])) {
+            return $translations['it'];
+        }
+        return "";
+    }
+
 }

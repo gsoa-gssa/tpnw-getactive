@@ -1,0 +1,99 @@
+.tpnw-getactive-eventgrid {
+
+    &__filterbar {
+        label {
+            background-color: black;
+            position: absolute;
+            font-size: 0.85rem;
+            top: -1rem;
+            left: 0.5rem;
+            color: white;
+            z-index: 2;
+            padding: 0.25rem;
+        }
+
+        &__filter {
+            background-color: transparent;
+            border: 1px solid white;
+            border-radius: 4px;
+            padding: 0.5rem;
+            color: white;
+            position: relative;
+
+            &--container {
+                position: relative;
+            }
+        }
+    }
+
+    &__submit {
+
+        &__button {
+            @apply bg-highlight text-white px-12 py-2 mx-auto text-2xl font-extrabold uppercase;
+
+            &:disabled {
+                @apply bg-gray-600 text-accent;
+            }
+        }
+    }
+
+
+    &__events {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        @apply gap-4 md:gap-6 lg:gap-8;
+
+        &__event {
+            border-radius: 4px;
+
+            &__details {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+
+                @apply my-2;
+
+                &__detail {
+                    font-size: 0.8rem;
+                    padding: 0.25rem;
+                    font-weight: 700;
+                    color: white;
+                    line-height: 0.85;
+                    border-radius: 3px;
+
+                    @apply bg-highlight;
+
+                    &:empty {
+                        display: none;
+                    }
+                }
+            }
+
+            &__selectionboxes {
+
+                &__checkbox {
+                    display: none;
+                }
+
+                &__selectionbox {
+                    @apply w-full bg-black text-accent font-extrabold uppercase text-2xl text-center px-3 py-1;
+
+                    &--selected {
+                        @apply bg-highlight text-white;
+                    }
+                }
+
+                &:has(input:checked) {
+
+                    .tpnw-getactive-eventgrid__events__event__selectionboxes__selectionbox--select {
+                        display: none;
+                    }
+
+                    .tpnw-getactive-eventgrid__events__event__selectionboxes__selectionbox--selected {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -4,8 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OnelickController;
 
 Route::get('/', function () {
-    return null;
-});
+    $events = \App\Models\Event::whereDate('date', ">=", now())->where("visibility", true)->orderBy('date', 'asc')->get();
+    return view("frontend.events", compact('events'));
+})->name('landingpage');
+
+Route::get('/signup/{events}', function ($events) {
+    dd($events);
+})->name('signup');
 
 Route::get('/oneclick/{oneclick:uuid}', [
     OnelickController::class,

@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Livewire;
+
+use Livewire\Component;
+use App\Models\Event;
+
+class EventGrid extends Component
+{
+    public $events;
+    public $filters = [];
+    public $eventCounter = 0;
+
+    public function mount($events)
+    {
+        $this->events = $events;
+    }
+
+    public function changeFilter($filter, $value)
+    {
+        if ($value == "all") {
+            unset($this->filters[$filter]);
+        } else {
+            $this->filters[$filter] = $value;
+        }
+        $this->filterEvents();
+    }
+
+    public function filterEvents()
+    {
+        $query = Event::query();
+        if (isset($this->filters["type"])) {
+            $query->where("type", $this->filters["type"]);
+        }
+        if (isset($this->filters["canton"])) {
+            $query->where(function ($query) {
+                $query->where("canton", $this->filters["canton"])
+                    ->orWhere("canton", "national");
+            });
+        }
+        $this->events = $query->get();
+    }
+
+    public function changeCounter($checked) {
+        if ($checked) {
+            $this->eventCounter++;
+        } else {
+            $this->eventCounter--;
+        }
+    }
+
+    public function render()
+    {
+        return view('livewire.event-grid');
+    }
+}

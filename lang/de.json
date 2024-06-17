@@ -34,5 +34,11 @@
     "events.export.signups.status": "Status",
     "events.export.signups.attendance": "Teilnahme",
     "events.export.signups.followup": "Nachfassen",
-    "oneclick.og.title": "Danke für deine Anmeldung!"
+    "visual.subtitle": "Atomwaffenverbot jetzt!",
+    "visual.title": "Wir brauchen dich!",
+    "signup.lead": "Eine Volksinitiative zu sammeln braucht viele Menschen, die mithelfen: Unterschriften sammeln und beglaubigen, Flyer verteilen, Aktionen organisieren und, und und: Deshalb brauchen wir Menschen wie dich! Danke, dass du uns unterstützt!",
+    "oneclick.og.title": "Danke für deine Anmeldung!",
+    "frontend.og.title": "frontend.og.title",
+    "frontend.og.description": "frontend.og.description",
+    "pledge.lead": "pledge.lead"
 }
