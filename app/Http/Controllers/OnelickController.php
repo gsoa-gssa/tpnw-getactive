@@ -32,6 +32,9 @@ class OnelickController extends Controller
             $contact->activities = [];
         }
         $contact->activities = array_unique(array_merge($contact->activities, [$event->type]));
+        if (!isset($contact->language) || $contact->language == "") {
+            $contact->language = app()->getLocale();
+        }
         $contact->save();
         $signup = Signup::firstOrCreate([
             'event_id' => $event->id,
