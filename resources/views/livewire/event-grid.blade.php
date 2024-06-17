@@ -51,7 +51,7 @@
         <div class="tpnw-getactive-eventgrid__events max-w-[1080px] mx-auto mt-8">
             @foreach($events as $event)
                 <label for="event{{$event->id}}" class="tpnw-getactive-eventgrid__events__event bg-accent p-3">
-                    <h2 class="text-2xl font-bold">{{$event->getTranslatable("name", app()->getLocale())}}</h2>
+                    <h2 class="text-2xl font-bold !leading-[1.15]">{{$event->getTranslatable("name", app()->getLocale())}}</h2>
                     <div class="tpnw-getactive-eventgrid__events__event__details">
                         <span class="tpnw-getactive-eventgrid__events__event__details__detail">{{date("d.m.Y", strtotime($event->date))}}</span>
                         <span class="tpnw-getactive-eventgrid__events__event__details__detail">{{$event->getTranslatable("time", app()->getLocale())}}</span>
