@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Event;
 use Filament\Resources\Pages\viewRecord;
+use Webbingbrasil\FilamentCopyActions\Pages\Actions\CopyAction;
 
 class ViewEvent extends viewRecord
 {
@@ -20,6 +21,11 @@ class ViewEvent extends viewRecord
             Action::make('Edit Event')
                 ->icon('heroicon-o-pencil')
                 ->url(route('filament.admin.resources.events.edit', ['record' => $this->record])),
+            CopyAction::make()->copyable(
+                function (Event $event) {
+                    return route('signup.events', ["event" => $event->id]);
+                }
+            )->label(__("buttonlabels.copy.signuplink")),
             Action::make("print")
                 ->label(__("buttonlabels.print.signups"))
                 ->icon('heroicon-o-document-text')

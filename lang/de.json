@@ -20,6 +20,7 @@
     "filterlables.contacts.my_contacts": "Meine Kontakte",
     "buttonlabels.import.contacts": "Kontakte importieren",
     "buttonlabels.export.contacts": "Kontakte exportieren",
+    "buttonlabels.copy.signuplink": "Anmeldelink kopieren",
     "signup.status.signup": "Angemeldet",
     "signup.status.confirmed": "Bestätigt",
     "signup.status.cancelled": "Abgesagt",
