@@ -9,6 +9,8 @@ Route::get('/', function () {
 })->name('landingpage');
 
 Route::get('/signup/{events}', function ($events) {
+    $events = explode(',', $events);
+    $events = \App\Models\Event::whereIn('id', $events)->get();
     dd($events);
 })->name('signup');
 
