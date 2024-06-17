@@ -62,6 +62,7 @@
                         $event->getTranslatable("description", app()->getLocale())
                     !!}
                     <p class="text-sm"><b>{{__("label.location")}}</b> {{$event->getTranslatable("location", app()->getLocale())}}</p>
+                    <p class="text-sm"><b>{{__("label.time")}}</b> {{$event->getTranslatable("time", app()->getLocale())}}</p>
 
                     <div class="tpnw-getactive-eventgrid__events__event__selectionboxes mt-4">
                         <input
