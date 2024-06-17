@@ -50,6 +50,7 @@
     "signup.zip": "Postleitzahl",
     "signup.canton": "Kanton",
     "cantons.select": "Kanton auswählen",
+    "cantons.national": "Schweizweit",
     "cantons.AG": "Aargau",
     "cantons.AI": "Appenzell Innerrhoden",
     "cantons.AR": "Appenzell Ausserrhoden",
