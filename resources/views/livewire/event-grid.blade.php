@@ -1,13 +1,9 @@
 <div class="tpnw-getactive-eventgrid">
-    <form action="{{route("signup", ["events" => "PLACEHOLDER"])}}" class="tpnw-getactive-eventgrid__form">
-        <div class="tpnw-getactive-eventgrid__submit max-w-[793px] mx-auto flex justify-center">
-            @if ($eventCounter > 0)
-                <button type="submit" class="tpnw-getactive-eventgrid__submit__button">{{__("signup.gonext.1")}}</button>
-            @else
-                <button type="submit" class="tpnw-getactive-eventgrid__submit__button" disabled>{{__("signup.selectEvents")}}</button>
-            @endif
+    <form action="{{route("signup.events", ["events" => "PLACEHOLDER"])}}" class="tpnw-getactive-eventgrid__form">
+        <div class="tpnw-getactive-eventgrid__filterbar max-w-[793px] mx-auto">
+            <h2 class="tpnw-title text-white text-xl md:text-2xl lg:text-4xl">{{__("signup.selectEvents")}}</h2>
         </div>
-        <div class="tpnw-getactive-eventgrid__filterbar max-w-[793px] mx-auto flex gap-4 md:gap-6 lg:gap-8 mt-10">
+        <div class="tpnw-getactive-eventgrid__filterbar max-w-[793px] mx-auto flex gap-4 md:gap-6 lg:gap-8 mt-8">
             <div class="tpnw-getactive-eventgrid__filterbar__filter--container">
                 <label for="cantonFilter">{{__("cantons.canton")}}</label>
                 <select class="tpnw-getactive-eventgrid__filterbar__filter" id="cantonFilter" wire:change="changeFilter('canton', $event.target.value)">
@@ -49,6 +45,9 @@
                 </select>
             </div>
         </div>
+        <div class="tpnw-getactive-eventgrid__submit max-w-[793px] mx-auto flex justify-center mt-10">
+            <button type="submit" class="tpnw-getactive-eventgrid__submit__button">{{__("signup.gonext.1", ["count" => $eventCounter])}}</button>
+        </div>
         <div class="tpnw-getactive-eventgrid__events max-w-[1080px] mx-auto mt-8">
             @foreach($events as $event)
                 <label for="event{{$event->id}}" class="tpnw-getactive-eventgrid__events__event bg-accent p-3">
@@ -56,8 +55,8 @@
                     <div class="tpnw-getactive-eventgrid__events__event__details">
                         <span class="tpnw-getactive-eventgrid__events__event__details__detail">{{date("d.m.Y", strtotime($event->date))}}</span>
                         <span class="tpnw-getactive-eventgrid__events__event__details__detail">{{$event->getTranslatable("time", app()->getLocale())}}</span>
-                        <span class="tpnw-getactive-eventgrid__events__event__details__detail">{{__("eventtype.$event->type")}}</span>
-                        <span class="tpnw-getactive-eventgrid__events__event__details__detail">{{__("canton.$event->canton")}}</span>
+                        <span class="tpnw-getactive-eventgrid__events__event__details__detail">{{__("eventtypes.$event->type")}}</span>
+                        <span class="tpnw-getactive-eventgrid__events__event__details__detail">{{__("cantons.$event->canton")}}</span>
                     </div>
                     {!!
                         $event->getTranslatable("description", app()->getLocale())
@@ -65,7 +64,19 @@
                     <p class="text-sm"><b>{{__("label.location")}}</b> {{$event->getTranslatable("location", app()->getLocale())}}</p>
 
                     <div class="tpnw-getactive-eventgrid__events__event__selectionboxes mt-4">
-                        <input type="checkbox" name="events[]" value="{{$event->id}}" id="event{{$event->id}}" class="tpnw-getactive-eventgrid__events__event__selectionboxes__checkbox" wire:change="changeCounter($event.target.checked)">
+                        <input
+                            type="checkbox"
+                            name="events[]"
+                            value="{{$event->id}}"
+                            id="event{{$event->id}}"
+                            class="tpnw-getactive-eventgrid__events__event__selectionboxes__checkbox"
+                            wire:change="changeCounter($event.target.checked)"
+                            wire:model="selectedEvents"
+                            wire:load="changeCounter($event.target.checked)"
+                            @if (in_array($event->id, $selectedEvents))
+                                checked
+                            @endif
+                        >
                         <div class="tpnw-getactive-eventgrid__events__event__selectionboxes__selectionbox tpnw-getactive-eventgrid__events__event__selectionboxes__selectionbox--select">{{__("label.select")}}</div>
                         <div class="tpnw-getactive-eventgrid__events__event__selectionboxes__selectionbox tpnw-getactive-eventgrid__events__event__selectionboxes__selectionbox--selected hidden">{{__("label.selected")}}</div>
                     </div>

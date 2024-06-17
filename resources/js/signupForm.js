@@ -6,6 +6,9 @@ window.addEventListener("submit", function (event) {
     let url = new URL(form.action).toString();
     let formData = new FormData(form);
     let events = formData.getAll("events[]").join(",");
+    if (events.length === 0) {
+        
+    }
     url = url.replace("PLACEHOLDER", events);
     window.location.href = url.toString();
 });

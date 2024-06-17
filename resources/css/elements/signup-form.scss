@@ -1,0 +1,46 @@
+.tpnw-getactive-form {
+
+    form {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    &__input {
+
+        &--group {
+            position: relative;
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="tel"],
+            input[type="number"],
+            select {
+                width: 100%;
+                background-color: transparent;
+                border: 2px solid black;
+                border-radius: 4px;
+                padding: 0.5rem;
+                position: relative;
+                height: stretch;
+            }
+
+
+            label {
+                background-color: white;
+                position: absolute;
+                font-size: 0.85rem;
+                top: -1rem;
+                left: 0.5rem;
+                z-index: 2;
+                padding: 0.25rem;
+            }
+        }
+
+        &__submit {
+            @apply w-full text-center bg-black text-accent font-extrabold uppercase text-2xl py-2;
+        }
+    }
+}

@@ -4,12 +4,12 @@
         label {
             background-color: black;
             position: absolute;
-            font-size: 0.85rem;
-            top: -1rem;
+            font-size: 0.7rem;
+            top: -0.8rem;
             left: 0.5rem;
             color: white;
             z-index: 2;
-            padding: 0.25rem;
+            padding: 0.25rem 0.5rem;
         }
 
         &__filter {
@@ -31,7 +31,7 @@
         &__button {
             @apply bg-highlight text-white px-12 py-2 mx-auto text-2xl font-extrabold uppercase;
 
-            &:disabled {
+            &--disabled {
                 @apply bg-gray-600 text-accent;
             }
         }
@@ -45,6 +45,8 @@
 
         &__event {
             border-radius: 4px;
+
+            height: fit-content;
 
             &__details {
                 display: flex;

@@ -10,6 +10,7 @@ class EventGrid extends Component
     public $events;
     public $filters = [];
     public $eventCounter = 0;
+    public $selectedEvents = [];
 
     public function mount($events)
     {
