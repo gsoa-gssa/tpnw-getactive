@@ -22,6 +22,7 @@ class Event extends Model
         'date' => 'date',
         'name' => 'array',
         'location' => 'array',
+        'time' => 'array',
         'description' => 'array',
     ];
 
