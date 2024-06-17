@@ -18,3 +18,5 @@ yarn-error.log
 /.idea
 /.vscode
 /cronlog.txt
+**/.DS_Store
+.DS_Store
