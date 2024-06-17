@@ -53,4 +53,12 @@ class SignupsRelationManager extends RelationManager
                 ]),
             ]);
     }
+
+    /**
+     * Remove readOnly constraint.
+     */
+    public function isReadOnly(): bool
+    {
+        return false;
+    }
 }
