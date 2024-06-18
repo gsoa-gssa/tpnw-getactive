@@ -136,6 +136,36 @@ class ContactResource extends Resource
                     ->label(__("filterlables.contacts.my_contacts"))
                     ->toggle()
                     ->query(fn (Builder $query) => $query->where('user_responsible_id', auth()->id())),
+                Filters\SelectFilter::make("canton")
+                    ->label(__("filterlables.contacts.canton"))
+                    ->options([
+                        "AG" => __("cantons.AG"),
+                        "AR" => __("cantons.AR"),
+                        "AI" => __("cantons.AI"),
+                        "BL" => __("cantons.BL"),
+                        "BS" => __("cantons.BS"),
+                        "BE" => __("cantons.BE"),
+                        "FR" => __("cantons.FR"),
+                        "GE" => __("cantons.GE"),
+                        "GL" => __("cantons.GL"),
+                        "GR" => __("cantons.GR"),
+                        "JU" => __("cantons.JU"),
+                        "LU" => __("cantons.LU"),
+                        "NE" => __("cantons.NE"),
+                        "NW" => __("cantons.NW"),
+                        "OW" => __("cantons.OW"),
+                        "SG" => __("cantons.SG"),
+                        "SH" => __("cantons.SH"),
+                        "SO" => __("cantons.SO"),
+                        "SZ" => __("cantons.SZ"),
+                        "TG" => __("cantons.TG"),
+                        "TI" => __("cantons.TI"),
+                        "UR" => __("cantons.UR"),
+                        "VD" => __("cantons.VD"),
+                        "VS" => __("cantons.VS"),
+                        "ZG" => __("cantons.ZG"),
+                        "ZH" => __("cantons.ZH")
+                    ])
             ])
             ->headerActions([
                 Tables\Actions\ImportAction::make()
