@@ -86,7 +86,6 @@ class ContactResource extends Resource
                         "ZG" => __("cantons.ZG"),
                         "ZH" => __("cantons.ZH")
                     ])
-                    ->default("ZH")
                     ->searchable(),
                 Forms\Components\Select::make("activities")
                     ->options([
