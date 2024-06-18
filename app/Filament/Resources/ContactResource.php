@@ -100,6 +100,7 @@ class ContactResource extends Resource
                 Forms\Components\Select::make("user_responsible_id")
                     ->relationship("user", "name")
                     ->preload()
+                    ->default(auth()->id())
                     ->searchable(),
             ]);
     }
