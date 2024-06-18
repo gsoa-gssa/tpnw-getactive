@@ -152,7 +152,7 @@ class OneclickResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     CopyAction::make()->copyable(
                         function (Oneclick $oneclick) {
-                            $url = "https://go.atomwaffenverbot.de/oneclick/" . $oneclick->uuid;
+                            $url = "https://go.atomwaffenverbot.ch/oneclick/" . $oneclick->uuid;
                             foreach ($oneclick->fields as $field) {
                                 $separator = strpos($url, "?") === false ? "?" : "&";
                                 $url .= $separator . $field["field"] . "=" . $field["value"];
