@@ -149,16 +149,40 @@ class OneclickResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                CopyAction::make()->copyable(
-                    function (Oneclick $oneclick) {
-                        $url = route('oneclick.createSignup', $oneclick);
-                        foreach ($oneclick->fields as $field) {
-                            $separator = strpos($url, "?") === false ? "?" : "&";
-                            $url .= $separator . $field["field"] . "=" . $field["value"];
+                Tables\Actions\ActionGroup::make([
+                    CopyAction::make()->copyable(
+                        function (Oneclick $oneclick) {
+                            $url = "https://go.atomwaffenverbot.de/oneclick/" . $oneclick->uuid;
+                            foreach ($oneclick->fields as $field) {
+                                $separator = strpos($url, "?") === false ? "?" : "&";
+                                $url .= $separator . $field["field"] . "=" . $field["value"];
+                            }
+                            return $url;
                         }
-                        return $url;
-                    }
-                )
+                    )->label(__("actionlables.copy.de")),
+                    CopyAction::make()->copyable(
+                        function (Oneclick $oneclick) {
+                            $url = "https://go.interdiction-armes-nucleaires.ch/oneclick/" . $oneclick->uuid;
+                            foreach ($oneclick->fields as $field) {
+                                $separator = strpos($url, "?") === false ? "?" : "&";
+                                $url .= $separator . $field["field"] . "=" . $field["value"];
+                            }
+                            return $url;
+                        }
+                    )->label(__("actionlables.copy.fr")),
+                    CopyAction::make()->copyable(
+                        function (Oneclick $oneclick) {
+                            $url = "https://go.divieto-armi-nucleari.ch/oneclick/" . $oneclick->uuid;
+                            foreach ($oneclick->fields as $field) {
+                                $separator = strpos($url, "?") === false ? "?" : "&";
+                                $url .= $separator . $field["field"] . "=" . $field["value"];
+                            }
+                            return $url;
+                        }
+                    )->label(__("actionlables.copy.it")),
+                ])
+                ->button()
+                ->label(__("actionlables.copy")),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
