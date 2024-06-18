@@ -39,6 +39,7 @@ class EventGrid extends Component
                     ->orWhere("canton", "national");
             });
         }
+        $query->whereDate('date', ">=", now())->where("visibility", true)->orderBy('date', 'asc')->get();
         $this->events = $query->get();
     }
 
