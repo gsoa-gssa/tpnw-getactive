@@ -138,6 +138,7 @@ class ContactResource extends Resource
                     ->query(fn (Builder $query) => $query->where('user_responsible_id', auth()->id())),
                 Filters\SelectFilter::make("canton")
                     ->label(__("filterlables.contacts.canton"))
+                    ->multiple()
                     ->options([
                         "AG" => __("cantons.AG"),
                         "AR" => __("cantons.AR"),
