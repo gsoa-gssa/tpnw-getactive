@@ -40,8 +40,15 @@ class SignupController extends Controller
         if (!is_array($contact->activities)) {
             $contact->activities = [];
         }
-        $event = Event::find($request->events[0]);
-        $contact->activities = array_unique(array_merge($contact->activities, [$event->type]));
+        $activities = [];
+        foreach ($request->events as $event) {
+            $event = Event::find($event);
+            if (!$event) {
+                return redirect()->route('signup.events')->withInput();
+            }
+            $activities[] = $event->type;
+        }
+        $contact->activities = array_unique(array_merge($contact->activities, $activities));
 
         foreach ($request->events as $event) {
             Signup::firstOrCreate([
