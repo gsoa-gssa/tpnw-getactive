@@ -32,34 +32,18 @@ class ContactImporter extends Importer
                 ->rules(['in:de,fr,it']),
             ImportColumn::make("canton")
                 ->label("Canton")
-                ->castStateUsing(function ($state) {
-                    if (blank($state)) {
-                        return "ZH";
-                    } else {
-                        return $state;
-                    }
-                })
                 ->requiredMapping(),
-            ImportColumn::make("activities")
-                ->array(", ")
-                ->label("Activities"),
             ImportColumn::make("zip")
-                ->label("Zip"),
-            ImportColumn::make("user")
-                ->label("User ID")
                 ->requiredMapping()
-                ->relationship(resolveUsing: "email"),
+                ->label("Zip"),
         ];
     }
 
     public function resolveRecord(): ?Contact
     {
-        // return Contact::firstOrNew([
-        //     // Update existing records, matching them by `$this->data['column_name']`
-        //     'email' => $this->data['email'],
-        // ]);
-
-        return new Contact();
+        return Contact::firstOrNew([
+            'email' => $this->data['email'],
+        ]);
     }
 
     public static function getCompletedNotificationBody(Import $import): string

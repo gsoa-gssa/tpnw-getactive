@@ -54,4 +54,12 @@ class User extends Authenticatable implements FilamentUser
         $emailDomain = explode('@', $this->email)[1];
         return in_array($emailDomain, $domains);
     }
+
+    /**
+     * Get the events for the user.
+     */
+    public function events() : \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\Event::class);
+    }
 }

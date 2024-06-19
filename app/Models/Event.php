@@ -29,9 +29,9 @@ class Event extends Model
     /**
      * Get the responsible user for the event.
      */
-    public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function users() : \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_responsible_id');
+        return $this->belongsToMany(\App\Models\User::class);
     }
 
     /**

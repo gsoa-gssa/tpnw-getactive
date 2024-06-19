@@ -109,10 +109,11 @@ class EventResource extends Resource
                     ])
                     ->native(false)
                     ->required(),
-                Forms\Components\Select::make("user_responsible_id")
-                    ->relationship("user", "name")
+                Forms\Components\Select::make("users")
+                    ->relationship("users", "name")
                     ->preload()
-                    ->default(auth()->id())
+                    ->default([auth()->id()])
+                    ->multiple()
                     ->searchable(),
                 Forms\Components\Toggle::make('visibility')
                     ->default(true)
@@ -185,7 +186,7 @@ class EventResource extends Resource
                     ->label(__("filterlables.events.my_events"))
                     ->default(true)
                     ->toggle()
-                    ->query(fn (Builder $query): Builder => $query->where('user_responsible_id', auth()->id())),
+                    ->query(fn (Builder $query): Builder => $query->whereHas('users', fn (Builder $query) => $query->where('user_id', auth()->id()))),
                 Filters\TrashedFilter::make(),
             ])
             ->actions([
