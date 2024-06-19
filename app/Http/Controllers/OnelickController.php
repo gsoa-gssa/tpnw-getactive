@@ -6,6 +6,7 @@ use App\Models\Oneclick;
 use App\Models\Signup;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class OnelickController extends Controller
 {
@@ -15,9 +16,17 @@ class OnelickController extends Controller
     public function createSignup(Oneclick $oneclick)
     {
         $fields = request()->all();
-        if (!isset($fields['email']) || !filter_var($fields['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception('Email must be provided and valid.', 400);
+
+        $validator = Validator::make($fields, [
+            'email' => 'required|email',
+            'phone' => 'required',
+            'zip' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('signup.events', $oneclick->event->id)->withInput();
         }
+
         $event = $oneclick->event;
         $contact = Contact::firstOrCreate(['email' => $fields['email']]);
         foreach ($fields as $field => $value) {

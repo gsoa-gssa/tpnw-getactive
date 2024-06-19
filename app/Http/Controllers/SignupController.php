@@ -33,6 +33,7 @@ class SignupController extends Controller
             'phone' => $request->phone,
             'zip' => $request->zip,
             'canton' => $request->canton,
+            'language' => app()->getLocale(),
         ]);
 
         foreach ($request->events as $event) {
