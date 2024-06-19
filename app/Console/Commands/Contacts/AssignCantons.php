@@ -14,7 +14,7 @@ class AssignCantons extends Command
      *
      * @var string
      */
-    protected $signature = 'contacts:assign-cantons {--dry-run=false}';
+    protected $signature = 'contacts:assign-cantons {--dry-run=false} {--y}';
 
     /**
      * The console command description.
@@ -28,9 +28,14 @@ class AssignCantons extends Command
      */
     public function handle()
     {
+        if ($this->option("y")) {
+            $this->info('EXECUTING IN AUTO MODE');
+            $this->info("START TIME: " . now());
+        }
+
         if ($this->option('dry-run') === 'true') {
             $this->info('Dry run enabled. No changes will be saved.');
-        } else {
+        } else if (!$this->option('y') && $this->option('dry-run') === 'false') {
             $this->info('Dry run disabled. Changes will be saved.');
             $confirmed = confirm('Are you sure you want to continue?');
             if (!$confirmed) {
@@ -79,40 +84,46 @@ class AssignCantons extends Command
             }
         }
 
-        $this->info('Orphan contacts: ' . count($orphans));
-        foreach ($orphans as $orphan) {
-            $this->info("Orphan contact: {$orphan->email}");
-        }
 
         if (count($orphans) > 0) {
-            $sendEmail = confirm('Do you want to send an email with the orphan contacts to a user?');
-            if ($sendEmail) {
-                $user = select(
-                    'Select a user to send the email to:',
-                    \App\Models\User::pluck('name', 'email')
-                );
-                $orphanCSV = [];
-                $orphanCSV[] = ['id', 'firstname', 'lastname', 'email'];
-                foreach ($orphans as $orphan) {
-                    $orphanCSV[] = [$orphan->id, $orphan->firstname, $orphan->lastname, $orphan->email];
+            $this->info('Orphan contacts: ' . count($orphans));
+            foreach ($orphans as $orphan) {
+                $this->info("Orphan contact: {$orphan->email}");
+            }
+            if (!$this->option("y")) {
+                $sendEmail = confirm('Do you want to send an email with the orphan contacts to a user?');
+                if ($sendEmail) {
+                    $user = select(
+                        'Select a user to send the email to:',
+                        \App\Models\User::pluck('name', 'email')
+                    );
+                    $orphanCSV = [];
+                    $orphanCSV[] = ['id', 'firstname', 'lastname', 'email'];
+                    foreach ($orphans as $orphan) {
+                        $orphanCSV[] = [$orphan->id, $orphan->firstname, $orphan->lastname, $orphan->email];
+                    }
+                    $csv = \League\Csv\Writer::createFromString('');
+                    $csv->insertAll($orphanCSV);
+                    $this->info('Sending email...');
+                    // Send email with orphan contacts
+                    Mail::raw("Ophan Contacts for export " . now(), function ($message) use ($csv, $user) {
+                        $message->to($user)
+                            ->subject('Orphan Contacts')
+                            ->attachData($csv->toString(), 'orphans-' . now() . '.csv', [
+                                'mime' => 'text/csv',
+                            ])
+                            ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    });
                 }
-                $csv = \League\Csv\Writer::createFromString('');
-                $csv->insertAll($orphanCSV);
-                $this->info('Sending email...');
-                // Send email with orphan contacts
-                Mail::raw("Ophan Contacts for export " . now(), function ($message) use ($csv, $user) {
-                    $message->to($user)
-                        ->subject('Orphan Contacts')
-                        ->attachData($csv->toString(), 'orphans-' . now() . '.csv', [
-                            'mime' => 'text/csv',
-                        ])
-                        ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                });
-
             }
         }
 
         $this->info("Assigned cantons to {$assigned} contacts.");
-        $this->info('Cantons assigned to contacts.');
+        $this->info('Command completed.');
+
+        if ($this->option("y")) {
+            $this->info("END TIME: " . now());
+            $this->info("______________ " . PHP_EOL . PHP_EOL);
+        }
     }
 }
