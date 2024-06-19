@@ -15,10 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(\App\Http\Middleware\SetAppLocale::class);
     })
     ->withSchedule(function (Schedule $schedule){
-        $schedule->command('contacts:assign-cantons --y')->cron("0-59/5 * * * *")
+        $schedule->command('contacts:assign-cantons --y')->cron("0-59/15 * * * *")
             ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/contacts-assign-cantons.log'));
-        $schedule->command('contacts:autoassign --y')->cron("3-59/5 * * * *")
+        $schedule->command('contacts:autoassign --y')->cron("5-59/15 * * * *")
             ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/contacts-autoassign.log'));
     })
