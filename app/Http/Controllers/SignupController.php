@@ -26,7 +26,7 @@ class SignupController extends Controller
         ]);
         $request->events = json_decode($request->events);
 
-        $contact = Contact::firstOrCreate([
+        $contact = Contact::updateOrCreate([
             'email' => $request->email,
         ], [
             'firstname' => $request->firstname,
