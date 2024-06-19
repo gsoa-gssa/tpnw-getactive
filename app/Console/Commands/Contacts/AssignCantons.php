@@ -44,6 +44,7 @@ class AssignCantons extends Command
         $contacts = \App\Models\Contact::where("canton", null)->where("user_responsible_id", null)->get();
 
         $orphans = [];
+        $assigned = 0;
 
         // Loop through all contacts
         foreach ($contacts as $contact) {
@@ -71,6 +72,7 @@ class AssignCantons extends Command
 
             // Assign the canton to the contact
             $contact->canton = $canton;
+            $assigned++;
             $this->info("Canton {$canton} assigned to contact {$contact->id}.");
             if ($this->option('dry-run') === 'false') {
                 $contact->save();
@@ -83,7 +85,7 @@ class AssignCantons extends Command
         }
 
         if (count($orphans) > 0) {
-            $sendEmail = confirm('Do you want to send an with the orphan contacts?');
+            $sendEmail = confirm('Do you want to send an email with the orphan contacts to a user?');
             if ($sendEmail) {
                 $user = select(
                     'Select a user to send the email to:',
@@ -110,6 +112,7 @@ class AssignCantons extends Command
             }
         }
 
+        $this->info("Assigned cantons to {$assigned} contacts.");
         $this->info('Cantons assigned to contacts.');
     }
 }
