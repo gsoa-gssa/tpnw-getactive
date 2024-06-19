@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\Event;
 use App\Models\Signup;
 use Illuminate\Http\Request;
 
@@ -35,6 +36,12 @@ class SignupController extends Controller
             'canton' => $request->canton,
             'language' => app()->getLocale(),
         ]);
+
+        if (!is_array($contact->activities)) {
+            $contact->activities = [];
+        }
+        $event = Event::find($request->events[0]);
+        $contact->activities = array_unique(array_merge($contact->activities, [$event->type]));
 
         foreach ($request->events as $event) {
             Signup::firstOrCreate([
