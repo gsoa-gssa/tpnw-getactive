@@ -49,6 +49,7 @@ class SignupController extends Controller
             $activities[] = $event->type;
         }
         $contact->activities = array_unique(array_merge($contact->activities, $activities));
+        $contact->save();
 
         foreach ($request->events as $event) {
             Signup::firstOrCreate([
