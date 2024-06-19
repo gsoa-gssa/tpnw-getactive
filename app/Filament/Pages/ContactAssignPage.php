@@ -11,6 +11,25 @@ use Filament\Pages\SettingsPage;
 class ContactAssignPage extends SettingsPage
 {
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationGroup = 'System Settings';
+
+    protected static ?int $navigationSort = 20;
+
+    /**
+     * Title of the page.
+     */
+    public function getTitle(): string|\Illuminate\Contracts\Support\Htmlable
+    {
+        return __('pages.title.contact_assign');
+    }
+
+    /**
+     * Navigation Label of the page.
+     */
+    public static function getNavigationLabel(): string
+    {
+        return __('pages.title.contact_assign');
+    }
 
     protected static string $settings = ContactAssign::class;
 
