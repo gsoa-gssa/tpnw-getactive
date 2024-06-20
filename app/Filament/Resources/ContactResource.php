@@ -109,15 +109,24 @@ class ContactResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('firstname')
+                    ->sortable()
+                    ->label(__('columnlabels.firstname'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('lastname')
+                    ->sortable()
+                    ->label(__('columnlabels.lastname'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->sortable()
+                    ->label(__('columnlabels.email'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
+                    ->sortable()
+                    ->label(__('columnlabels.phone'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('zip')
                     ->sortable()
+                    ->label(__('columnlabels.zip'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
