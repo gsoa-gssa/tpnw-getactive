@@ -52,6 +52,9 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->plugins([
+                \pxlrbt\FilamentSpotlight\SpotlightPlugin::make(),
+            ])
             ->passwordReset()
             ->profile()
             ->databaseNotifications()

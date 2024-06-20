@@ -14,6 +14,7 @@
         "livewire/livewire": "^3.5",
         "parallax/filament-comments": "^1.3",
         "pxlrbt/filament-activity-log": "^1.1",
+        "pxlrbt/filament-spotlight": "^1.2",
         "spatie/laravel-activitylog": "^4.8",
         "webbingbrasil/filament-copyactions": "^3.0"
     },
