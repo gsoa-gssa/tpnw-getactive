@@ -21,7 +21,9 @@ class SignupsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Select::make('event_id')
                     ->relationship('event', 'name->de')
-                    ->getOptionLabelFromRecordUsing(fn (Event $event) => $event->getTranslatable('name', app()->getLocale()))
+                    ->getOptionLabelFromRecordUsing(function(Event $event) {
+                        return date("d.m.Y", strtotime($event->date)) . ": " . $event->getTranslatable('name', app()->getLocale());
+                    })
                     ->searchable()
                     ->preload()
                     ->required(),
