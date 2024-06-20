@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ContactResource\RelationManagers;
 
+use App\Models\Event;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -20,6 +21,7 @@ class SignupsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Select::make('event_id')
                     ->relationship('event', 'name->de')
+                    ->getOptionLabelFromRecordUsing(fn (Event $event) => $event->getTranslatable('name', app()->getLocale()))
                     ->searchable()
                     ->preload()
                     ->required(),
@@ -38,7 +40,18 @@ class SignupsRelationManager extends RelationManager
                     ->label('Status')
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make("my_events")
+                    ->label(__("filterlables.events.my_events"))
+                    ->modifyQueryUsing(function (Builder $query){
+                        $query->whereHas('event', function (Builder $query) {
+                            $query->whereHas("users", function (Builder $query) {
+                                $query->where("user_id", auth()->id());
+                            });
+                        });
+                        return $query;
+                    })
+                    ->toggle()
+                    ->default(true),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),

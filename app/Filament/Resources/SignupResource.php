@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SignupResource\Pages;
-use App\Filament\Resources\SignupResource\RelationManagers;
-use App\Models\Signup;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Event;
+use App\Models\Signup;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\SignupResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\SignupResource\RelationManagers;
 
 class SignupResource extends Resource
 {
@@ -39,6 +40,7 @@ class SignupResource extends Resource
                     ->nullable(),
                 Forms\Components\Select::make('event_id')
                     ->relationship('event', 'name->de')
+                    ->getOptionLabelFromRecordUsing(fn (Event $event) => $event->getTranslatable('name', app()->getLocale()))
                     ->searchable()
                     ->preload()
                     ->required(),

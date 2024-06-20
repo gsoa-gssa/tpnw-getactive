@@ -4,6 +4,7 @@ namespace App\Filament\Resources\EventResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Event;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -34,6 +35,7 @@ class SignupsRelationManager extends RelationManager
                     ->required(),
                 Forms\Components\Select::make('event_id')
                     ->relationship('event', 'name->de')
+                    ->getOptionLabelFromRecordUsing(fn (Event $event) => $event->getTranslatable('name', app()->getLocale()))
                     ->searchable()
                     ->preload()
             ]);
@@ -44,7 +46,8 @@ class SignupsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('id')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make("status")
                     ->icon(fn (string $state): string => match ($state) {
                         'signup' => 'heroicon-o-question-mark-circle',
@@ -60,17 +63,15 @@ class SignupsRelationManager extends RelationManager
                     })
                     ->label('Status'),
                 Tables\Columns\TextColumn::make('contact.email')
-                    ->label('Email'),
+                    ->label(__("signup.email")),
                 Tables\Columns\TextColumn::make('contact.firstname')
-                    ->label('First Name')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label(__("signup.firstname")),
                 Tables\Columns\TextColumn::make('contact.lastname')
-                    ->label('Last Name')
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('contact.zip')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label(__("signup.lastname")),
                 Tables\Columns\TextColumn::make('contact.phone')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label(__("signup.phone")),
+                Tables\Columns\TextColumn::make('contact.zip')
+                    ->label(__("signup.zip")),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
@@ -82,6 +83,16 @@ class SignupsRelationManager extends RelationManager
                     ])
                     ->default('signup')
                     ->label('Status'),
+                Tables\Filters\Filter::make('my_contacts')
+                    ->label(__("filterlables.contacts.my_contacts"))
+                    ->toggle()
+                    ->default(true)
+                    ->modifyQueryUsing(function (Builder $query) {
+                        $query->whereHas('contact', function ($query) {
+                            $query->where('user_responsible_id', auth()->id());
+                        });
+                        return $query;
+                    }),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
