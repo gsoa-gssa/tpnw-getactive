@@ -191,6 +191,7 @@ class EventResource extends Resource
                     ->label(__("filterlables.contacts.canton"))
                     ->multiple()
                     ->options([
+                        "national" => __("cantons.national"),
                         "AG" => __("cantons.AG"),
                         "AR" => __("cantons.AR"),
                         "AI" => __("cantons.AI"),
