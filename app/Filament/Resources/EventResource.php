@@ -97,7 +97,11 @@ class EventResource extends Resource
                     ])
                     ->searchable()
                     ->required(),
-                Forms\Components\TextInput::make('contact')
+                Forms\Components\TextInput::make('contactinfo.name')
+                    ->maxLength(255)
+                    ->helperText('Name of contact person')
+                    ->default(auth()->user()->name),
+                Forms\Components\TextInput::make('contactinfo.email')
                     ->email()
                     ->maxLength(255)
                     ->helperText('Email address for contact person')
