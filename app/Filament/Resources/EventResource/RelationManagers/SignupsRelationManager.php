@@ -63,6 +63,7 @@ class SignupsRelationManager extends RelationManager
                     })
                     ->label('Status'),
                 Tables\Columns\TextColumn::make('contact.email')
+                    ->url(fn ($record) => route('filament.admin.resources.contacts.view', $record->contact))
                     ->label(__("signup.email")),
                 Tables\Columns\TextColumn::make('contact.firstname')
                     ->label(__("signup.firstname")),

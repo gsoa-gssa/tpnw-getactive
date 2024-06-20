@@ -176,7 +176,7 @@ class EventResource extends Resource
                     ->label(__("filterlables.events.only_future"))
                     ->default(true)
                     ->toggle()
-                    ->query(fn (Builder $query): Builder => $query->where('date', '>=', now())),
+                    ->query(fn (Builder $query): Builder => $query->where('date', '>=', date('Y-m-d', strtotime('today')))),
                 Filters\Filter::make("must_reassign")
                     ->label(__("filterlables.events.must_reassign"))
                     ->default(false)

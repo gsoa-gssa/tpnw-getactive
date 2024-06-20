@@ -54,13 +54,64 @@ class SignupsRelationManager extends RelationManager
                     })
                     ->toggle()
                     ->default(true),
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        'signup' => __("signup.status.signup"),
+                        'confirmed' => __("signup.status.confirmed"),
+                        'cancelled' => __("signup.status.cancelled"),
+                        'no-show' => __("signup.status.no-show"),
+                    ])
+                    ->default('signup')
+                    ->label('Status'),
+                Tables\Filters\Filter::make("only_future")
+                    ->label(__("filterlables.events.only_future"))
+                    ->default(true)
+                    ->toggle()
+                    ->modifyQueryUsing(function (Builder $query) {
+                        $query->whereHas('event', function ($query) {
+                            $query->where('date', '>=', date('Y-m-d', strtotime('today')));
+                        });
+                        return $query;
+                    }),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make("confirm_signup")
+                        ->label(__("actionlabels.signup.confirm"))
+                        ->icon('heroicon-o-check-circle')
+                        ->color('success')
+                        ->visible(fn ($record) => $record->status != 'confirmed')
+                        ->action(fn ($record) => $record->update(['status' => 'confirmed'])),
+                Tables\Actions\Action::make("edit")
+                    ->icon('heroicon-o-pencil-square')
+                    ->label(__("actionlabels.signups.edit"))
+                    ->url(fn ($record) => route('filament.admin.resources.signups.edit', $record)),
+                Tables\Actions\EditAction::make("quick_edit")
+                    ->icon('heroicon-o-forward')
+                    ->label(__("actionlabels.signups.quick_edit")),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make("cancel_signup")
+                        ->label(__("actionlabels.signup.cancel"))
+                        ->icon('heroicon-o-x-circle')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->action(fn ($record) => $record->update(['status' => 'cancelled'])),
+                    Tables\Actions\Action::make("no_show_signup")
+                        ->label(__("actionlabels.signup.no_show"))
+                        ->icon('heroicon-o-face-frown')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->action(fn ($record) => $record->update(['status' => 'no-show'])),
+                    Tables\Actions\DeleteAction::make(),
+                ])->visible(fn ($record) => $record->status === 'signup'),
+                Tables\Actions\Action::make("reset_signup")
+                    ->label(__("actionlabels.signup.reset"))
+                    ->icon('heroicon-o-arrow-path')
+                    ->color('warning')
+                    ->action(fn ($record) => $record->update(['status' => 'signup']))
+                    ->visible(fn ($record) => $record->status !== 'signup'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

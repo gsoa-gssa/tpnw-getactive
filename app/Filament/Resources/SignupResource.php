@@ -30,6 +30,7 @@ class SignupResource extends Resource
                         'confirmed' => __("signup.status.confirmed"),
                         'cancelled' => __("signup.status.cancelled"),
                         'no-show' => __("signup.status.no-show"),
+                        'attended' => __("signup.status.attended"),
                     ])
                     ->inline()
                     ->default('signup')
