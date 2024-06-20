@@ -136,6 +136,7 @@ class ContactResource extends Resource
                 Filters\Filter::make("my_contacts")
                     ->label(__("filterlables.contacts.my_contacts"))
                     ->toggle()
+                    ->default(true)
                     ->query(fn (Builder $query) => $query->where('user_responsible_id', auth()->id())),
                 Filters\SelectFilter::make("canton")
                     ->label(__("filterlables.contacts.canton"))
