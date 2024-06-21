@@ -20,8 +20,16 @@ class SignupsRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('event_id')
-                    ->relationship('event', 'name->de')
-                    ->getOptionLabelFromRecordUsing(fn (Event $event) => $event->getTranslatable('name', app()->getLocale()))
+                    ->relationship(
+                        'event',
+                        'name->de',
+                        modifyQueryUsing: function (Builder $query) {
+                            $query->where('date', '>=', date('Y-m-d', strtotime(now())));
+                            $query->orderBy('date', 'asc');
+                            $query->where("reassign", false);
+                        }
+                    )
+                    ->getOptionLabelFromRecordUsing(fn (Event $event) => date("d.m.Y", strtotime($event->date)) . ": " . $event->getTranslatable('name', app()->getLocale()))
                     ->searchable()
                     ->preload()
             ]);
