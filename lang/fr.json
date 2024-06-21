@@ -37,6 +37,7 @@
     "signup.lastname": "Nom",
     "signup.phone": "Numéro de téléphone",
     "signup.zip": "Code postal",
+    "filterlables.contacts.has_phone": "Avec numéro de téléphone",
     "filterlables.contacts.my_contacts": "Mes contacts",
     "actionlabels.signup.confirm": "Confirmer l'inscription",
     "actionlabels.signups.edit": "Éditer l'inscription",

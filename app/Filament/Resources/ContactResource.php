@@ -147,6 +147,11 @@ class ContactResource extends Resource
                     ->toggle()
                     ->default(true)
                     ->query(fn (Builder $query) => $query->where('user_responsible_id', auth()->id())),
+                Filters\Filter::make("has_phone")
+                    ->label(__("filterlables.contacts.has_phone"))
+                    ->toggle()
+                    ->default(true)
+                    ->query(fn (Builder $query) => $query->whereNotNull('phone')),
                 Filters\SelectFilter::make("canton")
                     ->label(__("filterlables.contacts.canton"))
                     ->multiple()
