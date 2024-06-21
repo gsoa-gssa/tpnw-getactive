@@ -58,6 +58,7 @@ class AdminPanelProvider extends PanelProvider
             ->passwordReset()
             ->profile()
             ->databaseNotifications()
+            ->favicon(asset('images/favicon/favicon.png'))
             ->authMiddleware([
                 Authenticate::class,
             ]);
