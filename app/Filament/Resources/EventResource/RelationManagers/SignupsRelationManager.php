@@ -77,10 +77,10 @@ class SignupsRelationManager extends RelationManager
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
-                        'signup' => 'Signup',
-                        'confirmed' => 'Confirmed',
-                        'cancelled' => 'Cancelled',
-                        'no-show' => 'No Show',
+                        'signup' => __("signup.status.signup"),
+                        'confirmed' => __("signup.status.confirmed"),
+                        'cancelled' => __("signup.status.cancelled"),
+                        'no-show' => __("signup.status.no-show"),
                     ])
                     ->default('signup')
                     ->label('Status'),

@@ -49,7 +49,7 @@
     "actionlabels.signups.no_show": "Nicht erschienen",
     "actionlabels.signups.reset": "Anmeldungen zurücksetzen",
     "filterlables.events.my_events": "Meine Events",
-    "signup.status.signup": "Angemeldet",
+    "signup.status.signup": "Nicht bestätigt",
     "signup.status.confirmed": "Bestätigt",
     "signup.status.cancelled": "Abgesagt",
     "signup.status.no-show": "Nicht erschienen",
