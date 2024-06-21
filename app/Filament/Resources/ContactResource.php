@@ -155,6 +155,14 @@ class ContactResource extends Resource
                     ->label(__("filterlables.contacts.no_signups"))
                     ->toggle()
                     ->query(fn (Builder $query) => $query->doesntHave('signups')),
+                Filters\Filter::make("orpahsn")
+                    ->label(__("filterlables.contacts.orphans"))
+                    ->toggle()
+                    ->query(function (Builder $query) {
+                        $query->whereNull('user_responsible_id');
+                        $query->whereNull("zip");
+                        $query->whereNull("canton");
+                    }),
                 Filters\SelectFilter::make("canton")
                     ->label(__("filterlables.contacts.canton"))
                     ->multiple()

@@ -70,6 +70,7 @@
     "columnlabels.zip": "PLZ",
     "filterlables.contacts.has_phone": "Mit Telefonnummer",
     "filterlables.contacts.no_signups": "Keine Anmeldungen",
+    "filterlables.contacts.orphans": "Unzugeordnet",
     "buttonlabels.import.contacts": "Kontakte importieren",
     "buttonlabels.export.contacts": "Kontakte exportieren",
     "signup.status.attended": "Teilgenommen",

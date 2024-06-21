@@ -70,6 +70,7 @@
     "columnlabels.zip": "Code postal",
     "filterlables.contacts.has_phone": "Avec numéro de téléphone",
     "filterlables.contacts.no_signups": "Sans inscription",
+    "filterlables.contacts.orphans": "Orphelins",
     "buttonlabels.import.contacts": "Importer des contacts",
     "buttonlabels.export.contacts": "Exporter des contacts",
     "signup.status.attended": "Participé",
