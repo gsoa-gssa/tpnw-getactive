@@ -54,6 +54,7 @@
     "signup.status.cancelled": "Annullato",
     "signup.status.no-show": "Assente",
     "filterlables.events.only_future": "Solo eventi futuri",
+    "event.contactinfo.phone": "Numero di telefono",
     "filterlables.events.must_reassign": "Deve essere riassegnato",
     "filterlables.contacts.canton": "Filtra per cantone",
     "cantons.national": "Nazionale",

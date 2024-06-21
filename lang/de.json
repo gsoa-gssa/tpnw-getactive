@@ -54,6 +54,7 @@
     "signup.status.cancelled": "Abgesagt",
     "signup.status.no-show": "Nicht erschienen",
     "filterlables.events.only_future": "Nur zukünftige Events",
+    "event.contactinfo.phone": "Telefonnummer",
     "filterlables.events.must_reassign": "Anmeldungen müssen neu zugewiesen werden",
     "filterlables.contacts.canton": "Kantone filtern",
     "cantons.national": "Schweizweit",

@@ -106,6 +106,10 @@ class EventResource extends Resource
                     ->maxLength(255)
                     ->helperText('Email address for contact person')
                     ->default(auth()->user()->email),
+                Forms\Components\TextInput::make('contactinfo.phone')
+                    ->maxLength(255)
+                    ->helperText('Phone number for contact person')
+                    ->label(__('event.contactinfo.phone')),
                 Forms\Components\Select::make('type')
                     ->options([
                         "signaturecollection" => "Signature Collection",
