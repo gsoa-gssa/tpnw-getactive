@@ -150,8 +150,11 @@ class ContactResource extends Resource
                 Filters\Filter::make("has_phone")
                     ->label(__("filterlables.contacts.has_phone"))
                     ->toggle()
-                    ->default(true)
                     ->query(fn (Builder $query) => $query->whereNotNull('phone')),
+                // Filters\Filter::make("no_signups")
+                //     ->label(__("filterlables.contacts.no_signups"))
+                //     ->toggle()
+                //     ->query(fn (Builder $query) => $query->doesntHave('signups')),
                 Filters\SelectFilter::make("canton")
                     ->label(__("filterlables.contacts.canton"))
                     ->multiple()
