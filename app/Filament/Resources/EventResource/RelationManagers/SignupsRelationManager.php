@@ -19,20 +19,6 @@ class SignupsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('contact_id')
-                    ->relationship('contact', 'email')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
-                Forms\Components\Select::make('status')
-                    ->options([
-                        'signup' => 'Signup',
-                        'confirmed' => 'Confirmed',
-                        'cancelled' => 'Cancelled',
-                        'no-show' => 'No Show',
-                    ])
-                    ->default('signup')
-                    ->required(),
                 Forms\Components\Select::make('event_id')
                     ->relationship('event', 'name->de')
                     ->getOptionLabelFromRecordUsing(fn (Event $event) => $event->getTranslatable('name', app()->getLocale()))
@@ -106,15 +92,12 @@ class SignupsRelationManager extends RelationManager
                         ->label(__("actionlabels.signup.confirm"))
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->visible(fn ($record) => $record->status != 'confirmed')
+                        ->visible(fn ($record) => $record->status != 'confirmed' && !$record->event->reassign)
                         ->action(fn ($record) => $record->update(['status' => 'confirmed'])),
                 Tables\Actions\Action::make("edit")
                     ->icon('heroicon-o-pencil-square')
                     ->label(__("actionlabels.signups.edit"))
                     ->url(fn ($record) => route('filament.admin.resources.signups.edit', $record)),
-                Tables\Actions\EditAction::make("quick_edit")
-                    ->icon('heroicon-o-forward')
-                    ->label(__("actionlabels.signups.quick_edit")),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make("cancel_signup")
                         ->label(__("actionlabels.signup.cancel"))
@@ -129,13 +112,17 @@ class SignupsRelationManager extends RelationManager
                         ->requiresConfirmation()
                         ->action(fn ($record) => $record->update(['status' => 'no-show'])),
                     Tables\Actions\DeleteAction::make(),
-                ])->visible(fn ($record) => $record->status === 'signup'),
+                ])->visible(fn ($record) => $record->status === 'signup' && !$record->event->reassign),
                 Tables\Actions\Action::make("reset_signup")
                     ->label(__("actionlabels.signup.reset"))
                     ->icon('heroicon-o-arrow-path')
                     ->color('warning')
                     ->action(fn ($record) => $record->update(['status' => 'signup']))
-                    ->visible(fn ($record) => $record->status !== 'signup'),
+                    ->visible(fn ($record) => $record->status !== 'signup' && !$record->event->reassign),
+                Tables\Actions\EditAction::make()
+                    ->label(__("actionlabels.signups.reassign"))
+                    ->icon('heroicon-o-arrows-right-left')
+                    ->visible(fn ($record) => $record->event->reassign)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
