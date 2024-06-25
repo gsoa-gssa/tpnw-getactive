@@ -42,6 +42,7 @@
     "signup.status.cancelled": "Abgesagt",
     "signup.status.no-show": "Nicht erschienen",
     "filterlables.contacts.my_contacts": "Meine Kontakte",
+    "filterlables.contacts.users": "Benutzer:innen",
     "actionlabels.signup.confirm": "Anmeldung bestätigen",
     "actionlabels.signups.edit": "Anmeldung bearbeiten",
     "actionlabels.signup.cancel": "Anmeldung absagen",

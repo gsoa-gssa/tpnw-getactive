@@ -155,7 +155,7 @@ class ContactResource extends Resource
                     ->label(__("filterlables.contacts.no_signups"))
                     ->toggle()
                     ->query(fn (Builder $query) => $query->doesntHave('signups')),
-                Filters\Filter::make("orpahsn")
+                Filters\Filter::make("orpahns")
                     ->label(__("filterlables.contacts.orphans"))
                     ->toggle()
                     ->query(function (Builder $query) {
@@ -193,7 +193,19 @@ class ContactResource extends Resource
                         "VS" => __("cantons.VS"),
                         "ZG" => __("cantons.ZG"),
                         "ZH" => __("cantons.ZH")
-                    ])
+                    ]),
+                    Filters\SelectFilter::make("users")
+                    ->label(__("filterlables.contacts.users"))
+                    ->multiple()
+                    ->options(
+                        \App\Models\User::all()->pluck("name", "id")->toArray()
+                    )
+                    ->modifyQueryUsing(function (Builder $query, $state){
+                        if (!$state['values']) {
+                            return $query;
+                        }
+                        return $query->whereIn('user_responsible_id', $state['values']);
+                    }),
             ])
             ->headerActions([
                 Tables\Actions\ImportAction::make()

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\EventResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EventResource\RelationManagers;
-use App\Models\User;
 
 class EventResource extends Resource
 {
@@ -229,9 +228,9 @@ class EventResource extends Resource
                 Filters\SelectFilter::make("users")
                     ->label(__("filterlables.contacts.users"))
                     ->multiple()
-                    ->options([
-                        User::all()->pluck("name", "id")->toArray()
-                    ])
+                    ->options(
+                        \App\Models\User::all()->pluck("name", "id")->toArray()
+                    )
                     ->modifyQueryUsing(function (Builder $query, $state){
                         if (!$state['values']) {
                             return $query;

@@ -42,6 +42,7 @@
     "signup.status.cancelled": "Annulé",
     "signup.status.no-show": "Non présent",
     "filterlables.contacts.my_contacts": "Mes contacts",
+    "filterlables.contacts.users": "Users",
     "actionlabels.signup.confirm": "Confirmer l'inscription",
     "actionlabels.signups.edit": "Éditer l'inscription",
     "actionlabels.signup.cancel": "Annuler l'inscription",
