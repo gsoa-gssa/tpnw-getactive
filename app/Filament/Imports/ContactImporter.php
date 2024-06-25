@@ -2,9 +2,10 @@
 
 namespace App\Filament\Imports;
 
+use App\Models\User;
 use App\Models\Contact;
-use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
+use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Models\Import;
 
 class ContactImporter extends Importer
@@ -36,6 +37,14 @@ class ContactImporter extends Importer
             ImportColumn::make("zip")
                 ->requiredMapping()
                 ->label("Zip"),
+            ImportColumn::make("user")
+                ->relationship(resolveUsing: function (string $state): ?User {
+                return User::query()
+                    ->where('email', $state)
+                    ->orWhere('id', $state)
+                    ->orWhere("name", $state)
+                    ->first();
+            })
         ];
     }
 
