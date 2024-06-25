@@ -78,6 +78,7 @@ class ReassignCantonsUsers extends Command
 
         foreach ($contacts as $contact) {
             $this->info("Finding canton for contact " . $contact->email);
+            Log::channel("reassignment")->info("Finding canton for contact " . $contact->email);
             $oldCanton = $contact->canton;
             $response = \Illuminate\Support\Facades\Http::get("https://openplzapi.org/ch/Localities", [
                 "postalCode" => $contact->zip
