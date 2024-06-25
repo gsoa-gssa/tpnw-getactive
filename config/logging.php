@@ -52,6 +52,14 @@ return [
 
     'channels' => [
 
+        'reassignment' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/reassignment.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 14,
+            'replace_placeholders' => true,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => explode(',', env('LOG_STACK', 'single')),

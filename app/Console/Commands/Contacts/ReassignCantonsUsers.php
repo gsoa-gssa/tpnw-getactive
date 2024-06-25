@@ -5,6 +5,8 @@ namespace App\Console\Commands\Contacts;
 use App\Models\Contact;
 use App\Settings\ContactAssign;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+
 use function Laravel\Prompts\select;
 use Illuminate\Support\Facades\Mail;
 use function Laravel\Prompts\confirm;
@@ -51,10 +53,13 @@ class ReassignCantonsUsers extends Command
          *
          */
 
+        Log::channel("reassignment")->info("Reassignment started at " . now() . PHP_EOL . PHP_EOL);
         if ($this->option('dry-run') === 'true') {
             $this->info('Dry run enabled. No changes will be saved.');
+            Log::channel("reassignment")->info('Dry run enabled. No changes will be saved.');
         } else if ($this->option('dry-run') === 'false') {
             $this->info('Dry run disabled. Changes will be saved.');
+            Log::channel("reassignment")->info('Dry run disabled. Changes will be saved.');
             $confirmed = confirm('Are you sure you want to continue?');
             if (!$confirmed) {
                 $this->info('Command cancelled.');
@@ -62,6 +67,7 @@ class ReassignCantonsUsers extends Command
             }
         }
         $this->info('Reassigning cantons and users to contacts...');
+        Log::channel("reassignment")->info('Reassigning cantons and users to contacts...');
         $user = select(
             'Select a user for whom you want to reassign the contacts:',
             \App\Models\User::pluck('name', 'id')
@@ -81,20 +87,27 @@ class ReassignCantonsUsers extends Command
 
             if (!$newCanton) {
                 $this->info("No canton found for contact {$contact->email} with ZIP code {$contact->zip}");
+                Log::channel("reassignment")->info("No canton found for contact {$contact->email} with ZIP code {$contact->zip}");
                 $this->info("DONE WITH CONTACT {$contact->id}");
+                Log::channel("reassignment")->info("DONE WITH CONTACT {$contact->id}");
                 $this->info("______________ " . PHP_EOL . PHP_EOL);
+                Log::channel("reassignment")->info("______________ " . PHP_EOL . PHP_EOL);
                 continue;
             }
 
             if ($newCanton == $oldCanton) {
                 $this->info("New canton identical with old canton for contact {$contact->email}");
+                Log::channel("reassignment")->info("New canton identical with old canton for contact {$contact->email}");
                 $this->info("DONE WITH CONTACT {$contact->id}");
+                Log::channel("reassignment")->info("DONE WITH CONTACT {$contact->id}");
                 $this->info("______________ " . PHP_EOL . PHP_EOL);
+                Log::channel("reassignment")->info("______________ " . PHP_EOL . PHP_EOL);
                 continue;
             }
 
             $contact->canton = $newCanton;
             $this->info("Assigned {$newCanton} to contact {$contact->email} based on ZIP Code {$contact->zip}.");
+            Log::channel("reassignment")->info("Assigned {$newCanton} to contact {$contact->email} based on ZIP Code {$contact->zip}.");
             if ($this->option('dry-run') === 'false') {
                 $contact->save();
             }
@@ -104,25 +117,32 @@ class ReassignCantonsUsers extends Command
                 return $user["canton"] === $oldCanton;
             }))[0]["user_id"] ?? null;
 
+            if ($oldUser != $contact->user_responsible_id) {
+                $this->info("Old user was probably not assigned through autoassign for contact {$contact->email}. No changes made in user");
+                Log::channel("reassignment")->info("Old user was probably not assigned through autoassign for contact {$contact->email}. No changes made in user");
+                $this->info("DONE WITH CONTACT {$contact->id}");
+                Log::channel("reassignment")->info("DONE WITH CONTACT {$contact->id}");
+                $this->info("______________ " . PHP_EOL . PHP_EOL);
+                Log::channel("reassignment")->info("______________ " . PHP_EOL . PHP_EOL);
+                continue;
+            }
+
             $newUser = array_values(array_filter($contactAssign->canton_rules, function ($user) use ($newCanton) {
                 return $user["canton"] === $newCanton;
             }))[0]["user_id"] ?? null;
 
-            if ($newUser == $oldUser) {
-                $this->info("New user identical with old user for contact {$contact->email}");
-                $this->info("DONE WITH CONTACT {$contact->id}");
-                $this->info("______________ " . PHP_EOL . PHP_EOL);
-                continue;
-            }
-
             $contact->user_responsible_id = $newUser;
             $this->info("Assigned contact {$contact->email} to user {$newUser}.");
+            Log::channel("reassignment")->info("Assigned contact {$contact->email} to user {$newUser}.");
+
             if ($this->option('dry-run') === 'false') {
                 $contact->save();
             }
             $alteredContacts[] = $contact;
             $this->info("DONE WITH CONTACT {$contact->id}");
+            Log::channel("reassignment")->info("DONE WITH CONTACT {$contact->id}");
             $this->info("______________ " . PHP_EOL . PHP_EOL);
+            Log::channel("reassignment")->info("______________ " . PHP_EOL . PHP_EOL);
         }
 
         if (count($alteredContacts) > 0) {
@@ -134,9 +154,9 @@ class ReassignCantonsUsers extends Command
                     \App\Models\User::pluck('name', 'email')
                 );
                 $orphanCSV = [];
-                $orphanCSV[] = ['id', 'firstname', 'lastname', 'email', 'canton', 'zip'];
+                $orphanCSV[] = ['id', 'firstname', 'lastname', 'email', 'canton', 'zip', "user"];
                 foreach ($alteredContacts as $alteredContact) {
-                    $orphanCSV[] = [$alteredContact->id, $alteredContact->firstname, $alteredContact->lastname, $alteredContact->email, $alteredContact->canton, $alteredContact->zip];
+                    $orphanCSV[] = [$alteredContact->id, $alteredContact->firstname, $alteredContact->lastname, $alteredContact->email, $alteredContact->canton, $alteredContact->zip, $alteredContact->user->name];
                 }
                 $csv = \League\Csv\Writer::createFromString('');
                 $csv->insertAll($orphanCSV);
