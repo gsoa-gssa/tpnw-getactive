@@ -159,7 +159,7 @@ class EventResource extends Resource
                 Tables\Columns\IconColumn::make('type')
                     ->icon(fn (string $state): string => match ($state) {
                         'signaturecollection' => 'heroicon-o-pencil',
-                        'certification' => 'heroicon-o-clipboard-check',
+                        'certification' => 'heroicon-o-document-check',
                     })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
