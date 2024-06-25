@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\EventResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EventResource\RelationManagers;
+use App\Models\User;
 
 class EventResource extends Resource
 {
@@ -163,8 +164,6 @@ class EventResource extends Resource
                     })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('users.name')
-                    ->searchable()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -227,6 +226,18 @@ class EventResource extends Resource
                         "ZG" => __("cantons.ZG"),
                         "ZH" => __("cantons.ZH")
                     ]),
+                Filters\SelectFilter::make("users")
+                    ->label(__("filterlables.contacts.users"))
+                    ->multiple()
+                    ->options([
+                        User::all()->pluck("name", "id")->toArray()
+                    ])
+                    ->modifyQueryUsing(function (Builder $query, $state){
+                        if (!$state['values']) {
+                            return $query;
+                        }
+                        return $query->whereHas('users', fn($query) => $query->whereIn('user_id', $state['values']));
+                    }),
                 Filters\TrashedFilter::make(),
             ])
             ->actions([
