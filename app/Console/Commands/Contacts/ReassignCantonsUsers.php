@@ -81,11 +81,15 @@ class ReassignCantonsUsers extends Command
 
             if (!$newCanton) {
                 $this->info("No canton found for contact {$contact->email} with ZIP code {$contact->zip}");
+                $this->info("DONE WITH CONTACT {$contact->id}");
+                $this->info("______________ " . PHP_EOL . PHP_EOL);
                 continue;
             }
 
             if ($newCanton == $oldCanton) {
                 $this->info("New canton identical with old canton for contact {$contact->email}");
+                $this->info("DONE WITH CONTACT {$contact->id}");
+                $this->info("______________ " . PHP_EOL . PHP_EOL);
                 continue;
             }
 
@@ -106,6 +110,8 @@ class ReassignCantonsUsers extends Command
 
             if ($newUser == $oldUser) {
                 $this->info("New user identical with old user for contact {$contact->email}");
+                $this->info("DONE WITH CONTACT {$contact->id}");
+                $this->info("______________ " . PHP_EOL . PHP_EOL);
                 continue;
             }
 
