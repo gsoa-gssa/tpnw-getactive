@@ -162,7 +162,7 @@ class EventResource extends Resource
                         'certification' => 'heroicon-o-document-check',
                     })
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('users.name')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
