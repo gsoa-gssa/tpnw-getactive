@@ -101,6 +101,14 @@ class ContactResource extends Resource
                     ->preload()
                     ->default(auth()->id())
                     ->searchable(),
+                Forms\Components\Select::make('tags')
+                    ->relationship(name: 'tags', titleAttribute: 'label')
+                    ->multiple()
+                    ->preload()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('label')
+                            ->required(),
+                    ]),
             ]);
     }
 
@@ -263,6 +271,7 @@ class ContactResource extends Resource
                                 Infolists\Components\TextEntry::make('language'),
                                 Infolists\Components\TextEntry::make('activities'),
                                 Infolists\Components\TextEntry::make('user.name'),
+                                Infolists\Components\TextEntry::make('tags.label'),
                             ]),
                     ]),
                 Infolists\Components\Section::make('Comments')

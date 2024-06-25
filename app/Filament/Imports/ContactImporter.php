@@ -3,6 +3,7 @@
 namespace App\Filament\Imports;
 
 use App\Models\User;
+use App\Models\Tag;
 use App\Models\Contact;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\ImportColumn;
@@ -16,26 +17,20 @@ class ContactImporter extends Importer
     {
         return [
             ImportColumn::make('firstname')
-                ->label('First Name')
-                ->requiredMapping(),
+                ->label('First Name'),
             ImportColumn::make('lastname')
-                ->label('Last Name')
-                ->requiredMapping(),
+                ->label('Last Name'),
             ImportColumn::make('email')
                 ->label('Email')
                 ->requiredMapping(),
             ImportColumn::make('phone')
-                ->label('Phone')
-                ->requiredMapping(),
+                ->label('Phone'),
             ImportColumn::make('language')
                 ->label('Language')
-                ->requiredMapping()
                 ->rules(['in:de,fr,it']),
             ImportColumn::make("canton")
-                ->label("Canton")
-                ->requiredMapping(),
+                ->label("Canton"),
             ImportColumn::make("zip")
-                ->requiredMapping()
                 ->label("Zip"),
             ImportColumn::make("user")
                 ->relationship(resolveUsing: function (string $state): ?User {

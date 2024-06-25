@@ -62,4 +62,12 @@ class Contact extends Model
             $contact->save();
         });
     }
+
+    /**
+     * Get the tags for this contact.
+     */
+    public function tags() : \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\Tag::class);
+    }
 }
