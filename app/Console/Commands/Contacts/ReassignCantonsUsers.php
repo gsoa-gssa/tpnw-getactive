@@ -62,8 +62,11 @@ class ReassignCantonsUsers extends Command
             }
         }
         $this->info('Reassigning cantons and users to contacts...');
-
-        $contacts = Contact::where("zip", "!=", null)->where("user_responsible_id", 1)->get();
+        $user = select(
+            'Select a user for whom you want to reassign the contacts:',
+            \App\Models\User::pluck('name', 'id')
+        );
+        $contacts = Contact::where("zip", "!=", null)->where("user_responsible_id", $user)->get();
 
         $alteredContacts = [];
 
