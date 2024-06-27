@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\EventResource\RelationManagers;
 
+use App\Models\Contact;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Event;
@@ -19,6 +20,12 @@ class SignupsRelationManager extends RelationManager
     {
         return $form
             ->schema([
+                Forms\Components\Select::make("contact_id")
+                    ->relationship(
+                        "contact",
+                        "id"
+                    )
+                    ->getOptionLabelFromRecordUsing(fn(Contact $contact) => $contact->firstname . " " . $contact->lastname),
                 Forms\Components\Select::make('event_id')
                     ->relationship(
                         'event',
