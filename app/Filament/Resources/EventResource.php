@@ -244,7 +244,7 @@ class EventResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('activities')->url(fn($record) => EventResource::getUrl('activities', ['record' => $record])),
                 Tables\Actions\RestoreAction::make()
-                    ->visible(fn ($record) => $record->deleted)
+                    ->visible(fn($record) => $record->trashed())
             ])
             ->headerActions([
             ])
