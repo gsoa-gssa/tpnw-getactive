@@ -195,6 +195,7 @@ class EventResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort("date", "asc")
             ->filters([
                 Filters\Filter::make("only_future")
                     ->label(__("filterlables.events.only_future"))
