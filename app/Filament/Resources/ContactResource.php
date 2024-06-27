@@ -163,6 +163,10 @@ class ContactResource extends Resource
                     ->label(__("filterlables.contacts.no_signups"))
                     ->toggle()
                     ->query(fn (Builder $query) => $query->doesntHave('signups')),
+                Filters\Filter::make("has_signups")
+                    ->label(__("filterlables.contacts.has_signups"))
+                    ->toggle()
+                    ->query(fn (Builder $query) => $query->has('signups')),
                 Filters\Filter::make("orpahns")
                     ->label(__("filterlables.contacts.orphans"))
                     ->toggle()

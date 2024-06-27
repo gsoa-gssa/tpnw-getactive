@@ -71,6 +71,7 @@
     "columnlabels.zip": "CAP",
     "filterlables.contacts.has_phone": "Con numero di telefono",
     "filterlables.contacts.no_signups": "Senza iscrizioni",
+    "filterlables.contacts.has_signups": "Hat Anmeldungen",
     "filterlables.contacts.orphans": "Orfani",
     "buttonlabels.import.contacts": "Importa contatti",
     "buttonlabels.export.contacts": "Esporta contatti",
