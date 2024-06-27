@@ -98,7 +98,7 @@ class EventResource extends Resource
                     ])
                     ->searchable()
                     ->required(),
-                Forms\Components\Select::make("contact")
+                Forms\Components\Select::make("contact_id")
                     ->relationship("contact", "id")
                     ->searchable()
                     ->preload()
