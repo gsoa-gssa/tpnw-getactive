@@ -214,6 +214,7 @@ class ContactResource extends Resource
                         }
                         return $query->whereIn('user_responsible_id', $state['values']);
                     }),
+                    Filters\TrashedFilter::make()
             ])
             ->headerActions([
                 Tables\Actions\ImportAction::make()
