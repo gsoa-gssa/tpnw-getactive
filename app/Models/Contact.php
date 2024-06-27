@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -59,6 +60,21 @@ class Contact extends Model
         static::deleting(function ($contact) {
             $contact->signups()->delete();
             $contact->email = $contact->email . '-deleted-' . now();
+            $contact->save();
+        });
+
+        static::restoring(function($contact) {
+            $emailParts = explode("-deleted-", $contact->email);
+            $email = $emailParts[0];
+            $existing = Contact::where("email", $email)->count();
+            if ($existing != 0) {
+                Notification::make()
+                    ->title(__("alerts.restore.emailinuse"))
+                    ->danger()
+                    ->send();
+                return false;
+            }
+            $contact->email = $email;
             $contact->save();
         });
     }
