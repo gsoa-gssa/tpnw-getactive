@@ -114,7 +114,20 @@ class EventResource extends Resource
                         Forms\Components\TextInput::make('zip')
                             ->required(),
                     ])
-                    ->getOptionLabelFromRecordUsing(fn (Contact $contact) => $contact->firstname . " " . $contact->lastname . " (" . $contact->email . ")"),
+                    ->editOptionForm([
+                        Forms\Components\TextInput::make('firstname')
+                            ->required(),
+                        Forms\Components\TextInput::make('lastname')
+                            ->required(),
+                        Forms\Components\TextInput::make('email')
+                            ->required(),
+                        Forms\Components\TextInput::make('phone')
+                            ->required(),
+                        Forms\Components\TextInput::make('zip')
+                            ->required(),
+                    ])
+                    ->getOptionLabelFromRecordUsing(fn (Contact $contact) => $contact->firstname . " " . $contact->lastname . " (" . $contact->email . ")")
+                    ->default(Contact::where("email", auth()->user()->email)->first()->id ?? null),
                 Forms\Components\TextInput::make('contactinfo.name')
                     ->maxLength(255)
                     ->helperText('Name of contact person')
