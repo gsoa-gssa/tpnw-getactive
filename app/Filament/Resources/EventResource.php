@@ -270,4 +270,12 @@ class EventResource extends Resource
             'activities' => Pages\ActivityLogPage::route('/{record}/activities'),
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
 }
