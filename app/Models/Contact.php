@@ -86,4 +86,12 @@ class Contact extends Model
     {
         return $this->belongsToMany(\App\Models\Tag::class);
     }
+
+    /**
+     * Get the events this contact is responsible for.
+     */
+    public function events() : \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Event::class);
+    }
 }

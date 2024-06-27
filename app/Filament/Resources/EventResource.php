@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\EventResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EventResource\RelationManagers;
+use App\Models\Contact;
 
 class EventResource extends Resource
 {
@@ -97,6 +98,23 @@ class EventResource extends Resource
                     ])
                     ->searchable()
                     ->required(),
+                Forms\Components\Select::make("contact")
+                    ->relationship("contact", "id")
+                    ->searchable()
+                    ->preload()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('firstname')
+                            ->required(),
+                        Forms\Components\TextInput::make('lastname')
+                            ->required(),
+                        Forms\Components\TextInput::make('email')
+                            ->required(),
+                        Forms\Components\TextInput::make('phone')
+                            ->required(),
+                        Forms\Components\TextInput::make('zip')
+                            ->required(),
+                    ])
+                    ->getOptionLabelFromRecordUsing(fn (Contact $contact) => $contact->firstname . " " . $contact->lastname),
                 Forms\Components\TextInput::make('contactinfo.name')
                     ->maxLength(255)
                     ->helperText('Name of contact person')

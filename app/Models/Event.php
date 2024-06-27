@@ -28,7 +28,7 @@ class Event extends Model
     ];
 
     /**
-     * Get the responsible user for the event.
+     * Get the responsible users for the event.
      */
     public function users() : \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
@@ -51,6 +51,15 @@ class Event extends Model
     {
         return $this->hasMany(\App\Models\Signup::class);
     }
+
+    /**
+     * Get the contact that is responsible for this event.
+     */
+    public function contact() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Contact::class);
+    }
+
 
     /**
      * Get a translatable String for the event or fallback to de, fr and it in that order.
