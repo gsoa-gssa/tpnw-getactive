@@ -128,19 +128,6 @@ class EventResource extends Resource
                     ])
                     ->getOptionLabelFromRecordUsing(fn (Contact $contact) => $contact->firstname . " " . $contact->lastname . " (" . $contact->email . ")")
                     ->default(Contact::where("email", auth()->user()->email)->first()->id ?? null),
-                Forms\Components\TextInput::make('contactinfo.name')
-                    ->maxLength(255)
-                    ->helperText('Name of contact person')
-                    ->default(auth()->user()->name),
-                Forms\Components\TextInput::make('contactinfo.email')
-                    ->email()
-                    ->maxLength(255)
-                    ->helperText('Email address for contact person')
-                    ->default(auth()->user()->email),
-                Forms\Components\TextInput::make('contactinfo.phone')
-                    ->maxLength(255)
-                    ->helperText('Phone number for contact person')
-                    ->label(__('event.contactinfo.phone')),
                 Forms\Components\Select::make('type')
                     ->options([
                         "signaturecollection" => "Signature Collection",
