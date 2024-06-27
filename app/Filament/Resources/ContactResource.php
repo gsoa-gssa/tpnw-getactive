@@ -228,6 +228,8 @@ class ContactResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('activities')->url(fn($record) => ContactResource::getUrl('activities', ['record' => $record])),
+                Tables\Actions\RestoreAction::make()
+                    ->visible(fn ($record) => $record->deleted)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
