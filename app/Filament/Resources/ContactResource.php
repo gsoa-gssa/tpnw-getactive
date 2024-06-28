@@ -119,10 +119,12 @@ class ContactResource extends Resource
                 Tables\Columns\TextColumn::make('firstname')
                     ->sortable()
                     ->label(__('columnlabels.firstname'))
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('lastname')
                     ->sortable()
                     ->label(__('columnlabels.lastname'))
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->sortable()
@@ -131,14 +133,22 @@ class ContactResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->sortable()
                     ->label(__('columnlabels.phone'))
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('zip')
                     ->sortable()
                     ->label(__('columnlabels.zip'))
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('canton')
+                    ->sortable()
+                    ->label(__('columnlabels.canton'))
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('number_of_signups')
                     ->sortable(query: fn (Builder $query, $direction) => $query->withCount('signups')->orderBy('signups_count', $direction))
                     ->label(__('tablecolumns.contacts.number_of_signups'))
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->getStateUsing(fn($record) => $record->signups->count()),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -150,6 +160,10 @@ class ContactResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label(__('columnlabels.user'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
