@@ -183,7 +183,7 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('number_of_signups')
                     ->label(__("tablecolumns.events.number_of_signups"))
                     ->getStateUsing(fn (Event $event) => $event->signups->count())
-                    ->sortable(),
+                    ->sortable(query: fn (Builder $query, $direction) => $query->withCount('signups')->orderBy('signups_count', $direction)),
                 Tables\Columns\TextColumn::make('users.name')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
