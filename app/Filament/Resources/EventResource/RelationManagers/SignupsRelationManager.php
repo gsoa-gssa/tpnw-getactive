@@ -83,12 +83,11 @@ class SignupsRelationManager extends RelationManager
                         'cancelled' => __("signup.status.cancelled"),
                         'no-show' => __("signup.status.no-show"),
                     ])
-                    ->default('signup')
                     ->label('Status'),
                 Tables\Filters\Filter::make('my_contacts')
                     ->label(__("filterlables.contacts.my_contacts"))
                     ->toggle()
-                    ->default(true)
+                    ->default(false)
                     ->modifyQueryUsing(function (Builder $query) {
                         $query->whereHas('contact', function ($query) {
                             $query->where('user_responsible_id', auth()->id());
