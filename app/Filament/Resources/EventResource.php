@@ -180,6 +180,10 @@ class EventResource extends Resource
                         'certification' => 'heroicon-o-document-check',
                     })
                     ->sortable(),
+                Tables\Columns\TextColumn::make('number_of_signups')
+                    ->label(__("tablecolumns.events.number_of_signups"))
+                    ->getStateUsing(fn (Event $event) => $event->signups->count())
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('users.name')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')

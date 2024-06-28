@@ -136,6 +136,10 @@ class ContactResource extends Resource
                     ->sortable()
                     ->label(__('columnlabels.zip'))
                     ->searchable(),
+                Tables\Columns\TextColumn::make('canton')
+                    ->sortable()
+                    ->label(__('tablecolumns.contacts.number_of_signups'))
+                    ->getStateUsing(fn($record) => $record->signups->count()),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
