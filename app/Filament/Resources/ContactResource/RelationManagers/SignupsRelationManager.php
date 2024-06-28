@@ -59,7 +59,7 @@ class SignupsRelationManager extends RelationManager
                         return $query;
                     })
                     ->toggle()
-                    ->default(true),
+                    ->default(false),
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
                         'signup' => __("signup.status.signup"),
@@ -67,7 +67,6 @@ class SignupsRelationManager extends RelationManager
                         'cancelled' => __("signup.status.cancelled"),
                         'no-show' => __("signup.status.no-show"),
                     ])
-                    ->default('signup')
                     ->label('Status'),
                 Tables\Filters\Filter::make("only_future")
                     ->label(__("filterlables.events.only_future"))
