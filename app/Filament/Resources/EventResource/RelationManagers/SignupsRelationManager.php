@@ -97,14 +97,15 @@ class SignupsRelationManager extends RelationManager
                 Tables\Filters\SelectFilter::make("canton")
                     ->label(__("filterlables.contacts.canton"))
                     ->multiple()
-                    ->modifyQueryUsing(function (Builder $query, $value) {
-                        $query->whereHas('contact', function ($query) use ($value) {
-                            $query->whereIn('canton', $value);
+                    ->query(function ($query, $state) {
+                        if (!$state['values']) {
+                            return $query;
+                        }
+                        $query->whereHas('contact', function ($query) use ($state) {
+                            $query->whereIn('canton', $state["values"]);
                         });
-                        return $query;
                     })
                     ->options([
-                        "national" => __("cantons.national"),
                         "AG" => __("cantons.AG"),
                         "AR" => __("cantons.AR"),
                         "AI" => __("cantons.AI"),
