@@ -217,7 +217,7 @@ class EventResource extends Resource
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->whereHas('users', fn (Builder $query) => $query->where('user_id', auth()->id()))),
                 Filters\SelectFilter::make("canton")
-                    ->label(__("filterlables.contacts.canton"))
+                    ->label(__("filterlables.events.canton"))
                     ->multiple()
                     ->options([
                         "national" => __("cantons.national"),
