@@ -6,13 +6,16 @@ use Filament\Forms;
 use Filament\Tables;
 use App\Models\Event;
 use App\Models\Signup;
+use Filament\Infolists;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\SignupResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SignupResource\RelationManagers;
+use Parallax\FilamentComments\Infolists\Components\CommentsEntry;
 
 class SignupResource extends Resource
 {
@@ -40,9 +43,6 @@ class SignupResource extends Resource
                     ->columnSpanFull()
                     ->label(__('signup.additional_information'))
                     ->helperText(__('signup.additional_information_helper'))
-                    ->nullable(),
-                Forms\Components\RichEditor::make('comment')
-                    ->columnSpanFull()
                     ->nullable(),
                 Forms\Components\Select::make('event_id')
                     ->relationship('event', 'name->de')
@@ -100,6 +100,47 @@ class SignupResource extends Resource
         return [
             RelationManagers\EmailNotificationRelationManager::class,
         ];
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('Personal Information')
+                    ->schema([
+                        Infolists\Components\Fieldset::make('signup')
+                            ->label(__("signup.infolist.label"))
+                            ->schema([
+                                Infolists\Components\IconEntry::make("status")
+                                    ->icon(fn (Signup $signup) => match ($signup->status) {
+                                        'signup' => 'heroicon-o-question-mark-circle',
+                                        'confirmed' => 'heroicon-o-check-circle',
+                                        'cancelled' => 'heroicon-o-x-circle',
+                                        'no-show' => 'heroicon-o-face-frown',
+                                        'attended' => 'heroicon-o-shield-check',
+                                    })
+                                    ->color(fn (Signup $signup) => match ($signup->status) {
+                                        'signup' => 'warning',
+                                        'confirmed' => 'success',
+                                        'cancelled' => 'danger',
+                                        'no-show' => 'danger',
+                                        'attended' => 'success',
+                                    })
+                                    ->label(__("signup.infolist.status")),
+                                Infolists\Components\TextEntry::make('contact.email')
+                                    ->url(fn (Signup $signup) => route('filament.admin.resources.contacts.view', $signup->contact))
+                                    ->label(__("signup.infolist.contact")),
+                                Infolists\Components\TextEntry::make('event.name')
+                                    ->url(fn (Signup $signup) => route('filament.admin.resources.events.view', $signup->event))
+                                    ->label(__("signup.infolist.event")),
+                            ]),
+                    ]),
+                Infolists\Components\Section::make('Comments')
+                    ->schema([
+                            CommentsEntry::make('filament_comments')
+                                ->columnSpanFull(),
+                    ]),
+            ]);
     }
 
     public static function getPages(): array
