@@ -14,7 +14,6 @@ class ViewSignup extends viewRecord
     protected function getHeaderActions(): array
     {
         return [
-            CommentsAction::make(),
             Actions\Action::make("edit")
                 ->label("Edit Signup")
                 ->icon("heroicon-o-pencil")
