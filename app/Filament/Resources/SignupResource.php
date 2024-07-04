@@ -82,7 +82,64 @@ class SignupResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        'signup' => __("signup.status.signup"),
+                        'confirmed' => __("signup.status.confirmed"),
+                        'cancelled' => __("signup.status.cancelled"),
+                        'no-show' => __("signup.status.no-show"),
+                        'attended' => __("signup.status.attended"),
+                    ])
+                    ->label(__('signup.status'))
+                    ->default('signup'),
+                Tables\Filters\SelectFilter::make('event_id')
+                    ->relationship('event', 'name->de')
+                    ->getOptionLabelFromRecordUsing(fn (Event $event) => $event->getTranslatable('name', app()->getLocale()))
+                    ->searchable()
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('contact_id')
+                    ->relationship('contact', 'email')
+                    ->searchable()
+                    ->preload(),
+                Tables\Filters\SelectFilter::make("canton")
+                    ->label(__("filterlables.contacts.canton"))
+                    ->multiple()
+                    ->modifyQueryUsing(function (Builder $query, $state) {
+                        if (!$state['values']) {
+                            return $query;
+                        }
+                        $query->whereHas('contact', function ($query) use ($state) {
+                            $query->whereIn('canton', $state["values"]);
+                        });
+                    })
+                    ->options([
+                        "AG" => __("cantons.AG"),
+                        "AR" => __("cantons.AR"),
+                        "AI" => __("cantons.AI"),
+                        "BL" => __("cantons.BL"),
+                        "BS" => __("cantons.BS"),
+                        "BE" => __("cantons.BE"),
+                        "FR" => __("cantons.FR"),
+                        "GE" => __("cantons.GE"),
+                        "GL" => __("cantons.GL"),
+                        "GR" => __("cantons.GR"),
+                        "JU" => __("cantons.JU"),
+                        "LU" => __("cantons.LU"),
+                        "NE" => __("cantons.NE"),
+                        "NW" => __("cantons.NW"),
+                        "OW" => __("cantons.OW"),
+                        "SG" => __("cantons.SG"),
+                        "SH" => __("cantons.SH"),
+                        "SO" => __("cantons.SO"),
+                        "SZ" => __("cantons.SZ"),
+                        "TG" => __("cantons.TG"),
+                        "TI" => __("cantons.TI"),
+                        "UR" => __("cantons.UR"),
+                        "VD" => __("cantons.VD"),
+                        "VS" => __("cantons.VS"),
+                        "ZG" => __("cantons.ZG"),
+                        "ZH" => __("cantons.ZH")
+                    ]),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
