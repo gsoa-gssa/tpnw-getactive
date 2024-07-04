@@ -264,6 +264,7 @@ class ContactResource extends Resource
     {
         return [
             RelationManagers\SignupsRelationManager::class,
+            RelationManagers\EmailNotificationsRelationManager::class,
         ];
     }
 

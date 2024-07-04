@@ -36,6 +36,11 @@ class SignupResource extends Resource
                     ->default('signup')
                     ->columnSpanFull()
                     ->required(),
+                Forms\Components\RichEditor::make('additional_information')
+                    ->columnSpanFull()
+                    ->label(__('signup.additional_information'))
+                    ->helperText(__('signup.additional_information_helper'))
+                    ->nullable(),
                 Forms\Components\RichEditor::make('comment')
                     ->columnSpanFull()
                     ->nullable(),
@@ -93,7 +98,7 @@ class SignupResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\EmailNotificationRelationManager::class,
         ];
     }
 

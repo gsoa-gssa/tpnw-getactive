@@ -94,4 +94,12 @@ class Contact extends Model
     {
         return $this->hasMany(\App\Models\Event::class);
     }
+
+    /**
+     * Get the emails that were sent to this contact
+     */
+    public function emailNotifications() : \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\EmailNotification::class);
+    }
 }

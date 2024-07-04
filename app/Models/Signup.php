@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Parallax\FilamentComments\Models\Traits\HasFilamentComments;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Testing\Fluent\Concerns\Has;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Signup extends Model
 {
@@ -43,5 +43,13 @@ class Signup extends Model
     {
         return LogOptions::defaults()
             ->logAll();
+    }
+
+    /**
+     * Get the email notification that belongs to this signup
+     */
+    public function emailNotification(): BelongsTo
+    {
+        return $this->belongsTo(EmailNotification::class);
     }
 }
