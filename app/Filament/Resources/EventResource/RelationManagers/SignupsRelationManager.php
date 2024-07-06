@@ -55,7 +55,7 @@ class SignupsRelationManager extends RelationManager
                         'confirmed' => 'heroicon-o-check-circle',
                         'cancelled' => 'heroicon-o-x-circle',
                         'no-show' => 'heroicon-o-face-frown',
-                        'attended' => 'heroicon-o-shield-check',
+                        'attended' => 'heroicon-f-shield-check',
                     })
                     ->color(fn (string $state): string => match ($state) {
                         'signup' => 'warning',
