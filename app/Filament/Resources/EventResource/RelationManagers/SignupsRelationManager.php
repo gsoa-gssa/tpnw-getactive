@@ -147,7 +147,7 @@ class SignupsRelationManager extends RelationManager
                         ->label(__("actionlabels.signup.confirm"))
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->visible(fn ($record) => $record->status != 'confirmed' && !$record->event->reassign)
+                        ->visible(fn ($record) => $record->status === 'signup' && !$record->event->reassign)
                         ->action(fn ($record) => $record->update(['status' => 'confirmed'])),
                 Tables\Actions\Action::make("edit")
                     ->icon('heroicon-o-pencil-square')
