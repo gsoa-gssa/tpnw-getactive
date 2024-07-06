@@ -44,7 +44,21 @@ class SignupsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('event.name')
                     ->label('Event'),
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\IconColumn::make("status")
+                    ->icon(fn (string $state): string => match ($state) {
+                        'signup' => 'heroicon-o-question-mark-circle',
+                        'confirmed' => 'heroicon-o-check-circle',
+                        'cancelled' => 'heroicon-o-x-circle',
+                        'no-show' => 'heroicon-o-face-frown',
+                        'attended' => 'heroicon-o-shield-check',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'signup' => 'warning',
+                        'confirmed' => 'success',
+                        'cancelled' => 'warning',
+                        'no-show' => 'danger',
+                        'attended' => 'success',
+                    })
                     ->label('Status')
             ])
             ->filters([
