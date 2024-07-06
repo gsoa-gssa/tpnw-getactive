@@ -213,7 +213,7 @@ class SignupResource extends Resource
                                         'confirmed' => 'heroicon-o-check-circle',
                                         'cancelled' => 'heroicon-o-x-circle',
                                         'no-show' => 'heroicon-o-face-frown',
-                                        'attended' => 'heroicon-o-shield-check',
+                                        'attended' => 'heroicon-s-shield-check',
                                     })
                                     ->color(fn (Signup $signup) => match ($signup->status) {
                                         'signup' => 'warning',
