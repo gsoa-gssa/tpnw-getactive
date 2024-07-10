@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Contacts;
 
+use App\Models\Canton;
 use App\Models\Contact;
-use App\Settings\ContactAssign;
 use Illuminate\Console\Command;
 use function Laravel\Prompts\select;
 use Illuminate\Support\Facades\Mail;
@@ -47,7 +47,6 @@ class AssignOrphans extends Command
         }
 
         $this->info('Assigning contacts to users...');
-        $contactAssign = app(ContactAssign::class);
 
         // Get all contacts that are not assigned to a user
         $contacts = Contact::whereNull('user_responsible_id')->get();
@@ -62,15 +61,13 @@ class AssignOrphans extends Command
                 continue;
             }
 
-            $user = array_values(array_filter($contactAssign->canton_rules, function ($user) use ($contact) {
-                return $user["canton"] === $contact->canton;
-            }))[0]["user_id"] ?? null;
-
+            $user = Canton::where('code', $contact->canton)->first();
             if (!$user) {
                 $this->error("No user found for canton {$contact->canton}.");
                 $orphans[] = $contact;
                 continue;
             }
+            $user = $user->user_id;
 
             $contact->user_responsible_id = $user;
             $assigned++;

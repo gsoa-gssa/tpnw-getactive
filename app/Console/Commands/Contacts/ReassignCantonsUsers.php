@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Contacts;
 
+use App\Models\Canton;
 use App\Models\Contact;
-use App\Settings\ContactAssign;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -113,10 +113,7 @@ class ReassignCantonsUsers extends Command
                 $contact->save();
             }
 
-            $contactAssign = app(ContactAssign::class);
-            $oldUser = array_values(array_filter($contactAssign->canton_rules, function ($user) use ($oldCanton) {
-                return $user["canton"] === $oldCanton;
-            }))[0]["user_id"] ?? null;
+            $oldUser = Canton::where("code", $oldCanton)->first()->user_id;
 
             if ($oldUser != $contact->user_responsible_id) {
                 $this->info("Old user was probably not assigned through autoassign for contact {$contact->email}. No changes made in user");
@@ -128,9 +125,7 @@ class ReassignCantonsUsers extends Command
                 continue;
             }
 
-            $newUser = array_values(array_filter($contactAssign->canton_rules, function ($user) use ($newCanton) {
-                return $user["canton"] === $newCanton;
-            }))[0]["user_id"] ?? null;
+            $newUser = Canton::where("code", $newCanton)->first()->user_id;
 
             $contact->user_responsible_id = $newUser;
             $this->info("Assigned contact {$contact->email} to user {$newUser}.");
