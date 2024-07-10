@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Infolists;
 use App\Models\Event;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -14,6 +15,7 @@ use App\Filament\Resources\EventResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Contact;
+use Filament\Infolists\Infolist;
 
 class EventResource extends Resource
 {
@@ -291,4 +293,90 @@ class EventResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    /**
+     * Infolist
+     */
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make("Event Information")
+                    ->schema([
+                        Infolists\Components\TextEntry::make('date')
+                            ->date("d.m.Y")
+                            ->label('Date'),
+                        InfoLists\Components\TextEntry::make('canton')
+                            ->label('Canton'),
+                        InfoLists\Components\TextEntry::make('type')
+                            ->label('Type'),
+                        InfoLists\Components\IconEntry::make('visibility')
+                            ->icon(fn($state) => $state ? 'heroicon-o-eye' : 'heroicon-o-eye-slash')
+                            ->label('Visibility'),
+                        Infolists\Components\Tabs::make("Event Content")
+                            ->tabs([
+                                Infolists\Components\Tabs\Tab::make('German')
+                                    ->schema([
+                                        Infolists\Components\TextEntry::make('name.de')
+                                            ->label('Name'),
+                                        Infolists\Components\TextEntry::make('location.de')
+                                            ->label('Location'),
+                                        Infolists\Components\TextEntry::make('time.de')
+                                            ->label('Time'),
+                                        Infolists\Components\TextEntry::make('description.de')
+                                            ->label('Description'),
+                                    ]),
+                                Infolists\Components\Tabs\Tab::make('French')
+                                    ->schema([
+                                        Infolists\Components\TextEntry::make('name.fr')
+                                            ->label('Name'),
+                                        Infolists\Components\TextEntry::make('location.fr')
+                                            ->label('Location'),
+                                        Infolists\Components\TextEntry::make('time.fr')
+                                            ->label('Time'),
+                                        Infolists\Components\TextEntry::make('description.fr')
+                                            ->label('Description'),
+                                    ]),
+                                Infolists\Components\Tabs\Tab::make('Italian')
+                                    ->schema([
+                                        Infolists\Components\TextEntry::make('name.it')
+                                            ->label('Name'),
+                                        Infolists\Components\TextEntry::make('location.it')
+                                            ->label('Location'),
+                                        Infolists\Components\TextEntry::make('time.it')
+                                            ->label('Time'),
+                                        Infolists\Components\TextEntry::make('description.it')
+                                            ->label('Description'),
+                                    ]),
+                            ])
+                            ->columns(2)
+                            ->columnSpanFull(),
+                    ]
+                )
+                    ->columns(2),
+                Infolists\Components\Section::make(__("events.infolist.section.contact"))
+                    ->schema([
+                        Infolists\Components\TextEntry::make('contact.firstname')
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->label("First Name"),
+                        Infolists\Components\TextEntry::make('contact.lastname')
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->label("Last Name"),
+                        InfoLists\Components\TextEntry::make('contact.email')
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->label('Email'),
+                        InfoLists\Components\TextEntry::make('contact.phone')
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->label('Phone'),
+                        InfoLists\Components\TextEntry::make('contact.zip')
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->label('Zip'),
+                        InfoLists\Components\TextEntry::make('contact.canton')
+                            ->url(fn($record) => CantonResource::getUrl('edit', ['record' => \App\Models\Canton::where('code', $record->contact->canton)->first()->id ?? 1]))
+                            ->label('Canton'),
+                    ]
+                )
+                    ->columns(2),
+            ]);
+        }
 }
