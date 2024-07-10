@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OnelickController;
 use App\Http\Controllers\SignupController;
@@ -21,6 +22,12 @@ Route::get('/signup/{events}', function ($events) {
     $events = \App\Models\Event::whereIn('id', $events)->get();
     return view("frontend.signup", compact('events'));
 })->name('signup.events');
+
+Route::get('/event/create', function () {
+    return view("frontend.event.create");
+})->name('event.create');
+
+Route::post('/event/create', [EventController::class, 'createEvent'])->name('event.create');
 
 Route::get('/oneclick/{oneclick:uuid}', [
     OnelickController::class,

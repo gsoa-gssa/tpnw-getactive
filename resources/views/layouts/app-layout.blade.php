@@ -60,6 +60,15 @@
 </head>
 <body>
     <main>
+        @if ($header)
+        <div class="tpnw-getactive-header bg-accent">
+            <div class="tpnw-getactive-header__inner px-4 pt-8 md:pt-12 lg:pt-20 pb-16 md:pb-20 lg:pb-28  w-fit mx-auto max-w-7xl sm:px-6 lg:px-8 py-6">
+                <x-petition-icon class="max-w-[480px] w-full mb-2 mx-auto" />
+                <h2 class="text-center text-xl md:text-2xl lg:text-3xl">{{__("visual.subtitle")}}</h2>
+                <h1 class="tpnw-title text-center text-5xl md:text-6xl lg:text-7xl">{{__("visual.title")}}</h1>
+            </div>
+        </div>
+        @endif
         {{ $slot }}
     </main>
     <!-- Matomo -->

@@ -25,7 +25,16 @@ class SignupsRelationManager extends RelationManager
                         "contact",
                         "id"
                     )
-                    ->getOptionLabelFromRecordUsing(fn(Contact $contact) => $contact->firstname . " " . $contact->lastname),
+                    ->searchable()
+                    ->preload()
+                    ->getOptionLabelFromRecordUsing(fn(Contact $contact) => $contact->firstname . " " . $contact->lastname . " (" . $contact->email . ")"),
+                Forms\Components\ToggleButtons::make('status')
+                    ->options([
+                        'signup' => __("signup.status.signup"),
+                        'confirmed' => __("signup.status.confirmed"),
+                    ])
+                    ->inline()
+                    ->default('confirmed'),
                 Forms\Components\Select::make('event_id')
                     ->relationship(
                         'event',

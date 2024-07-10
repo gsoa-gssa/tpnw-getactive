@@ -6,15 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class AppLayout extends Component
+class EventForm extends Component
 {
-    public $header;
     /**
      * Create a new component instance.
      */
-    public function __construct($header = true)
+    public function __construct()
     {
-        $this->header = $header;
+        //
     }
 
     /**
@@ -22,6 +21,6 @@ class AppLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.app-layout');
+        return view('components.event-form');
     }
 }

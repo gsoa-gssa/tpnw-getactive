@@ -71,16 +71,16 @@
                 <td style="border: none;">
                     <table style="border: none; table-layout: fixed;">
                         <tr style="border: none;">
-                            <td style="border: none;">{{__("events.export.id")}}</td>
-                            <td style="border: none; background: rgb(229,231,235); text-align: end; font-weight: bold;">{{$event->id}}</td>
+                            <td style="border: none;">{{__("events.export.date")}}</td>
+                            <td style="border: none; background: rgb(229,231,235); text-align: end; font-weight: bold;">{{date("d.m.Y", strtotime($event->date))}}</td>
                         </tr>
                     </table>
                 </td>
                 <td style="border: none;">
                     <table style="border: none; table-layout: fixed;">
                         <tr style="border: none;">
-                            <td style="border: none;">{{__("events.export.date")}}</td>
-                            <td style="border: none; background: rgb(229,231,235); text-align: end; font-weight: bold;">{{date("d.m.Y", strtotime($event->date))}}</td>
+                            <td style="border: none;">{{__("events.export.time")}}</td>
+                            <td style="border: none; background: rgb(229,231,235); text-align: end; font-weight: bold;">{{$event->getTranslatable("time", app()->getLocale())}}</td>
                         </tr>
                     </table>
                 </td>
@@ -133,6 +133,14 @@
                     <th class="td-wide">{{__("events.export.signups.notes")}}</th>
                 </tr>
             </thead>
+            <tr class="body">
+                <td>{{$event->contact->firstname}} {{$event->contact->lastname}}</td>
+                <td>{{$event->contact->phone}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="td-wide">{{__("events.export.signups.in_charge")}}</td>
+            </tr>
             @foreach($event->signups as $signup)
                 <tr class="body">
                     <td>{{$signup->contact->firstname}} {{$signup->contact->lastname}}</td>

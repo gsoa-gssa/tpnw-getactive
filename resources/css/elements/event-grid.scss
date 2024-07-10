@@ -32,6 +32,8 @@
     }
 
     &__submit {
+        position: sticky;
+        top: calc(100vh - 4rem);
 
         &__button {
             @apply bg-highlight text-white px-12 py-2 mx-auto text-2xl font-extrabold uppercase;

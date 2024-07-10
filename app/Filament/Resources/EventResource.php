@@ -145,16 +145,9 @@ class EventResource extends Resource
                     ->default(true)
                     ->onColor('success')
                     ->offColor('danger')
-                    ->helperText('Should people be able to signup for this event or is it assign only?')
+                    ->helperText(__('events.create.visibility_helper'))
                     ->columnSpanFull()
-                    ->label('Is public?'),
-                Forms\Components\Toggle::make('reassign')
-                    ->default(false)
-                    ->onColor('success')
-                    ->offColor('danger')
-                    ->label('Must signups be reassigned?')
-                    ->columnSpanFull()
-                    ->helperText('If event is a placeholder for multiple smaller events.'),
+                    ->label(__('events.create.visibility')),
             ]);
     }
 
@@ -206,11 +199,6 @@ class EventResource extends Resource
                     ->default(true)
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->where('date', '>=', date('Y-m-d', strtotime('today')))),
-                Filters\Filter::make("must_reassign")
-                    ->label(__("filterlables.events.must_reassign"))
-                    ->default(false)
-                    ->toggle()
-                    ->query(fn (Builder $query): Builder => $query->where('reassign', true)),
                 Filters\Filter::make("my_events")
                     ->label(__("filterlables.events.my_events"))
                     ->default(true)
