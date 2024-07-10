@@ -4,9 +4,9 @@
         <div class="tpnw-getactive-cta__container px-2 md:px-4">
             <div class="tpnw-getactive__container__inner max-w-[793px] mx-auto bg-white p-4 md:p-6 lg:p-8 relative">
                 <p class="text-3xl font-bold">{{__("signup.lead")}}</p>
-                {{-- <p class="mt-4">
+                <p class="mt-4">
                     <a href="/event/create" class="tpnw-getactive-new-event text-sm underline text-highlight">{{__("signup.new_event")}}</a>
-                </p> --}}
+                </p>
             </div>
         </div>
     </div>

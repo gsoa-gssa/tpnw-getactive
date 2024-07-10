@@ -35,6 +35,17 @@ class ViewEvent extends viewRecord
                         echo $pdf->output();
                     }, "signups-{$event->name[app()->getLocale()]}-{$event->date}.pdf");
                 }),
+            Action::make("public")
+                ->label(__("buttonlabels.publish"))
+                ->icon('heroicon-o-eye')
+                ->requiresConfirmation()
+                ->action(function(Event $event){
+                    $event->update(["visibility" => true]);
+                    \Filament\Notifications\Notification::make()
+                        ->title(__("notifications.event.published"))
+                        ->success()
+                        ->send();
+                })->visible(fn() => !$this->record->visibility),
         ];
     }
 }

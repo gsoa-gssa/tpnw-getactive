@@ -29,6 +29,10 @@ Route::get('/event/create', function () {
 
 Route::post('/event/create', [EventController::class, 'createEvent'])->name('event.create');
 
+Route::get('/event/thanks', function () {
+    return view("frontend.thanks");
+})->name('event.thanks');
+
 Route::get('/oneclick/{oneclick:uuid}', [
     OnelickController::class,
     'createSignup'

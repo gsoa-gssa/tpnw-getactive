@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class EventForm extends Component
 {
+    public $cantons;
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->cantons = \App\Models\Canton::all();
     }
 
     /**
