@@ -227,7 +227,7 @@ class SignupResource extends Resource
                                     ->url(fn (Signup $signup) => route('filament.admin.resources.contacts.view', $signup->contact))
                                     ->label(__("signup.infolist.contact")),
                                 Infolists\Components\TextEntry::make('event.name')
-                                    ->url(fn (Signup $signup) => route('filament.admin.resources.events.view', $signup->event))
+                                    ->url(fn (Signup $signup) => route('filament.admin.resources.events.view', $signup->event ?? 1))
                                     ->label(__("signup.infolist.event")),
                             ]),
                     ]),

@@ -35,6 +35,15 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => env('APP_SUPERADMIN_NAME', 'Admin'),
+            'email' => env('APP_SUPERADMIN_EMAIL', 'admin@localhost'),
+            'password' => password_hash(env('APP_SUPERADMIN_PASSWORD', 'password'), PASSWORD_DEFAULT),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'email_verified_at' => now(),
+        ]);
     }
 
     /**

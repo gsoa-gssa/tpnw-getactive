@@ -6,6 +6,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Parallax\FilamentComments\Models\FilamentComment;
 use Parallax\FilamentComments\Models\Traits\HasFilamentComments;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -60,6 +61,13 @@ class Contact extends Model
         static::deleting(function ($contact) {
             $contact->signups()->delete();
             $contact->email = $contact->email . '-deleted-' . now();
+            $comment = __("alerts.delete.deleted", ["model" => __("models.contacts.name"), "user" => auth()->user()->name, "date" => now()]);
+            FilamentComment::create([
+                'comment' => $comment,
+                "subject_type" => "App\Models\Contact",
+                "subject_id" => $contact->id,
+                "user_id" => auth()->id(),
+            ]);
             $contact->save();
         });
 
@@ -76,6 +84,31 @@ class Contact extends Model
             }
             $contact->email = $email;
             $contact->save();
+            $comment = __("alerts.restore.restored", ["model" => __("models.contacts.name"), "user" => auth()->user()->name, "date" => now()]);
+            FilamentComment::create([
+                'comment' => $comment,
+                "subject_type" => "App\Models\Contact",
+                "subject_id" => $contact->id,
+                "user_id" => auth()->id(),
+            ]);
+        });
+
+        /** Before creating, check if the email exists for a deleted contact and restore it */
+        static::creating(function($contact) {
+            $existing = Contact::withTrashed()->where("email", "like", $contact->email . "-deleted-%")->first();
+            if ($existing) {
+                $existing->restore();
+                $newFields = $contact->getAttributes();
+                unset($newFields['id']);
+                unset($newFields['created_at']);
+                unset($newFields['updated_at']);
+                unset($newFields['deleted_at']);
+                $existing->update($newFields);
+                $contact->id = $existing->id;
+                return false;
+            } else {
+                return true;
+            }
         });
     }
 

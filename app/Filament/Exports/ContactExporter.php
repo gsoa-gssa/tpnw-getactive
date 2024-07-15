@@ -27,7 +27,6 @@ class ContactExporter extends Exporter
             ExportColumn::make('language'),
             ExportColumn::make('canton'),
             ExportColumn::make('activities'),
-            ExportColumn::make('user_responsible_id'),
         ];
     }
 
