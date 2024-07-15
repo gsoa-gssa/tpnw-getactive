@@ -2,9 +2,10 @@
 
 namespace App\Notifications\Signup;
 
-use App\Models\Contact;
+use App\Models\User;
 use App\Models\Event;
 use App\Models\Signup;
+use App\Models\Contact;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,6 +18,7 @@ class Reminder extends Notification
     public Signup $signup;
     public Event $event;
     public Contact $contact;
+    public User $user;
     public string $language;
     /**
      * Create a new notification instance.
@@ -25,7 +27,8 @@ class Reminder extends Notification
     {
         $this->signup = $signup;
         $this->event = $signup->event;
-        $this->contact = $signup->contact ?? Contact::all()->first();
+        $this->contact = $signup->contact;
+        $this->user = $this->contact->user ?? User::all()->first();
         $this->language = $this->contact->language ?? "de";
 
         app()->setLocale($this->language);
@@ -50,13 +53,14 @@ class Reminder extends Notification
                     ->subject(__("emails.signup.reminder.subject", [
                         "event" => $this->event->getTranslatable("name", $this->language),
                     ]))
-                    ->from($this->contact->user->email, $this->contact->user->name)
-                    ->cc($this->contact->user->email, $this->contact->user->name)
+                    ->from($this->user->email, $this->user->name)
+                    ->cc($this->user->email, $this->user->name)
                     ->view('emails.signup.reminder.' . $this->language, [
                         "event" => $this->event,
                         "contact" => $this->contact,
                         "signup" => $this->signup,
                         "language" => $this->language,
+                        "user" => $this->user,
                     ]);
     }
 
@@ -76,6 +80,7 @@ class Reminder extends Notification
                 "contact" => $this->contact,
                 "signup" => $this->signup,
                 "language" => $this->language,
+                "user" => $this->user,
             ])->render(),
             "type" => "signupReminder",
         ];

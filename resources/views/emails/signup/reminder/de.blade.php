@@ -37,9 +37,9 @@
     <p>Falls du irgendwelche Fragen hast, melde dich bei mir!</p>
 
     <p>
-        <b>Liebe Grüsse</b>
-        {{$event->contact->user->firstname}} {{$event->contact->user->lastname}}<br>
-        {{$event->contact->user->email}}<br>
+        <b>Liebe Grüsse</b><br>
+        {{$user->name}}<br>
+        {{$user->email}}<br>
     </p>
 </body>
 </html>

@@ -39,8 +39,8 @@
 
     <p>
         <b>Saluti</b><br>
-        {{$event->contact->user->firstname}} {{$event->contact->user->lastname}}<br>
-        {{$event->contact->user->email}}<br>
+        {{$user->name}}<br>
+        {{$user->email}}<br>
     </p>
 </body>
 </html>
