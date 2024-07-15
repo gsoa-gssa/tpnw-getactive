@@ -53,7 +53,6 @@ class ContactResource extends Resource
                         "de" => __("languages.de"),
                         "fr" => __("languages.fr"),
                         "it" => __("languages.it"),
-                        "en" => __("languages.en"),
                     ])
                     ->inline()
                     ->default("de"),

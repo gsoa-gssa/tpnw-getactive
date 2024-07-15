@@ -21,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('contacts:autoassign --y')->cron("5-59/15 * * * *")
             ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/contacts-autoassign.log'));
+        $schedule->command('signups:reminders')->dailyAt('08:00')
+            ->withoutOverlapping()
+            ->appendOutputTo(storage_path('logs/signups-reminders.log'));
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

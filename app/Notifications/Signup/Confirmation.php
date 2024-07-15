@@ -1,28 +1,22 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Signup;
 
-use App\Models\Signup;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SignupConfirmation extends Notification
+class Confirmation extends Notification
 {
     use Queueable;
-
-    public Signup $signup;
-    public User $user;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Signup $signup, User $user)
+    public function __construct()
     {
-        $this->signup = $signup;
-        $this->user = $user;
+        //
     }
 
     /**
@@ -41,12 +35,9 @@ class SignupConfirmation extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(__("emails.signup_confirmation.subject"))
-            ->from($this->user->email, $this->user->name)
-            ->view('emails.signup_confirmation.' . app()->getLocale(), [
-                "signup" => $this->signup,
-                "contact" => $this->contact,
-            ]);
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**

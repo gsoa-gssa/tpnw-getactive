@@ -10,11 +10,13 @@ use Parallax\FilamentComments\Models\FilamentComment;
 use Parallax\FilamentComments\Models\Traits\HasFilamentComments;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Notifications\Notifiable;
+
 
 
 class Contact extends Model
 {
-    use HasFactory, SoftDeletes, HasFilamentComments, LogsActivity;
+    use HasFactory, SoftDeletes, HasFilamentComments, LogsActivity, Notifiable;
 
     /**
      * The attributes that should be cast to native types.

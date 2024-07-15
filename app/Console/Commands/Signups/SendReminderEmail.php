@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Signups;
 
 use Illuminate\Console\Command;
-use SendGrid;
 
 class SendReminderEmail extends Command
 {
@@ -26,37 +25,50 @@ class SendReminderEmail extends Command
      */
     public function handle()
     {
-        // Get all events that are two or less days out
-        $upcomingEvents = \App\Models\Event::whereDate('date', '<=', now()->addDays(2))
-            ->whereDate('date', '>=', now())
-            ->where("reassign", false)
-            ->get();
 
-        // Get all signups for the upcoming events that have status "confirmed"
-        $signups = \App\Models\Signup::whereIn('event_id', $upcomingEvents->pluck('id'))
-            ->where('status', 'confirmed')
-            ->get();
+        /**
+         * Get All Events that are happening within the next two days
+         */
+        $events = \App\Models\Event::whereDate('date', "<=", now()->addDays(2)->toDateString())->whereDate('date', '>', now()->toDateString())->get();
 
-        // Foreach signup, send a reminder email
-        $sdg = new SendGrid(env('SDG_API_KEY'));
-        foreach ($signups as $signup) {
-            $contact = $signup->contact;
-            $event = $signup->event;
-            $contact->user = $contact->user ?? \App\Models\User::find(1);
-            $contact->userDetails = \App\Models\Contact::where("email", $contact->user->email)->first();
-            $mail = new SendGrid\Mail\Mail();
-            try {
-                $mail->setFrom($contact->user->email, $contact->user->name);
-                $mail->setSubject(__('emails.signup_reminder.subject', ['event' => $event->getTranslatable('name', $contact->language)]));
-                $mail->addTo($contact->email, $contact->name);
-                $mail->addCc($contact->user->email, $contact->user->name);
-                $mail->addContent("text/html", view('emails.signupReminder.' . $contact->language, compact('contact', 'event', 'signup'))->render());
-                $response = $sdg->send($mail);
-            } catch (\Exception $e) {
-                $this->error('Error sending email to ' . $contact->email . ': ' . $e->getMessage());
+        if ($events->isEmpty()) {
+            $this->info('No events found for the next two days.');
+            return;
+        } else {
+            $line = "Events found for the next two days: ";
+            foreach ($events as $event) {
+                $line .= "{$event->getTranslatable('name', 'de')} ({$event->date->format('d.m.Y')}), ";
             }
+            $this->info($line);
+        }
+        /**
+         * Get all signups for the events with status confirmed and doesn't have email notifications where emailNotification.type is signupReminder
+         */
+        $signups = \App\Models\Signup::whereIn('event_id', $events->pluck('id'))->where('status', 'confirmed')->whereDoesntHave('emailNotifications', function ($query) {
+            $query->where('type', 'signupReminder');
+        })->get();
+        if ($signups->isEmpty()) {
+            $this->info('No unreminded signups found for these events.');
+            return;
+        }
 
-            dd($response);
+        /**
+         * Loop through the signups and send reminder emails
+         */
+        foreach ($signups as $signup) {
+            $this->info("Sending reminder email to {$signup->contact->email} for event {$signup->event->getTranslatable('name', $signup->contact->language)}");
+            $notification = new \App\Notifications\Signup\Reminder($signup);
+            $signup->contact->notify($notification);
+            $data = $notification->toArray($signup->contact);
+            $emailNotification = \App\Models\EmailNotification::create([
+                'subject' => $data['subject'],
+                'body' => $data['body'],
+                'user_id' => $signup->contact->user->id,
+                'contact_id' => $signup->contact->id,
+                'signup_id' => $signup->id,
+                'type' => $data['type'],
+            ]);
+            $this->info("Email notification created with ID {$emailNotification->id}");
         }
     }
 }
