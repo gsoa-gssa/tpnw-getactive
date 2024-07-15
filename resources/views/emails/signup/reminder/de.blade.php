@@ -13,7 +13,7 @@
 </head>
 <body>
     <p>Hallo {{$contact->firstname}}</p>
-    <p>Du hast dich für den Event «{{$event->getTranslatable("name", $language)}}» angemeldet, der morgen stattfindet. <b>Danke dafür!</b></p>
+    <p>Du hast dich für den Event «{{$event->getTranslatable("name", $language)}}» angemeldet, welcher bald stattfindet. <b>Danke dafür!</b></p>
     <p>Hier einige Details dazu:</p>
 
     <p>
