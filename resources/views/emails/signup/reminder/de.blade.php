@@ -29,8 +29,13 @@
             <li><b>Ort:</b> {{$event->getTranslatable("location", $language)}}</li>
         </ul>
     </p>
+    @if ($event->getTranslatable("description", $language))
+        <p><b>Weitere Infos zum Event</b></p>
+        {!!$event->getTranslatable("description", $language)!!}
+    @endif
     @if ($signup->additional_information)
-        <p><b>Zusätzliche Informationen zu deiner Anmeldung:</b></p>{!!$signup->additional_information!!}
+        <p><b>Zusätzliche Informationen zu deiner Anmeldung:</b></p>
+        {!!$signup->additional_information!!}
     @endif
 
     <p><br></p>
