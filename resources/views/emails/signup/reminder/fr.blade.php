@@ -30,13 +30,13 @@
             <li><b>Lieu :</b> {{$event->getTranslatable("location", $language)}}</li>
         </ul>
     </p>
-    <p><br></p>
     @if ($event->getTranslatable("description", $language))
+        <p><br></p>
         <p><b>Plus d'informations sur l'événement</b></p>
         {!!$event->getTranslatable("description", $language)!!}
     @endif
-    <p><br></p>
     @if ($signup->additional_information)
+        <p><br></p>
         <p><b>Informations supplémentaires concernant votre inscription :</b></p>{!!$signup->additional_information!!}
     @endif
 
