@@ -53,4 +53,26 @@ class Signup extends Model
     {
         return $this->hasMany(EmailNotification::class);
     }
+
+    /**
+     * Hook into the model bootstrapping
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($signup) {
+            $notification = new \App\Notifications\Signup\Confirmation($signup);
+            $signup->contact->notify($notification);
+            $data = $notification->toArray($signup->contact);
+            $emailNotification = \App\Models\EmailNotification::create([
+                'subject' => $data['subject'],
+                'body' => $data['body'],
+                'user_id' => $signup->contact->user->id,
+                'contact_id' => $signup->contact->id,
+                'signup_id' => $signup->id,
+                'type' => $data['type'],
+            ]);
+        });
+    }
 }

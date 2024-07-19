@@ -7,8 +7,17 @@ Route::get('/events/signups/export', function () {
     ]);
 });
 
-Route::get("/signups/reminder-email", function () {
-    $signup = App\Models\Signup::all()->first();
+Route::prefix("emails")->group(function () {
+    Route::get("/signup/confirmation", function () {
+        $signup = App\Models\Signup::all()->first();
 
-    return (new App\Notifications\Signup\Reminder($signup))->toMail($signup->contact);
+        return (new App\Notifications\Signup\Confirmation($signup))->toMail($signup->contact);
+    });
+
+    Route::get("/signup/reminder", function () {
+        $signup = App\Models\Signup::all()->first();
+
+        return (new App\Notifications\Signup\Reminder($signup))->toMail($signup->contact);
+    });
 });
+

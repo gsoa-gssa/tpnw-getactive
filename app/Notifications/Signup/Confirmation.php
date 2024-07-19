@@ -2,21 +2,37 @@
 
 namespace App\Notifications\Signup;
 
+use App\Models\User;
+use App\Models\Event;
+use App\Models\Signup;
+use App\Models\Contact;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class Confirmation extends Notification
 {
     use Queueable;
 
+    public Signup $signup;
+    public Event $event;
+    public Contact $contact;
+    public User $user;
+    public string $language;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(Signup $signup)
     {
-        //
+        $this->signup = $signup;
+        $this->event = $signup->event;
+        $this->contact = $signup->contact;
+        $this->user = $this->contact->user ?? User::all()->first();
+        $this->language = $this->contact->language ?? "de";
+
+        app()->setLocale($this->language);
     }
 
     /**
@@ -35,9 +51,18 @@ class Confirmation extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject(__("emails.signup.confirmation.subject", [
+                        "event" => $this->event->getTranslatable("name", $this->language),
+                    ]))
+                    ->from($this->user->email, $this->user->name)
+                    ->cc($this->user->email, $this->user->name)
+                    ->view('emails.signup.confirmation.' . $this->language, [
+                        "event" => $this->event,
+                        "contact" => $this->contact,
+                        "signup" => $this->signup,
+                        "language" => $this->language,
+                        "user" => $this->user,
+                    ]);
     }
 
     /**
@@ -48,7 +73,17 @@ class Confirmation extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            "subject" => __("emails.signup.confirmation.subject", [
+                "event" => $this->event->getTranslatable("name", $this->language),
+            ]),
+            "body" => view('emails.signup.confirmation.' . $this->language, [
+                "event" => $this->event,
+                "contact" => $this->contact,
+                "signup" => $this->signup,
+                "language" => $this->language,
+                "user" => $this->user,
+            ])->render(),
+            "type" => "signupConfirmation",
         ];
     }
 }
