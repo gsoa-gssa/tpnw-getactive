@@ -55,7 +55,6 @@ class Confirmation extends Notification
                         "event" => $this->event->getTranslatable("name", $this->language),
                     ]))
                     ->from($this->user->email, $this->user->name)
-                    ->cc($this->user->email, $this->user->name)
                     ->view('emails.signup.confirmation.' . $this->language, [
                         "event" => $this->event,
                         "contact" => $this->contact,
