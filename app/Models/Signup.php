@@ -62,6 +62,9 @@ class Signup extends Model
         parent::boot();
 
         static::created(function ($signup) {
+            if (!$signup->confirmation_email) {
+                return;
+            }
             $notification = new \App\Notifications\Signup\Confirmation($signup);
             $signup->contact->notify($notification);
             $data = $notification->toArray($signup->contact);

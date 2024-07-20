@@ -27,6 +27,7 @@ class SignupsRelationManager extends RelationManager
                     )
                     ->searchable()
                     ->preload()
+                    ->columnSpanFull()
                     ->getOptionLabelFromRecordUsing(fn(Contact $contact) => $contact->firstname . " " . $contact->lastname . " (" . $contact->email . ")"),
                 Forms\Components\ToggleButtons::make('status')
                     ->options([
@@ -47,7 +48,13 @@ class SignupsRelationManager extends RelationManager
                     )
                     ->getOptionLabelFromRecordUsing(fn (Event $event) => date("d.m.Y", strtotime($event->date)) . ": " . $event->getTranslatable('name', app()->getLocale()))
                     ->searchable()
-                    ->preload()
+                    ->preload(),
+                Forms\Components\Toggle::make('confirmation_email')
+                    ->label(__("signup.confirmation_email"))
+                    ->default(true),
+                Forms\Components\Toggle::make('reminder_email')
+                    ->label(__("signup.reminder_email"))
+                    ->default(true),
             ]);
     }
 

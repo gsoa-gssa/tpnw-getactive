@@ -87,6 +87,8 @@
     "signup.status.attended": "Teilgenommen",
     "signup.additional_information": "Zusätzliche Informationen",
     "signup.additional_information_helper": "Dieser Text wird im Bestätigungs-E-Mail angezeigt. Du kannst hier bilaterale Abmachungen, Treffpunkte oder andere wichtige Informationen eintragen.",
+    "signup.confirmation_email": "Email zur Bestätigung senden?",
+    "signup.reminder_email": "Email zur Erinnerung senden?",
     "signup.status": "Status",
     "signup.infolist.label": "Informationen",
     "signup.infolist.status": "Status",

@@ -87,6 +87,8 @@
     "signup.status.attended": "Partecipato",
     "signup.additional_information": "Informazioni aggiuntive",
     "signup.additional_information_helper": "Questo testo verrà visualizzato nella email di conferma. Puoi inserire accordi bilaterali, punti di incontro o altre informazioni importanti qui.",
+    "signup.confirmation_email": "Email di conferma",
+    "signup.reminder_email": "Email di promemoria",
     "signup.status": "Status",
     "signup.infolist.label": "Informazioni",
     "signup.infolist.status": "Stato",

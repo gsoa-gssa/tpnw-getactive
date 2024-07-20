@@ -55,6 +55,12 @@ class SignupResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
+                Forms\Components\Toggle::make('confirmation_email')
+                    ->default(true)
+                    ->label(__('signup.confirmation_email')),
+                Forms\Components\Toggle::make('reminder_email')
+                    ->default(true)
+                    ->label(__('signup.reminder_email')),
             ]);
     }
 
