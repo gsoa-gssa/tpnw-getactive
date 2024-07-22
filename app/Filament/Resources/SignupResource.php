@@ -107,7 +107,7 @@ class SignupResource extends Resource
                     ->searchable()
                     ->preload(),
                 Tables\Filters\SelectFilter::make("canton")
-                    ->label(__("filterlables.contacts.canton"))
+                    ->label(__("filterlabels.contacts.canton"))
                     ->multiple()
                     ->modifyQueryUsing(function (Builder $query, $state) {
                         if (!$state['values']) {
@@ -146,7 +146,7 @@ class SignupResource extends Resource
                         "ZH" => __("cantons.ZH")
                     ]),
                 Tables\Filters\SelectFilter::make("eventcanton")
-                    ->label(__("filterlables.events.canton"))
+                    ->label(__("filterlabels.events.canton"))
                     ->multiple()
                     ->modifyQueryUsing(function (Builder $query, $state) {
                         if (!$state['values']) {

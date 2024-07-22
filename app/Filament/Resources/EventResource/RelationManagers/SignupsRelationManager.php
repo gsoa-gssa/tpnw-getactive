@@ -103,7 +103,7 @@ class SignupsRelationManager extends RelationManager
                     ])
                     ->label('Status'),
                 Tables\Filters\Filter::make('my_contacts')
-                    ->label(__("filterlables.contacts.my_contacts"))
+                    ->label(__("filterlabels.contacts.my_contacts"))
                     ->toggle()
                     ->default(false)
                     ->modifyQueryUsing(function (Builder $query) {
@@ -113,7 +113,7 @@ class SignupsRelationManager extends RelationManager
                         return $query;
                     }),
                 Tables\Filters\SelectFilter::make("canton")
-                    ->label(__("filterlables.contacts.canton"))
+                    ->label(__("filterlabels.contacts.canton"))
                     ->multiple()
                     ->query(function ($query, $state) {
                         if (!$state['values']) {

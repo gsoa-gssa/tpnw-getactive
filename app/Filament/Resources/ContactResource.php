@@ -18,6 +18,12 @@ use Illuminate\Console\View\Components\Info;
 use App\Filament\Resources\ContactResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ContactResource\RelationManagers;
+use App\Models\Canton;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Parallax\FilamentComments\Infolists\Components\CommentsEntry;
 
 class ContactResource extends Resource
@@ -168,89 +174,65 @@ class ContactResource extends Resource
             ])
             ->filters([
                 Filters\Filter::make("my_contacts")
-                    ->label(__("filterlables.contacts.my_contacts"))
+                    ->label(__("filterlabels.contacts.my_contacts"))
                     ->toggle()
                     ->default(true)
                     ->query(fn (Builder $query) => $query->where('user_responsible_id', auth()->id())),
                 Filters\Filter::make("has_phone")
-                    ->label(__("filterlables.contacts.has_phone"))
+                    ->label(__("filterlabels.contacts.has_phone"))
                     ->toggle()
                     ->query(fn (Builder $query) => $query->whereNotNull('phone')),
                 Filters\Filter::make("no_signups")
-                    ->label(__("filterlables.contacts.no_signups"))
+                    ->label(__("filterlabels.contacts.no_signups"))
                     ->toggle()
                     ->query(fn (Builder $query) => $query->doesntHave('signups')),
                 Filters\Filter::make("has_signups")
-                    ->label(__("filterlables.contacts.has_signups"))
+                    ->label(__("filterlabels.contacts.has_signups"))
                     ->toggle()
                     ->query(fn (Builder $query) => $query->has('signups')),
                 Filters\Filter::make("orpahns")
-                    ->label(__("filterlables.contacts.orphans"))
+                    ->label(__("filterlabels.contacts.orphans"))
                     ->toggle()
                     ->query(function (Builder $query) {
                         $query->whereNull('user_responsible_id');
                         $query->whereNull("zip");
                         $query->whereNull("canton");
                     }),
-                Filters\SelectFilter::make("tags")
-                    ->label(__("filterlables.contacts.tags"))
-                    ->multiple()
-                    ->options(
-                        \App\Models\Tag::all()->pluck("label", "id")->toArray()
-                    )
-                    ->modifyQueryUsing(function (Builder $query, $state){
-                        if (!$state['values']) {
-                            return $query;
-                        }
-                        return $query->whereHas('tags', function ($query) use ($state) {
-                            $query->whereIn('tags.id', $state['values']);
-                        });
-                    }),
-                Filters\SelectFilter::make("canton")
-                    ->label(__("filterlables.contacts.canton"))
-                    ->multiple()
-                    ->options([
-                        "AG" => __("cantons.AG"),
-                        "AR" => __("cantons.AR"),
-                        "AI" => __("cantons.AI"),
-                        "BL" => __("cantons.BL"),
-                        "BS" => __("cantons.BS"),
-                        "BE" => __("cantons.BE"),
-                        "FR" => __("cantons.FR"),
-                        "GE" => __("cantons.GE"),
-                        "GL" => __("cantons.GL"),
-                        "GR" => __("cantons.GR"),
-                        "JU" => __("cantons.JU"),
-                        "LU" => __("cantons.LU"),
-                        "NE" => __("cantons.NE"),
-                        "NW" => __("cantons.NW"),
-                        "OW" => __("cantons.OW"),
-                        "SG" => __("cantons.SG"),
-                        "SH" => __("cantons.SH"),
-                        "SO" => __("cantons.SO"),
-                        "SZ" => __("cantons.SZ"),
-                        "TG" => __("cantons.TG"),
-                        "TI" => __("cantons.TI"),
-                        "UR" => __("cantons.UR"),
-                        "VD" => __("cantons.VD"),
-                        "VS" => __("cantons.VS"),
-                        "ZG" => __("cantons.ZG"),
-                        "ZH" => __("cantons.ZH")
-                    ]),
-                    Filters\SelectFilter::make("users")
-                    ->label(__("filterlables.contacts.users"))
-                    ->multiple()
-                    ->options(
-                        \App\Models\User::all()->pluck("name", "id")->toArray()
-                    )
-                    ->modifyQueryUsing(function (Builder $query, $state){
-                        if (!$state['values']) {
-                            return $query;
-                        }
-                        return $query->whereIn('user_responsible_id', $state['values']);
-                    }),
-                    Filters\TrashedFilter::make()
-            ])
+                    Filters\TrashedFilter::make(),
+                    QueryBuilder::make()
+                        ->constraints([
+                            TextConstraint::make('firstname')
+                                ->label(__('filterlabels.contacts.firstname')),
+                            TextConstraint::make('lastname')
+                                ->label(__('filterlabels.contacts.lastname')),
+                            TextConstraint::make('email')
+                                ->label(__('filterlabels.contacts.email')),
+                            TextConstraint::make('phone')
+                                ->label(__('filterlabels.contacts.phone')),
+                            TextConstraint::make('zip')
+                                ->label(__('filterlabels.contacts.zip')),
+                            SelectConstraint::make("canton")
+                                ->label(__('filterlabels.contacts.canton'))
+                                ->options(
+                                     Canton::all()->pluck("name." . app()->getLocale(), "code")->toArray()
+                                ),
+                            SelectConstraint::make("tags")
+                                ->label(__('filterlabels.contacts.tags'))
+                                ->multiple()
+                                ->options(
+                                    \App\Models\Tag::all()->pluck("label", "id")->toArray()
+                                ),
+                            RelationshipConstraint::make("user")
+                                ->label(__('filterlabels.contacts.users'))
+                                ->selectable(
+                                    IsRelatedToOperator::make()
+                                        ->titleAttribute("name")
+                                        ->searchable()
+                                        ->preload()
+                                        ->multiple()
+                                )
+                        ])
+                ], layout: \Filament\Tables\Enums\FiltersLayout::AboveContentCollapsible)
             ->headerActions([
                 Tables\Actions\ImportAction::make()
                     ->label(__('buttonlabels.import.contacts'))

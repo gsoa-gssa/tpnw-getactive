@@ -63,7 +63,7 @@ class SignupsRelationManager extends RelationManager
             ])
             ->filters([
                 Tables\Filters\Filter::make("my_events")
-                    ->label(__("filterlables.events.my_events"))
+                    ->label(__("filterlabels.events.my_events"))
                     ->modifyQueryUsing(function (Builder $query){
                         $query->whereHas('event', function (Builder $query) {
                             $query->whereHas("users", function (Builder $query) {
@@ -83,7 +83,7 @@ class SignupsRelationManager extends RelationManager
                     ])
                     ->label('Status'),
                 Tables\Filters\Filter::make("only_future")
-                    ->label(__("filterlables.events.only_future"))
+                    ->label(__("filterlabels.events.only_future"))
                     ->default(true)
                     ->toggle()
                     ->modifyQueryUsing(function (Builder $query) {

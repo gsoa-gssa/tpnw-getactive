@@ -197,17 +197,17 @@ class EventResource extends Resource
             ->defaultSort("date", "asc")
             ->filters([
                 Filters\Filter::make("only_future")
-                    ->label(__("filterlables.events.only_future"))
+                    ->label(__("filterlabels.events.only_future"))
                     ->default(true)
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->where('date', '>=', date('Y-m-d', strtotime('today')))),
                 Filters\Filter::make("my_events")
-                    ->label(__("filterlables.events.my_events"))
+                    ->label(__("filterlabels.events.my_events"))
                     ->default(true)
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->whereHas('users', fn (Builder $query) => $query->where('user_id', auth()->id()))),
                 Filters\SelectFilter::make("canton")
-                    ->label(__("filterlables.events.canton"))
+                    ->label(__("filterlabels.events.canton"))
                     ->multiple()
                     ->options([
                         "national" => __("cantons.national"),
@@ -239,7 +239,7 @@ class EventResource extends Resource
                         "ZH" => __("cantons.ZH")
                     ]),
                 Filters\SelectFilter::make("users")
-                    ->label(__("filterlables.contacts.users"))
+                    ->label(__("filterlabels.contacts.users"))
                     ->multiple()
                     ->options(
                         \App\Models\User::all()->pluck("name", "id")->toArray()
