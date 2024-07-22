@@ -192,6 +192,20 @@ class ContactResource extends Resource
                         $query->whereNull("zip");
                         $query->whereNull("canton");
                     }),
+                Filters\SelectFilter::make("tags")
+                    ->label(__("filterlables.contacts.tags"))
+                    ->multiple()
+                    ->options(
+                        \App\Models\Tag::all()->pluck("label", "id")->toArray()
+                    )
+                    ->modifyQueryUsing(function (Builder $query, $state){
+                        if (!$state['values']) {
+                            return $query;
+                        }
+                        return $query->whereHas('tags', function ($query) use ($state) {
+                            $query->whereIn('tags.id', $state['values']);
+                        });
+                    }),
                 Filters\SelectFilter::make("canton")
                     ->label(__("filterlables.contacts.canton"))
                     ->multiple()

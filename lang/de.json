@@ -17,6 +17,7 @@
     "signup.status.cancelled": "Abgesagt",
     "signup.status.no-show": "Nicht erschienen",
     "filterlables.contacts.my_contacts": "Meine Kontakte",
+    "filterlables.contacts.tags" : "Tags beinhaltet",
     "filterlables.contacts.canton": "Kanton des Kontakts",
     "cantons.AG": "Aargau",
     "cantons.AR": "Appenzell Ausserrhoden",

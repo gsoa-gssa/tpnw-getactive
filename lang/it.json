@@ -17,6 +17,7 @@
     "signup.status.cancelled": "Annullato",
     "signup.status.no-show": "Assente",
     "filterlables.contacts.my_contacts": "I miei contatti",
+    "filterlables.contacts.tags": "Tags inclusi",
     "filterlables.contacts.canton": "Canton del contatto",
     "cantons.AG": "Argovia",
     "cantons.AR": "Appenzello Esterno",

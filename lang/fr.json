@@ -17,6 +17,7 @@
     "signup.status.cancelled": "Annulé",
     "signup.status.no-show": "Non présent",
     "filterlables.contacts.my_contacts": "Mes contacts",
+    "filterlables.contacts.tags": "Tags inclus",
     "filterlables.contacts.canton": "Canton du contact",
     "cantons.AG": "Argovie",
     "cantons.AR": "Appenzell Rhodes-Extérieures",
