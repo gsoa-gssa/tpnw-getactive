@@ -216,11 +216,15 @@ class ContactResource extends Resource
                                 ->options(
                                      Canton::all()->pluck("name." . app()->getLocale(), "code")->toArray()
                                 ),
-                            SelectConstraint::make("tags")
+                            RelationshipConstraint::make("tags")
                                 ->label(__('filterlabels.contacts.tags'))
                                 ->multiple()
-                                ->options(
-                                    \App\Models\Tag::all()->pluck("label", "id")->toArray()
+                                ->selectable(
+                                    IsRelatedToOperator::make()
+                                        ->titleAttribute("label")
+                                        ->searchable()
+                                        ->preload()
+                                        ->multiple()
                                 ),
                             RelationshipConstraint::make("user")
                                 ->label(__('filterlabels.contacts.users'))
