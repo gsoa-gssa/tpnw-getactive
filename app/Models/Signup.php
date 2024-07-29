@@ -62,7 +62,7 @@ class Signup extends Model
         parent::boot();
 
         static::created(function ($signup) {
-            if (!$signup->confirmation_email) {
+            if ($signup->confirmation_email === false) {
                 return;
             }
             $notification = new \App\Notifications\Signup\Confirmation($signup);
@@ -71,7 +71,7 @@ class Signup extends Model
             $emailNotification = \App\Models\EmailNotification::create([
                 'subject' => $data['subject'],
                 'body' => $data['body'],
-                'user_id' => $signup->contact->user->id,
+                'user_id' => $signup->contact->user->id ?? null,
                 'contact_id' => $signup->contact->id,
                 'signup_id' => $signup->id,
                 'type' => $data['type'],

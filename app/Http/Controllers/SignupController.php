@@ -51,9 +51,12 @@ class SignupController extends Controller
         $contact->save();
 
         foreach ($request->events as $event) {
-            Signup::firstOrCreate([
+            Signup::where('contact_id', $contact->id)->where('event_id', $event)->delete();
+            Signup::create([
                 'contact_id' => $contact->id,
                 'event_id' => $event,
+                "confirmation_email" => true,
+                "reminder_email" => true,
             ]);
         }
 
