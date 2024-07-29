@@ -15,15 +15,15 @@ class SignupController extends Controller
 
     public function createSignup(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
             'zip' => 'required',
-            'canton' => 'required',
             'events' => 'required|json',
         ]);
+
         $request->events = json_decode($request->events);
 
         $contact = Contact::updateOrCreate([
@@ -33,7 +33,6 @@ class SignupController extends Controller
             'lastname' => $request->lastname,
             'phone' => $request->phone,
             'zip' => $request->zip,
-            'canton' => $request->canton,
             'language' => app()->getLocale(),
         ]);
 
