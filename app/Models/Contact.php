@@ -86,7 +86,6 @@ class Contact extends Model
             }
             $contact->email = $email;
             $contact->save();
-            dd($contact);
             $comment = __("alerts.restore.restored", ["model" => __("models.contacts.name"), "user" => auth()->user()->name, "date" => now()]);
             FilamentComment::create([
                 'comment' => $comment,
