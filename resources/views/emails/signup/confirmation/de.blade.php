@@ -126,7 +126,7 @@ body {
     <div id="i7ia9o" class="gjs-grid-column"><img id="ipbwk7" src="{{url('images/emails/MC_Head_de.png')}}" alt="Logo"/>
       <div id="i26i05"><b id="ijn4gj">Hoi {{$contact->firstname}}!</b></div>
       <div id="iwp6he">Du hast dich soeben für den Event «{{$event->getTranslatable("name", $language)}}» angemeldet.
-        <b>Danke dafür!</b><br/><br/>Die Veranstaltung findet am {{$event->date->format("d.m.Y")}} statt, ich werde mich kurz davor bei dir mit den wichtigsten Infos melden. Falls du fragen hast, kannst du dich jederzeit bei mir melden. Herzlichen Dank für deine Unterstützung!
+        <b>Danke dafür!</b><br/><br/>Die Veranstaltung findet am {{$event->date->format("d.m.Y")}}@if ($event->getTranslatable("time", $language)) (Uhrzeit: {{$event->getTranslatable("time", $language)}})@endif statt, ich werde mich kurz davor bei dir mit den wichtigsten Infos melden. Falls du fragen hast, kannst du dich jederzeit bei mir melden. Herzlichen Dank für deine Unterstützung!
         <br/>
         <br/>
         <b>Antimilitaristische Grüsse und bis bald,</b><br/>{{$user->name}}<br>
