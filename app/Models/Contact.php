@@ -61,6 +61,13 @@ class Contact extends Model
         parent::boot();
 
         static::deleting(function ($contact) {
+            if ($contact->events()->where('date', '>=', now())->count() > 0) {
+                Notification::make()
+                    ->title(__("alerts.delete.hasrelations.events"))
+                    ->danger()
+                    ->send();
+                return false;
+            }
             $contact->signups()->delete();
             $contact->email = $contact->email . '-deleted-' . now();
             $comment = __("alerts.delete.deleted", ["model" => __("models.contacts.name"), "user" => auth()->user()->name, "date" => now()]);

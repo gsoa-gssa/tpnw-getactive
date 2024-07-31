@@ -101,6 +101,7 @@
     "signup.infolist.contact": "Kontakt",
     "signup.infolist.event": "Event",
     "actionlables.mailchimp_defaults": "Mailchimp Standardwerte setzen",
+    "alerts.delete.hasrelations.events": "Kontakt kann nicht gelöscht werden, da er mit Events verknüpft ist",
     "alerts.delete.deleted": "<p>:model gelöscht durch :user am :date.<\/p>",
     "models.contacts.name": "Kontakt",
     "alerts.restore.emailinuse": "E-Mail Adresse ist bereits in Verwendung",

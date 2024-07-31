@@ -101,6 +101,7 @@
     "signup.infolist.contact": "Contact",
     "signup.infolist.event": "Événement",
     "actionlables.mailchimp_defaults": "Définir les valeurs par défaut de Mailchimp",
+    "alerts.delete.hasrelations.events": "Le contact ne peut pas être supprimé car il est lié à des événements",
     "alerts.delete.deleted": "<p>:model supprimé par :user le :date.<\/p>",
     "models.contacts.name": "Contact",
     "alerts.restore.emailinuse": "E-Mail Address in use",
