@@ -162,7 +162,7 @@ class EventResource extends Resource
                     ->searchable()
                     ->relationship('subevents', 'id')
                     ->getSearchResultsUsing(fn($query, $search) => $query->where('name', 'like', '%' . $search . '%')->whereDate('date', '>=', date('Y-m-d', strtotime('today'))))
-                    ->getOptionLabelFromRecordUsing(fn($record) => $record->getTranslatable('name', app()->getLocale()) . ' (' . $record->date . ')')
+                    ->getOptionLabelFromRecordUsing(fn($record) => $record->getTranslatable('name', app()->getLocale()) . ' (' . date("d.m.Y", strtotime($record->date)) . ')')
                     ->preload()
                     ->columnSpanFull()
                     ->visible(fn(Get $get) => $get('reassign'))
