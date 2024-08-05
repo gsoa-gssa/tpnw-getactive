@@ -159,13 +159,21 @@ class EventResource extends Resource
                     ->columnSpanFull()
                     ->label(__('events.create.reassign')),
                 Forms\Components\Select::make('subevents')
-                    ->options(Event::all()->pluck('name.' . app()->getLocale(), 'id')->toArray())
-                    ->getOptionLabelUsing(fn($record) => $record->getTranslatable('name', app()->getLocale()))
+                    ->searchable()
                     ->multiple()
+                    ->getSearchResultsUsing(function($search) {
+                        $events = Event::where('name', 'like', "%$search%")->get();
+                        $options = [];
+                        foreach ($events as $event) {
+                            $options[] = [
+                                $event->id => $event->getTranslatable('name', app()->getLocale())
+                            ];
+                        }
+                        return $options;
+                    })
                     ->visible(fn(Get $get): bool => $get('reassign'))
                     ->columnSpanFull()
-                    ->required()
-                    ->searchable(),
+                    ->required(),
             ]);
     }
 
