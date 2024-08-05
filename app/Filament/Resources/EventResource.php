@@ -164,6 +164,8 @@ class EventResource extends Resource
                     ->getSearchResultsUsing(fn($query, $search) => $query->where('name', 'like', '%' . $search . '%'))
                     ->getOptionLabelFromRecordUsing(fn($record) => $record->getTranslatable('name', app()->getLocale()))
                     ->preload()
+                    ->columnSpanFull()
+                    ->visible(fn(Get $get) => $get('reassign'))
                     ->multiple()
             ]);
     }
