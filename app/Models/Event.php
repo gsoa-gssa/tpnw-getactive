@@ -25,7 +25,6 @@ class Event extends Model
         'time' => 'array',
         'description' => 'array',
         'contactinfo' => 'array',
-        "subevents" => 'array',
     ];
 
     /**
@@ -34,6 +33,14 @@ class Event extends Model
     public function users() : \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(\App\Models\User::class);
+    }
+
+    /**
+     * Get the subevents for the event.
+     */
+    public function subevents() : \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\Event::class, 'events_events', 'event_id', 'subevent_id');
     }
 
     /**

@@ -36,7 +36,7 @@
                 <span class="text-red-500">{{ $errors->first("zip") }}</span>
             @endif
         </div>
-        @if ($events->first()->reassign && $events->count() == 1 && count($events->first()->subevents) > 1)
+        @if ($events->first()->reassign && $events->count() == 1 && $events->first()->subevents->count() > 1)
             <div class="tpnw-getactive-form__input--group col-span-full">
                 <p>{{__("signup.subevent.helper")}}</p>
             </div>
@@ -44,7 +44,6 @@
                 <label for="subevent">{{__("signup.subevent")}}</label>
                 <select name="subevent" id="subevent" required>
                     @foreach ($events->first()->subevents as $event)
-                        <?php $event = \App\Models\Event::find($event); ?>
                         <option value="{{$event->id}}">{{$event->getTranslatable("name", app()->getLocale())}}</option>
                     @endforeach
                 </select>
