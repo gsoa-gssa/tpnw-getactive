@@ -25,6 +25,7 @@ class Event extends Model
         'time' => 'array',
         'description' => 'array',
         'contactinfo' => 'array',
+        "subevents" => 'array',
     ];
 
     /**

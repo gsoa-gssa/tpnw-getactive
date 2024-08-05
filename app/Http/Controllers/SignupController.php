@@ -15,24 +15,43 @@ class SignupController extends Controller
 
     public function createSignup(Request $request)
     {
-        $validated = $request->validate([
+
+        if (!$request->events || !is_array(json_decode($request->events))) {
+            return redirect()->back()->withInput();
+        }
+
+        $request->events = json_decode($request->events);
+        if (count($request->events) == 1) {
+            $event = Event::find($request->events[0]);
+            $reassign = $event->reassign;
+        }
+
+        $validate = [
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
             'zip' => 'required',
             'events' => 'required|json',
-        ]);
+        ];
 
-        $request->events = json_decode($request->events);
+        if (isset($reassign)) {
+            $validate['subevent'] = 'required';
+        }
+
+        $validated = $request->validate($validate);
+
+        if ($reassign) {
+            $validated["events"] = [$validated["subevent"]];
+        }
 
         $contact = Contact::updateOrCreate([
-            'email' => $request->email,
+            'email' => $validated["email"],
         ], [
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'phone' => $request->phone,
-            'zip' => $request->zip,
+            'firstname' => $validated["firstname"],
+            'lastname' => $validated["lastname"],
+            'phone' => $validated["phone"],
+            'zip' => $validated["zip"],
             'language' => app()->getLocale(),
         ]);
 
@@ -40,7 +59,7 @@ class SignupController extends Controller
             $contact->activities = [];
         }
         $activities = [];
-        foreach ($request->events as $event) {
+        foreach ($validated["events"] as $event) {
             $event = Event::find($event);
             if (!$event) {
                 return redirect()->route('signup.events')->withInput();
@@ -50,7 +69,7 @@ class SignupController extends Controller
         $contact->activities = array_unique(array_merge($contact->activities, $activities));
         $contact->save();
 
-        foreach ($request->events as $event) {
+        foreach ($validated["events"] as $event) {
             Signup::where('contact_id', $contact->id)->where('event_id', $event)->delete();
             Signup::create([
                 'contact_id' => $contact->id,

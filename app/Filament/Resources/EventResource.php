@@ -7,6 +7,7 @@ use Filament\Tables;
 use Filament\Infolists;
 use App\Models\Event;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Tables\Table;
 use Filament\Tables\Filters;
 use Filament\Resources\Resource;
@@ -150,6 +151,21 @@ class EventResource extends Resource
                     ->helperText(__('events.create.visibility_helper'))
                     ->columnSpanFull()
                     ->label(__('events.create.visibility')),
+                Forms\Components\Toggle::make('reassign')
+                    ->default(false)
+                    ->onColor('success')
+                    ->live()
+                    ->helperText(__('events.create.reassign_helper'))
+                    ->columnSpanFull()
+                    ->label(__('events.create.reassign')),
+                Forms\Components\Select::make('subevents')
+                    ->options(Event::all()->pluck('name.' . app()->getLocale(), 'id')->toArray())
+                    ->getOptionLabelUsing(fn($record) => $record->getTranslatable('name', app()->getLocale()))
+                    ->multiple()
+                    ->visible(fn(Get $get): bool => $get('reassign'))
+                    ->columnSpanFull()
+                    ->required()
+                    ->searchable(),
             ]);
     }
 
