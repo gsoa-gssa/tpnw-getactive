@@ -161,7 +161,7 @@ class EventResource extends Resource
                 Forms\Components\Select::make('subevents')
                     ->searchable()
                     ->relationship('subevents', 'id')
-                    ->getSearchResultsUsing(fn($query, $search) => $query->where('name', 'like', '%' . $search . '%'))
+                    ->getSearchResultsUsing(fn($query, $search) => $query->where('name', 'like', '%' . $search . '%')->whereDate('date', '>=', date('Y-m-d', strtotime('today'))))
                     ->getOptionLabelFromRecordUsing(fn($record) => $record->getTranslatable('name', app()->getLocale()))
                     ->preload()
                     ->columnSpanFull()
