@@ -164,6 +164,7 @@
     "event.create.submit": "Créer l'événement",
     "signup.subevent.helper": "Ce jour-là, plusieurs événements auront lieu à différents endroits. Veuillez sélectionner l'événement auquel vous souhaitez participer.",
     "signup.subevent": "Événement",
+    "signup.subevent.placeholder": "Sélectionner un événement",
     "signup.submit": "S'inscrire",
     "signup.selectEvents": "Choisissez des événements",
     "cantons.canton": "Canton",

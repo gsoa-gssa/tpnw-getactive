@@ -43,6 +43,7 @@
             <div class="tpnw-getactive-form__input--group col-span-full">
                 <label for="subevent">{{__("signup.subevent")}}</label>
                 <select name="subevent" id="subevent" required>
+                    <option value="">{{__("signup.subevent.placeholder")}}</option>
                     @foreach ($events->first()->subevents as $event)
                         <option value="{{$event->id}}">{{$event->getTranslatable("name", app()->getLocale())}}</option>
                     @endforeach
