@@ -389,7 +389,7 @@ class EventResource extends Resource
                             ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id ?? 1]))
                             ->label('Zip'),
                         InfoLists\Components\TextEntry::make('contact.canton')
-                            ->url(fn($record) => CantonResource::getUrl('edit', ['record' => \App\Models\Canton::where('code', $record->contact->canton)->first()->id ?? 1]))
+                            ->url(fn($record) => CantonResource::getUrl('edit', ['record' => \App\Models\Canton::where('code', $record->contact->canton ?? "ZH")->first()->id ?? 1]))
                             ->label('Canton'),
                     ]
                 )
