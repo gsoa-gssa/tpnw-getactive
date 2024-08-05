@@ -108,6 +108,8 @@
     "models.contacts.name": "Contact",
     "alerts.restore.emailinuse": "E-Mail Address in use",
     "alerts.restore.restored": "<p>:model restauré par :user le :date.<\/p>",
+    "validator.signup.subevent.required": "Choisissez un événement",
+    "validator.signup.events.required": "Choisissez des événements",
     "emails.signup.confirmation.subject": "Merci pour votre inscription à «:event»",
     "emails.signup.reminder.subject": "Votre inscription pour «:event»",
     "events.export.signups.title": "Inscriptions pour «:eventname»",

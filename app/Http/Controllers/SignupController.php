@@ -39,7 +39,10 @@ class SignupController extends Controller
             $validate['subevent'] = 'required';
         }
 
-        $validated = $request->validate($validate);
+        $validated = $request->validate($validate, [
+            'subevent.required' => __('validator.signup.subevent.required'),
+            'events.required' => __('validator.signup.events.required'),
+        ]);
 
         if ($reassign) {
             $validated["events"] = [$validated["subevent"]];
