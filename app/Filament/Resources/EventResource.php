@@ -162,7 +162,7 @@ class EventResource extends Resource
                     ->searchable()
                     ->multiple()
                     ->getSearchResultsUsing(function($search) {
-                        $events = Event::where('name', 'like', "%$search%")->get();
+                        $events = Event::where('name', 'like', "%$search%")->whereDate('date', '>=', date('Y-m-d', strtotime('today')))->get();
                         $options = [];
                         foreach ($events as $event) {
                             $options[] = [
