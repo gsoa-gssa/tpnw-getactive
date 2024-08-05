@@ -374,19 +374,19 @@ class EventResource extends Resource
                 Infolists\Components\Section::make(__("events.infolist.section.contact"))
                     ->schema([
                         Infolists\Components\TextEntry::make('contact.firstname')
-                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]) ?? null)
                             ->label("First Name"),
                         Infolists\Components\TextEntry::make('contact.lastname')
-                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]) ?? null)
                             ->label("Last Name"),
                         InfoLists\Components\TextEntry::make('contact.email')
-                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]) ?? null)
                             ->label('Email'),
                         InfoLists\Components\TextEntry::make('contact.phone')
-                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]) ?? null)
                             ->label('Phone'),
                         InfoLists\Components\TextEntry::make('contact.zip')
-                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]))
+                            ->url(fn($record) => ContactResource::getUrl('view', ['record' => $record->contact_id]) ?? null)
                             ->label('Zip'),
                         InfoLists\Components\TextEntry::make('contact.canton')
                             ->url(fn($record) => CantonResource::getUrl('edit', ['record' => \App\Models\Canton::where('code', $record->contact->canton)->first()->id ?? 1]))
