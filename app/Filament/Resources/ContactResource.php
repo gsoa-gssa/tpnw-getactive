@@ -213,6 +213,7 @@ class ContactResource extends Resource
                                 ->label(__('filterlabels.contacts.zip')),
                             SelectConstraint::make("canton")
                                 ->label(__('filterlabels.contacts.canton'))
+                                ->multiple()
                                 ->options(
                                      Canton::all()->pluck("name." . app()->getLocale(), "code")->toArray()
                                 ),
