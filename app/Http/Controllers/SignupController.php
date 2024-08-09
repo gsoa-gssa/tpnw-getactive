@@ -35,7 +35,7 @@ class SignupController extends Controller
             'events' => 'required|json',
         ];
 
-        if (isset($reassign)) {
+        if (isset($reassign) && $reassign) {
             $validate['subevent'] = 'required';
         }
 
@@ -46,6 +46,8 @@ class SignupController extends Controller
 
         if ($reassign) {
             $validated["events"] = [$validated["subevent"]];
+        } else {
+            $validated["events"] = $request->events;
         }
 
         $contact = Contact::updateOrCreate([
