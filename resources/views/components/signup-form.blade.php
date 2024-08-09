@@ -1,4 +1,11 @@
 <div class="tpnw-getactive-form">
+    @if ($errors->any())
+        <div class="tpnw-getactive-form__input--group col-span-full bg-red-100 px-4 py-2 my-4 border border-red-500 rounded-sm">
+            <div class="text-red-500">
+                {{__("signup.error")}}
+            </div>
+        </div>
+    @endif
     <form action="{{route("signup.create")}}" method="POST">
         @csrf
         <div class="tpnw-getactive-form__input--group">

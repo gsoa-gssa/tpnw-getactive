@@ -164,6 +164,7 @@
     "event.create.zip.label": "CAP",
     "event.create.zip.placeholder": " ",
     "event.create.submit": "Crea evento",
+    "signup.error": "Si è verificato un errore durante la registrazione. Per favore riprova.",
     "signup.subevent.helper": "In questa giornata si svolgeranno eventi in più sedi. Seleziona l'evento a cui desideri partecipare.",
     "signup.subevent": "Evento",
     "signup.subevent.placeholder": "Seleziona l'evento",

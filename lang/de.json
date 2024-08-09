@@ -164,6 +164,7 @@
     "event.create.zip.label": "Postleitzahl",
     "event.create.zip.placeholder": " ",
     "event.create.submit": "Event erstellen",
+    "signup.error": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut.",
     "signup.subevent.helper": "An diesem Tag finden an mehreren Standorten Veranstaltungen statt. Bitte wähle die Veranstaltung aus, an der du teilnehmen möchtest.",
     "signup.subevent": "Veranstaltung",
     "signup.subevent.placeholder": "Veranstaltung auswählen",
