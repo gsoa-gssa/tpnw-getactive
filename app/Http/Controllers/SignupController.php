@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Event;
 use App\Models\Signup;
+use App\Models\Git;
 use Illuminate\Http\Request;
 
 class SignupController extends Controller
@@ -15,6 +16,10 @@ class SignupController extends Controller
 
     public function createSignup(Request $request)
     {
+        \Illuminate\Support\Facades\Log::build([
+            "driver" => "single",
+            "path" => storage_path('logs/signups/' . Git::getLastCommit()->getAuthorDate()->format('Y-m-d.H:i:s') . "/" . \Illuminate\Support\Str::uuid() . '.log'),
+        ])->info(json_encode($request->all()));
 
         if (!$request->events || !is_array(json_decode($request->events))) {
             return redirect()->back()->withInput();
