@@ -31,9 +31,9 @@
         </div>
         <div class="tpnw-getactive-form__input--group">
             <label for="phone">{{__("signup.phone")}}</label>
-            <input type="tel" id="phone" name="phone" value="{{old("phone", request("phone"))}}" required>
+            <input type="tel" id="phone" name="phone" value="{{old("phone", request("phonenumber"))}}" required>
             @if ($errors->has("phone"))
-                <span class="text-red-500">{{ $errors->first("phonenumber") }}</span>
+                <span class="text-red-500">{{ $errors->first("phone") }}</span>
             @endif
         </div>
         <div class="tpnw-getactive-form__input--group">
