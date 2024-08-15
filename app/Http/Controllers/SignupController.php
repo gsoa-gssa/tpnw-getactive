@@ -16,9 +16,10 @@ class SignupController extends Controller
 
     public function createSignup(Request $request)
     {
+        $logfile = storage_path('logs/signups/' . Git::getLastCommit()->getAuthorDate()->format('Y-m-d.H:i:s') . "/" . \Illuminate\Support\Str::uuid() . '.log');
         \Illuminate\Support\Facades\Log::build([
             "driver" => "single",
-            "path" => storage_path('logs/signups/' . Git::getLastCommit()->getAuthorDate()->format('Y-m-d.H:i:s') . "/" . \Illuminate\Support\Str::uuid() . '.log'),
+            "path" => $logfile,
         ])->info(json_encode($request->all()));
 
         if (!$request->events || !is_array(json_decode($request->events))) {

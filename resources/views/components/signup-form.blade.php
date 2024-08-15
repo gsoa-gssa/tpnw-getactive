@@ -10,35 +10,35 @@
         @csrf
         <div class="tpnw-getactive-form__input--group">
             <label for="firstname">{{__("signup.firstname")}}</label>
-            <input type="text" id="firstname" name="firstname" value="{{old("firstname")}}" required>
+            <input type="text" id="firstname" name="firstname" value="{{old("firstname", request("fname"))}}" required>
             @if ($errors->has("firstname"))
                 <span class="text-red-500">{{ $errors->first("firstname") }}</span>
             @endif
         </div>
         <div class="tpnw-getactive-form__input--group">
             <label for="lastname">{{__("signup.lastname")}}</label>
-            <input type="text" id="lastname" name="lastname" value="{{old("lastname")}}" required>
+            <input type="text" id="lastname" name="lastname" value="{{old("lastname", request("lname"))}}" required>
             @if ($errors->has("lastname"))
                 <span class="text-red-500">{{ $errors->first("lastname") }}</span>
             @endif
         </div>
         <div class="tpnw-getactive-form__input--group col-span-full">
             <label for="email">{{__("signup.email")}}</label>
-            <input type="email" id="email" name="email" value="{{old("email")}}" required>
+            <input type="email" id="email" name="email" value="{{old("email", request("email"))}}" required>
             @if ($errors->has("email"))
                 <span class="text-red-500">{{ $errors->first("email") }}</span>
             @endif
         </div>
         <div class="tpnw-getactive-form__input--group">
             <label for="phone">{{__("signup.phone")}}</label>
-            <input type="tel" id="phone" name="phone" value="{{old("phone")}}" required>
+            <input type="tel" id="phone" name="phone" value="{{old("phone", request("phone"))}}" required>
             @if ($errors->has("phone"))
                 <span class="text-red-500">{{ $errors->first("phone") }}</span>
             @endif
         </div>
         <div class="tpnw-getactive-form__input--group">
             <label for="zip">{{__("signup.zip")}}</label>
-            <input type="text" id="zip" name="zip" value="{{old("zip")}}" required>
+            <input type="text" id="zip" name="zip" value="{{old("zip", request("zip"))}}" required>
             @if ($errors->has("zip"))
                 <span class="text-red-500">{{ $errors->first("zip") }}</span>
             @endif
