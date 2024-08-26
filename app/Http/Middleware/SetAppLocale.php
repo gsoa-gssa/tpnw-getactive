@@ -27,7 +27,7 @@ class SetAppLocale
                 app()->setLocale('it');
                 break;
             default:
-                app()->setLocale('de');
+                app()->setLocale('it');
                 break;
         }
         return $next($request);

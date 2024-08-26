@@ -15,7 +15,7 @@ Route::prefix("emails")->group(function () {
     });
 
     Route::get("/signup/reminder", function () {
-        $signup = App\Models\Signup::all()->first();
+        $signup = App\Models\Signup::all()->last();
 
         return (new App\Notifications\Signup\Reminder($signup))->toMail($signup->contact);
     });
