@@ -11,7 +11,7 @@
     <div class="gjs-grid-column" id="i7as8h"><img src="{{url('images/emails/MC_Head_it.png')}}" alt="Logo" id="iz04el"/>
       <div id="ir2uut"><b id="i0os3o">Ciao {{$contact->firstname}}!</b></div>
       <div id="ifz1ka">Hai appena effettuato l'iscrizione per l'evento «{{$event->getTranslatable("name", $language)}}».
-        <b>Grazie!</b><br/><br/>L'evento si svolgerà il giorno della {{$event->date->format("d.m.Y")}}@if ($event->getTranslatable("time", $language)), {{$event->getTranslatable("time", $language)}}@endif, vi contatterò poco prima con le informazioni più importanti. Se avete domande, potete contattarmi in qualsiasi momento. Grazie mille per il vostro sostegno!
+        <b>Grazie!</b><br/><br/>L'evento si svolgerà il giorno {{$event->date->format("d.m.Y")}}@if ($event->getTranslatable("time", $language)), {{$event->getTranslatable("time", $language)}}@endif, vi contatterò poco prima con le informazioni più importanti. Se avete domande, potete contattarmi in qualsiasi momento. Grazie mille per il vostro sostegno!
         <br/>
         <br/>
         <b>Saluti antimilitaristi e a presto,</b>
