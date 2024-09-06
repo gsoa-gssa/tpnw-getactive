@@ -30,6 +30,17 @@ class SignupController extends Controller
         if (count($request->events) == 1) {
             $event = Event::find($request->events[0]);
             $reassign = $event->reassign;
+        } else {
+            foreach ($request->events as $event) {
+                $event = Event::find($event);
+                if ($event->reassign) {
+                    return redirect()->back()->withInput()->withErrors([
+                        'firstname' => __('validator.signup.subevent.notpossible'),
+                    ]);
+                } else {
+                    $reassign = false;
+                }
+            }
         }
 
         $validate = [
