@@ -40,8 +40,8 @@
                 <label for="typeFilter">{{__("eventtypes.type")}}</label>
                 <select class="tpnw-getactive-eventgrid__filterbar__filter" id="typeFilter" wire:change="changeFilter('type', $event.target.value)">
                     <option value="all">{{__("eventtypes.all")}}</option>
-                    <option value="signaturecollection">{{__("eventtypes.signaturecollection")}}</option>
-                    <option value="certification">{{__("eventtypes.certification")}}</option>
+                    <option value="signaturecollection" @if(request()->get('eventtype') == "signaturecollection") selected @endif>{{__("eventtypes.signaturecollection")}}</option>
+                    <option value="certification" @if(request()->get('eventtype') == "certification") selected @endif>{{__("eventtypes.certification")}}</option>
                 </select>
             </div>
         </div>

@@ -7,7 +7,12 @@ use App\Http\Controllers\SignupController;
 use App\Models\Signup;
 
 Route::get('/', function () {
-    $events = \App\Models\Event::whereDate('date', ">=", now())->where("visibility", true)->orderBy('date', 'asc')->get();
+    $query = \App\Models\Event::query();
+    $query->whereDate('date', ">=", now())->where("visibility", true)->orderBy('date', 'asc')->get();
+    if (request()->has('eventtype')) {
+        $query->where('type', request('eventtype'));
+    }
+    $events = $query->get();
     return view("frontend.events", compact('events'));
 })->name('landingpage');
 
