@@ -177,7 +177,7 @@
     "eventtypes.all": "Alle Typen",
     "eventtypes.signaturecollection": "Unterschriftensammlung",
     "eventtypes.certification": "Beglaubigung",
-    "signup.gonext.1": "Für :countX Sammeln anmelden",
+    "signup.gonext.1": "Für :count Events anmelden",
     "eventtypes.$event->type": "eventtypes.$event->type",
     "cantons.$event->canton": "cantons.$event->canton",
     "label.location": "Treffpunkt: ",

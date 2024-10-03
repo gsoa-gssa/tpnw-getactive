@@ -177,7 +177,7 @@
     "eventtypes.all": "Tous",
     "eventtypes.signaturecollection": "Collecte de signatures",
     "eventtypes.certification": "Certification",
-    "signup.gonext.1": "S'inscrire à la collecte 1X",
+    "signup.gonext.1": "S'inscrire à :count événements",
     "eventtypes.$event->type": "eventtypes.$event->type",
     "cantons.$event->canton": "cantons.$event->canton",
     "label.location": "Rendez-vous : ",
