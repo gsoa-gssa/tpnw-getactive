@@ -48,7 +48,7 @@
         <div class="tpnw-getactive-eventgrid__submit max-w-[793px] mx-auto flex justify-center mt-10">
             <button type="submit" class="tpnw-getactive-eventgrid__submit__button">{{__("signup.gonext.1", ["count" => $eventCounter])}}</button>
         </div>
-        <div class="tpnw-getactive-eventgrid__events max-w-[1080px] mx-auto mt-8 pb-12">
+        <div class="tpnw-getactive-eventgrid__events max-w-[1080px] mx-auto mt-8 pb-20">
             @foreach($events as $event)
                 <label for="event{{$event->id}}" class="tpnw-getactive-eventgrid__events__event bg-accent p-3">
                     <h2 class="text-2xl font-bold !leading-[1.15]">{{$event->getTranslatable("name", app()->getLocale())}}</h2>
