@@ -12,6 +12,9 @@ Route::get('/', function () {
     if (request()->has('eventtype')) {
         $query->where('type', request('eventtype'));
     }
+    if (request()->has('canton')) {
+        $query->where('canton', request('canton'));
+    }
     $events = $query->get();
     return view("frontend.events", compact('events'));
 })->name('landingpage');
