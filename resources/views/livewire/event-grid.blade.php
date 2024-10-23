@@ -8,32 +8,32 @@
                 <label for="cantonFilter">{{__("cantons.canton")}}</label>
                 <select class="tpnw-getactive-eventgrid__filterbar__filter" id="cantonFilter" wire:change="changeFilter('canton', $event.target.value)">
                     <option value="all">{{__("cantons.all")}}</option>
-                    <option value="AG" @if (request()->get("canton") == "AG") selected @endif>{{__("cantons.AG")}}</option>
-                    <option value="AI" @if (request()->get("canton") == "AI") selected @endif>{{__("cantons.AI")}}</option>
-                    <option value="AR" @if (request()->get("canton") == "AR") selected @endif>{{__("cantons.AR")}}</option>
-                    <option value="BE" @if (request()->get("canton") == "BE") selected @endif>{{__("cantons.BE")}}</option>
-                    <option value="BL" @if (request()->get("canton") == "BL") selected @endif>{{__("cantons.BL")}}</option>
-                    <option value="BS" @if (request()->get("canton") == "BS") selected @endif>{{__("cantons.BS")}}</option>
-                    <option value="FR" @if (request()->get("canton") == "FR") selected @endif>{{__("cantons.FR")}}</option>
-                    <option value="GE" @if (request()->get("canton") == "GE") selected @endif>{{__("cantons.GE")}}</option>
-                    <option value="GL" @if (request()->get("canton") == "GL") selected @endif>{{__("cantons.GL")}}</option>
-                    <option value="GR" @if (request()->get("canton") == "GR") selected @endif>{{__("cantons.GR")}}</option>
-                    <option value="JU" @if (request()->get("canton") == "JU") selected @endif>{{__("cantons.JU")}}</option>
-                    <option value="LU" @if (request()->get("canton") == "LU") selected @endif>{{__("cantons.LU")}}</option>
-                    <option value="NE" @if (request()->get("canton") == "NE") selected @endif>{{__("cantons.NE")}}</option>
-                    <option value="NW" @if (request()->get("canton") == "NW") selected @endif>{{__("cantons.NW")}}</option>
-                    <option value="OW" @if (request()->get("canton") == "OW") selected @endif>{{__("cantons.OW")}}</option>
-                    <option value="SG" @if (request()->get("canton") == "SG") selected @endif>{{__("cantons.SG")}}</option>
-                    <option value="SH" @if (request()->get("canton") == "SH") selected @endif>{{__("cantons.SH")}}</option>
-                    <option value="SO" @if (request()->get("canton") == "SO") selected @endif>{{__("cantons.SO")}}</option>
-                    <option value="SZ" @if (request()->get("canton") == "SZ") selected @endif>{{__("cantons.SZ")}}</option>
-                    <option value="TG" @if (request()->get("canton") == "TG") selected @endif>{{__("cantons.TG")}}</option>
-                    <option value="TI" @if (request()->get("canton") == "TI") selected @endif>{{__("cantons.TI")}}</option>
-                    <option value="UR" @if (request()->get("canton") == "UR") selected @endif>{{__("cantons.UR")}}</option>
-                    <option value="VD" @if (request()->get("canton") == "VD") selected @endif>{{__("cantons.VD")}}</option>
-                    <option value="VS" @if (request()->get("canton") == "VS") selected @endif>{{__("cantons.VS")}}</option>
-                    <option value="ZG" @if (request()->get("canton") == "ZG") selected @endif>{{__("cantons.ZG")}}</option>
-                    <option value="ZH" @if (request()->get("canton") == "ZH") selected @endif>{{__("cantons.ZH")}}</option>
+                    <option value="AG" @if (strtoupper(request()->get("canton")) == "AG") selected @endif>{{__("cantons.AG")}}</option>
+                    <option value="AI" @if (strtoupper(request()->get("canton")) == "AI") selected @endif>{{__("cantons.AI")}}</option>
+                    <option value="AR" @if (strtoupper(request()->get("canton")) == "AR") selected @endif>{{__("cantons.AR")}}</option>
+                    <option value="BE" @if (strtoupper(request()->get("canton")) == "BE") selected @endif>{{__("cantons.BE")}}</option>
+                    <option value="BL" @if (strtoupper(request()->get("canton")) == "BL") selected @endif>{{__("cantons.BL")}}</option>
+                    <option value="BS" @if (strtoupper(request()->get("canton")) == "BS") selected @endif>{{__("cantons.BS")}}</option>
+                    <option value="FR" @if (strtoupper(request()->get("canton")) == "FR") selected @endif>{{__("cantons.FR")}}</option>
+                    <option value="GE" @if (strtoupper(request()->get("canton")) == "GE") selected @endif>{{__("cantons.GE")}}</option>
+                    <option value="GL" @if (strtoupper(request()->get("canton")) == "GL") selected @endif>{{__("cantons.GL")}}</option>
+                    <option value="GR" @if (strtoupper(request()->get("canton")) == "GR") selected @endif>{{__("cantons.GR")}}</option>
+                    <option value="JU" @if (strtoupper(request()->get("canton")) == "JU") selected @endif>{{__("cantons.JU")}}</option>
+                    <option value="LU" @if (strtoupper(request()->get("canton")) == "LU") selected @endif>{{__("cantons.LU")}}</option>
+                    <option value="NE" @if (strtoupper(request()->get("canton")) == "NE") selected @endif>{{__("cantons.NE")}}</option>
+                    <option value="NW" @if (strtoupper(request()->get("canton")) == "NW") selected @endif>{{__("cantons.NW")}}</option>
+                    <option value="OW" @if (strtoupper(request()->get("canton")) == "OW") selected @endif>{{__("cantons.OW")}}</option>
+                    <option value="SG" @if (strtoupper(request()->get("canton")) == "SG") selected @endif>{{__("cantons.SG")}}</option>
+                    <option value="SH" @if (strtoupper(request()->get("canton")) == "SH") selected @endif>{{__("cantons.SH")}}</option>
+                    <option value="SO" @if (strtoupper(request()->get("canton")) == "SO") selected @endif>{{__("cantons.SO")}}</option>
+                    <option value="SZ" @if (strtoupper(request()->get("canton")) == "SZ") selected @endif>{{__("cantons.SZ")}}</option>
+                    <option value="TG" @if (strtoupper(request()->get("canton")) == "TG") selected @endif>{{__("cantons.TG")}}</option>
+                    <option value="TI" @if (strtoupper(request()->get("canton")) == "TI") selected @endif>{{__("cantons.TI")}}</option>
+                    <option value="UR" @if (strtoupper(request()->get("canton")) == "UR") selected @endif>{{__("cantons.UR")}}</option>
+                    <option value="VD" @if (strtoupper(request()->get("canton")) == "VD") selected @endif>{{__("cantons.VD")}}</option>
+                    <option value="VS" @if (strtoupper(request()->get("canton")) == "VS") selected @endif>{{__("cantons.VS")}}</option>
+                    <option value="ZG" @if (strtoupper(request()->get("canton")) == "ZG") selected @endif>{{__("cantons.ZG")}}</option>
+                    <option value="ZH" @if (strtoupper(request()->get("canton")) == "ZH") selected @endif>{{__("cantons.ZH")}}</option>
                 </select>
             </div>
             <div class="tpnw-getactive-eventgrid__filterbar__filter--container">
