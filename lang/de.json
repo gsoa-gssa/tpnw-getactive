@@ -188,5 +188,8 @@
     "frontend.og.title": "Wir brauchen dich!",
     "frontend.og.description": "Eine Volksinitiative zu sammeln braucht viele Menschen, die mithelfen: Unterschriften sammeln und beglaubigen, Flyer verteilen, Aktionen organisieren und, und und. Deshalb brauchen wir Menschen wie dich! Danke, dass du uns unterstützt!",
     "visual.subtitle": "Atomwaffenverbot jetzt!",
-    "visual.title": "Wir brauchen dich!"
+    "visual.title": "Wir brauchen dich!",
+    "contact.pages.view.actions.header.email.label": "E-Mail schreiben",
+    "contact.pages.view.actions.header.email.subject": "Wir brauchen Hilfe beim Unterschriften-Sammeln!",
+    "contact.pages.view.actions.header.email.body": "Hallo :contactname\n\nKönntest du vielleicht einmal Unterschriften sammeln helfen kommen für die Atomwaffenverbots-Initiative? Wir haben gerade wieder zusätzliche Sammel-Anlässe veröffentlicht.\nMehr Informationen und Anmeldung auf https: //go.atomwaffenverbot.ch/\n\nHerzliche Grüsse,\n:user"
 }
