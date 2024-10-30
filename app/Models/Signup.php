@@ -71,7 +71,7 @@ class Signup extends Model
             $emailNotification = \App\Models\EmailNotification::create([
                 'subject' => $data['subject'],
                 'body' => $data['body'],
-                'user_id' => $signup->contact->user->id ?? null,
+                'user_id' => $signup->contact->user->id ?? User::first()->id,
                 'contact_id' => $signup->contact->id,
                 'signup_id' => $signup->id,
                 'type' => $data['type'],
