@@ -67,7 +67,7 @@ class AssignCantons extends Command
                 "postalCode" => $zipCode,
             ])->json();
 
-            $canton = $response[0]["canton"]["code"] ?? null;
+            $canton = $response ?? null;
             dd($canton);
 
             if (!$canton) {
