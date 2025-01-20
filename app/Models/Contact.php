@@ -121,6 +121,31 @@ class Contact extends Model
         });
 
         /** Todo: If contact does not have user responsible, add user via canton */
+        static::creating(function($contact) {
+            $zipCode = $contact->zip;
+            if(!$zipCode) {
+                $contact->user_responsible_id = 1;
+                return;
+            }
+            if (!$contact->user_responsible_id) {
+                $canton = $contact->canton;
+                if (!$canton) {
+                    $response = \Illuminate\Support\Facades\Http::get("https://openplzapi.org/ch/Localities", [
+                        "postalCode" => $zipCode,
+                    ])->json();
+
+                    $canton = $response[0]["canton"]["shortName"] ?? null;
+                    if (!$canton) {
+                        $canton = "ZH";
+                    }
+                }
+                $user = Canton::where('code', $canton)->first();
+                if (!$user) {
+                    $user = User::first();
+                }
+                $contact->user_responsible_id = $user->id;
+            }
+        });
     }
 
     /**
