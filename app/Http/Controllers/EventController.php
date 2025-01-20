@@ -72,6 +72,7 @@ class EventController extends Controller
         $user->notify(new \App\Notifications\EventCreated($event));
 
         // TODO: Bestätigungs-Email an den Kontakt senden
+        $contact->notify(new \App\Notifications\Event\EventCreatedConfirmation($event));
 
         return redirect()->route('event.thanks', ['firstname' => $contact->firstname]);
     }

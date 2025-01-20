@@ -113,6 +113,7 @@
     "validator.signup.events.required": "Choisissez des événements",
     "emails.signup.confirmation.subject": "Merci pour votre inscription à «:event»",
     "emails.signup.reminder.subject": "Votre inscription pour «:event»",
+    "emails.event.created.confirmation.subject": "Votre événement a été créé avec succès!",
     "events.export.signups.title": "Inscriptions pour «:eventname»",
     "events.export.date": "Date",
     "events.export.time": "Heure",

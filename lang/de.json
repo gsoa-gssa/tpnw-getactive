@@ -113,6 +113,7 @@
     "validator.signup.events.required": "Bitte wähle mindestens ein Event aus",
     "emails.signup.confirmation.subject": "Danke für deine Anmeldung für «:event»",
     "emails.signup.reminder.subject": "Deine Anmeldung für «:event»",
+    "emails.event.created.confirmation.subject" : "Dein Event wurde erstellt!",
     "events.export.signups.title": "Teilnehmer*innen «:eventname»",
     "events.export.date": "Eventdatum",
     "events.export.time": "Uhrzeit",
