@@ -129,7 +129,7 @@ body {
         <b>Danke dafür!</b><br/><br/>Die Veranstaltung findet am {{$event->date->format("d.m.Y")}}@if ($event->getTranslatable("time", $language)) (Uhrzeit: {{$event->getTranslatable("time", $language)}})@endif statt, ich werde mich kurz davor bei dir mit den wichtigsten Infos melden. Falls du fragen hast, kannst du dich jederzeit bei mir melden. Herzlichen Dank für deine Unterstützung!
         <br/>
         <br/>
-        <b>Antimilitaristische Grüsse und bis bald,</b><br/>{{$user->name}}<br>
+        <b>Atomwaffenfreie Grüsse und bis bald,</b><br/>{{$user->name}}<br>
         {{$user->email}}<br>
       </div>
     </div>

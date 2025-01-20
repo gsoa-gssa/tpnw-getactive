@@ -119,6 +119,8 @@ class Contact extends Model
                 return true;
             }
         });
+
+        /** Todo: If contact does not have user responsible, add user via canton */
     }
 
     /**

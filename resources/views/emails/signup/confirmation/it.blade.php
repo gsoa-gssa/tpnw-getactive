@@ -14,7 +14,7 @@
         <b>Grazie!</b><br/><br/>L'evento si svolgerà il giorno {{$event->date->format("d.m.Y")}}@if ($event->getTranslatable("time", $language)), {{$event->getTranslatable("time", $language)}}@endif, vi contatterò poco prima con le informazioni più importanti. Se avete domande, potete contattarmi in qualsiasi momento. Grazie mille per il vostro sostegno!
         <br/>
         <br/>
-        <b>Saluti antimilitaristi e a presto,</b>
+        <b>Saluti dedicati e a presto,</b>
         <br/>
         {{$user->name}}<br>
         {{$user->email}}<br>
