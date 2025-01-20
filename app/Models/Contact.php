@@ -119,6 +119,34 @@ class Contact extends Model
                 return true;
             }
         });
+
+        static::created(function($contact) {
+            $zipCode = $contact->zip;
+            if(!$zipCode) {
+                $contact->user_responsible_id = 1;
+                return;
+            }
+            if (!$contact->user_responsible_id) {
+                $canton = $contact->canton;
+                if (!$canton) {
+                    $response = \Illuminate\Support\Facades\Http::get("https://openplzapi.org/ch/Localities", [
+                        "postalCode" => $zipCode,
+                    ])->json();
+
+                    $canton = $response[0]["canton"]["shortName"] ?? null;
+                    if (!$canton) {
+                        $canton = "ZH";
+                    }
+                }
+                $user = Canton::where('code', $canton)->first();
+                if (!$user) {
+                    $user = User::first();
+                }
+                $contact->user_responsible_id = $user->user_id;
+                $contact->canton = $canton;
+                $contact->save();
+            }
+        });
     }
 
     /**
