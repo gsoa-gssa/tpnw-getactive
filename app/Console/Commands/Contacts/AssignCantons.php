@@ -67,8 +67,7 @@ class AssignCantons extends Command
                 "postalCode" => $zipCode,
             ])->json();
 
-            $canton = $response ?? null;
-            var_dump($canton);
+            $canton = $response[0]["canton"]["shortName"] ?? null;
 
             if (!$canton) {
                 $this->error("No canton found for contact {$contact->id} with zip code {$zipCode}.");
