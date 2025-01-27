@@ -50,6 +50,7 @@ class SignupController extends Controller
             'phone' => 'required',
             'zip' => 'required',
             'events' => 'required|json',
+            "source" => ""
         ];
 
         if (isset($reassign) && $reassign) {
@@ -98,6 +99,7 @@ class SignupController extends Controller
                 'event_id' => $event,
                 "confirmation_email" => true,
                 "reminder_email" => true,
+                "source" => isset($validated["source"]) ? $validated["source"] : null,
             ]);
         }
 

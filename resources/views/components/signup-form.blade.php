@@ -60,9 +60,13 @@
                 @endif
             </div>
         @endif
+
         <div class="tpnw-getactive-form__input--group col-span-full">
             <button type="submit" class="tpnw-getactive-form__input__submit">{{__("signup.submit")}}</button>
         </div>
         <input type="hidden" name="events" value="{{$events->pluck("id")}}">
+        @if (request()->has("source"))
+            <input type="hidden" name="source" value="{{request("source")}}">
+        @endif
     </form>
 </div>
