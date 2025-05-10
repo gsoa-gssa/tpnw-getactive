@@ -103,7 +103,6 @@ class EventResource extends Resource
                     ->required(),
                 Forms\Components\Select::make("contact_id")
                     ->relationship("contact", "id")
-                    ->searchable()
                     ->preload()
                     ->createOptionForm([
                         Forms\Components\TextInput::make('firstname')
