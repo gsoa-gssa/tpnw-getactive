@@ -103,6 +103,7 @@ class EventResource extends Resource
                     ->required(),
                 Forms\Components\Select::make("contact_id")
                     ->relationship("contact", "id")
+                    ->searchable()
                     ->preload()
                     ->createOptionForm([
                         Forms\Components\TextInput::make('firstname')
@@ -183,7 +184,6 @@ class EventResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact')
-                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('type')
                     ->icon(fn (string $state): string => match ($state) {
