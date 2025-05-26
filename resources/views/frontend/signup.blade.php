@@ -8,6 +8,7 @@
                 @else
                     <p class="text-3xl font-bold">{{__("signup.lead2")}}</p>
                 @endif
+                <x-signup-details :event="$events->first()"/>
                 <x-signup-form :events="$events"/>
             </div>
         </div>
