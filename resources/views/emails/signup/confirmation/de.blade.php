@@ -157,10 +157,7 @@ body {
 							</li>
 						</ul>
 						<li>
-							<b>Datum:</b> {{$event->date->format("d.m.Y")}}
-							@if ($event->getTranslatable("time", $language))
-								, {{$event->getTranslatable("time", $language)}}
-							@endif
+							<b>Datum:</b> {{$event->date->format("d.m.Y")}}@if ($event->getTranslatable("time", $language)), {{$event->getTranslatable("time", $language)}}@endif
 						</li>
 						<li>
 							<b>Ort:</b> {{$event->getTranslatable("location", $language)}}
