@@ -10,6 +10,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Log;
 
 class Confirmation extends Notification
 {
@@ -20,6 +21,8 @@ class Confirmation extends Notification
     public Contact $contact;
     public User $user;
     public string $language;
+    private array $ccEmails;
+    private array $bccEmails;
 
     /**
      * Create a new notification instance.
@@ -31,6 +34,31 @@ class Confirmation extends Notification
         $this->contact = $signup->contact;
         $this->user = $this->contact->user ?? User::all()->first();
         $this->language = $this->contact->language ?? "de";
+
+        // add $this->user and $this->event->contact to the array of emails
+        // to add to the cc field of the email, don't add them twice
+        $this->ccEmails = [
+            $this->user->name => $this->user->email,
+            $this->event->contact->name => $this->event->contact->email
+        ];
+        // if the second email is the same as the first, remove second entry
+        if ($this->ccEmails[$this->user->name] === $this->ccEmails[$this->event->contact->name]) {
+            unset($this->ccEmails[$this->event->contact->name]);
+        }
+
+        // get email, name pairs of all users that are responsible for the event
+        // and use them in the bcc field of the email if they are not in cc already
+        $this->bccEmails = [];
+        $responsibleUsers = $this->event->users->map(function ($user) {
+            return [$user->email, $user->name];
+        })->toArray();
+        foreach ($responsibleUsers as $user) {
+            if (!in_array($user, $this->ccEmails)) {
+                $this->bccEmails[$user[1]] = $user[0];
+            }
+        }
+        Log::debug('CC Emails: ' . json_encode($this->ccEmails));
+        Log::debug('BCC Emails: ' . json_encode($this->bccEmails));
 
         app()->setLocale($this->language);
     }
@@ -55,6 +83,8 @@ class Confirmation extends Notification
                         "event" => $this->event->getTranslatable("name", $this->language),
                     ]))
                     ->from($this->user->email, $this->user->name)
+                    ->cc($this->ccEmails)
+                    ->bcc($this->bccEmails)
                     ->view('emails.signup.confirmation.' . $this->language, [
                         "event" => $this->event,
                         "contact" => $this->contact,
