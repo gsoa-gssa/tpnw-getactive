@@ -35,8 +35,7 @@ class Confirmation extends Notification
         $this->user = $this->contact->user ?? User::all()->first();
         $this->language = $this->contact->language ?? "de";
 
-        // add $this->user and $this->event->contact to the array of emails
-        // to add to the cc field of the email, don't add them twice
+        // add the volunteer's contact person and the event's contact person to the CC list
         $this->ccEmails = [
             $this->user->name => $this->user->email,
             $this->event->contact->name => $this->event->contact->email
@@ -46,8 +45,7 @@ class Confirmation extends Notification
             unset($this->ccEmails[$this->event->contact->name]);
         }
 
-        // get email, name pairs of all users that are responsible for the event
-        // and use them in the bcc field of the email if they are not in cc already
+        // add all responsible users of the event to the BCC list if they are not already in the CC list
         $this->bccEmails = [];
         $responsibleUsers = $this->event->users->map(function ($user) {
             return [$user->email, $user->name];
@@ -57,8 +55,6 @@ class Confirmation extends Notification
                 $this->bccEmails[$user[1]] = $user[0];
             }
         }
-        Log::debug('CC Emails: ' . json_encode($this->ccEmails));
-        Log::debug('BCC Emails: ' . json_encode($this->bccEmails));
 
         app()->setLocale($this->language);
     }
