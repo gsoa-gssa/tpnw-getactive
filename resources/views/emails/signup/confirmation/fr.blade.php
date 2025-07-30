@@ -5,25 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-</head>
-<body id="ik7m2j">
-  <div class="gjs-grid-row" id="irl6tc">
-    <div class="gjs-grid-column" id="i8pizv"><img src="{{url('images/emails/MC_Head_fr.png')}}" alt="Logo" id="idk18q"/>
-      <div id="ihut6t"><b id="iybtqg">Bonjour {{$contact->firstname}} {{$contact->lastname}} !</b></div>
-      <div id="irp3ot">Vous venez de vous inscrire à l'événement « {{$event->getTranslatable("name", $language)}} ».
-        <b>Je vous en remercie !</b><br/><br/>L'événement aura lieu le {{$event->date->format("d.m.Y")}}@if ($event->getTranslatable("time", $language)), {{$event->getTranslatable("time", $language)}}@endif, je m'adresserai à vous peu avant avec les informations les plus importantes. Si vous avez des questions, n'hésitez pas à me contacter. Un grand merci pour votre soutien !
-        <br/>
-        <br/>
-        <b>Salutations engagé et à bientôt,</b>
-        <br/>
-        {{$user->name}}<br>
-        {{$user->email}}<br>
-      </div>
-    </div>
-  </div>
-</body>
-
-<style>
+    <style>
 * {
 	box-sizing:border-box;
 }
@@ -92,20 +74,15 @@ body {
 	border-bottom-color:rgba(0,0,0,0.06);
 	border-left-color:rgba(0,0,0,0.06);
 }
-#idk18q {
-	color:black;
-	width:100%;
+#ipwl8z {
+	padding-top:0px;
+	padding-right:0px;
+	padding-bottom:0px;
+	padding-left:0px;
+	background-color:rgba(235,235,235,1);
+	line-height:140%;
 }
-#ihut6t {
-	padding:10px;
-	font-family:Arial,Helvetica,sans-serif;
-	font-size:22px;
-}
-#irp3ot {
-	padding:10px;
-	font-family:Arial,Helvetica,sans-serif;
-}
-#i8pizv {
+#i7ia9o {
 	max-width:650px;
 	margin-top:auto;
 	margin-right:auto;
@@ -115,19 +92,24 @@ body {
 	padding-top:0px;
 	padding-bottom:0px;
 }
-#irl6tc {
+#i26i05 {
+	padding:10px;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:22px;
+}
+#ipbwk7 {
+	color:black;
+	width:100%;
+}
+#iuxpfg {
 	padding-left:10px;
 	padding-right:10px;
 	padding-top:30px;
 	padding-bottom:30px;
 }
-#ik7m2j {
-	padding-top:0px;
-	padding-right:0px;
-	padding-bottom:0px;
-	padding-left:0px;
-	background-color:rgba(235,235,235,1);
-	line-height:140%;
+#iwp6he {
+	padding:10px;
+	font-family:Arial,Helvetica,sans-serif;
 }
 @media (max-width:992px) {
 	.gjs-grid-row {
@@ -137,5 +119,75 @@ body {
 	flex-direction:column;
 }
 }
-</style>
+    </style>
+</head>
+<body id="ipwl8z">
+  <div id="iuxpfg" class="gjs-grid-row">
+    <div id="i7ia9o" class="gjs-grid-column"><img id="ipbwk7" src="{{url('images/emails/MC_Head_fr.png')}}" alt="Logo"/>
+      <div id="i26i05">
+				<b id="ijn4gj">Bonjour {{$contact->firstname}}!</b>
+			</div>
+      <div id="iwp6he">
+				Vous vous êtes inscrit à l'événement «{{$event->getTranslatable("name", $language)}}».
+        <b>Merci pour cela !</b>
+				<br>
+				<br>
+				@if ($event->contact->email == $user->email)
+					Nous nous verrons au plus tard sur place, mais il est préférable que vous me contactiez afin que nous puissions discuter de tous les détails et nous assurer que nous pouvons nous joindre.
+				@else
+					Je ne pourrai malheureusement pas être présent, mais vous trouverez ci-dessous les coordonnées de la personne à contacter sur place. Je vous invite à la contacter afin de discuter des détails et de vous assurer que vous pourrez vous joindre. Si quelque chose ne fonctionne pas ou si vous avez d'autres questions, n'hésitez pas à me contacter.
+				@endif
+				Ma numéro de portable est {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
+				<br>
+				<br>
+				<p>Voici les détails de votre inscription :</p>
+				<p>
+					<ul>
+						<li>
+							<b>Personne responsable sur place :</b> {{$event->contact->firstname}} {{$event->contact->lastname}}
+						</li>
+						<ul>
+							@if ($event->contact->phone)
+								<li>
+									<b>Numéro de téléphone :</b> {{$event->contact->phone}}
+								</li>
+							@endif
+							<li>
+								<b>Adresse e-mail :</b> {{$event->contact->email}}
+							</li>
+						</ul>
+						<li>
+							<b>Date :</b> {{$event->date->format("d.m.Y")}}@if ($event->getTranslatable("time", $language)), {{$event->getTranslatable("time", $language)}}@endif
+						</li>
+						<li>
+							<b>Lieu :</b> {{$event->getTranslatable("location", $language)}}
+						</li>
+					</ul>
+				</p>
+				@if ($event->getTranslatable("description", $language))
+						<p><br></p>
+						<p><b>Plus d'informations sur l'événement</b></p>
+						{!!$event->getTranslatable("description", $language)!!}
+				@endif
+				@if ($signup->additional_information)
+						<p><br></p>
+						<p><b>Informations supplémentaires sur votre inscription :</b></p>
+						{!!$signup->additional_information!!}
+				@endif
+        <br/>
+        <br/>
+				<b>
+					Cordialement
+				</b>
+				<br>
+				{{$user->name}}
+				<br>
+        {{$user->email}}
+				<br>
+				{{$user->phone}}
+				<br>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
