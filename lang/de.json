@@ -76,6 +76,7 @@
     "languages.it": "Italienisch",
     "columnlabels.firstname": "Vorname",
     "columnlabels.lastname": "Nachname",
+    "columnlabels.name": "Name",
     "columnlabels.email": "E-Mail",
     "columnlabels.phone": "Telefonnummer",
     "columnlabels.zip": "PLZ",

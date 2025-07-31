@@ -138,7 +138,7 @@ body {
 				@else
           Avez-vous déjà pu contacter {{$event->contact->firstname}} ? Je ne pourrai malheureusement pas être présent.
           Si quelque chose n'est pas clair, veuillez contacter {{$event->contact->firstname}} (coordonnées ci-dessous) ou moi.
-          Ma numéro de portable est {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
+          Mon numéro de portable est le {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
 				@endif
 				<br>
 				<br>

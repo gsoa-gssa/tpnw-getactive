@@ -133,11 +133,11 @@ body {
 				<br>
 				<br>
 				@if ($event->contact->email == $user->email)
-					Nous nous verrons au plus tard sur place, mais il est préférable que vous me contactiez afin que nous puissions discuter de tous les détails et nous assurer que nous pouvons nous joindre.
+					Nous nous verrons au plus tard sur place, mais il est préférable que vous me contactiez afin que nous puissions discuter de tous les détails et nous assurer que nous pourrons nous rejoindre.
 				@else
-					Je ne pourrai malheureusement pas être présent, mais vous trouverez ci-dessous les coordonnées de la personne à contacter sur place. Je vous invite à la contacter afin de discuter des détails et de vous assurer que vous pourrez vous joindre. Si quelque chose ne fonctionne pas ou si vous avez d'autres questions, n'hésitez pas à me contacter.
+					Je ne pourrai malheureusement pas être présent, mais vous trouverez ci-dessous les coordonnées de la personne responsable sur place. Je vous invite à la contacter afin de discuter des détails et de vous assurer que vous pourrez vous rejoindre. Si quelque chose ne fonctionne pas ou si vous avez d'autres questions, n'hésitez pas à me contacter.
 				@endif
-				Ma numéro de portable est {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
+				Mon numéro de portable est le {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
 				<br>
 				<br>
 				<p>Voici les détails de votre inscription :</p>

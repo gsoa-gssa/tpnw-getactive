@@ -189,5 +189,10 @@
     "frontend.og.title": "Nous avons besoin de vous !",
     "frontend.og.description": "Collecter une initiative populaire nécessite de nombreuses personnes pour aider : collecter et certifier des signatures, distribuer des dépliants, organiser des actions, etc. C'est pourquoi nous avons besoin de personnes comme vous ! Merci de nous soutenir !",
     "visual.subtitle": "Interdiction des armes nucléaires maintenant !",
-    "visual.title": "Nous avons besoin de vous !"
+    "visual.title": "Nous avons besoin de vous !",
+    "signup.eventDetails": "Détails de l'événement",
+    "signup.eventDetails.location": "Lieu",
+    "signup.eventDetails.time": "Heure",
+    "signup.eventDetails.responsible": "Personne responsable",
+    "signup.eventDetails.numberOfSignups": "Nombre d'inscriptions"
 }
