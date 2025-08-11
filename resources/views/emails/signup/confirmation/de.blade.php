@@ -145,6 +145,7 @@ body {
 						Ich melde mich bei dir, sobald ich mehr weiss. Du kannst dich auch gerne direkt bei mir melden, falls du Fragen hast oder etwas unklar ist. Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
 					@else
 						{{$event->contact->firstname}} ist für den Anlass verantwortlich und wird sich so bald wie möglich bei dir melden. Wenn du nicht innerhalb von einigen Tagen etwas hörst, melde dich doch am besten selbst bei {{$event->contact->firstname}}.
+                                  @endif
 				@endif
 				<br>
 				<br>
