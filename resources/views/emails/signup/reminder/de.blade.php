@@ -133,10 +133,19 @@ body {
 				<br>
 				<br>
 				Das ist nun schon bald.
-				@if ($event->contact->email == $user->email)
-					Wenn noch etwas unklar ist, melde dich bitte bei mir. Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}. Sonst sehen wir uns dann vor Ort!
+				@if ($event->definitive)
+					@if ($event->contact->email == $user->email)
+						Wenn noch etwas unklar ist, melde dich bitte bei mir. Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}. Sonst sehen wir uns dann vor Ort!
+					@else
+						Konntest du dich schon mit {{$event->contact->firstname}} in Verbindung setzen? Ich selbst kann leider nicht vor Ort sein. Wenn noch etwas unklar ist, melde dich bitte bei {{$event->contact->firstname}} (Kontaktdaten unten) oder bei mir. Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
+					@endif
 				@else
-           Konntest du dich schon mit {{$event->contact->firstname}} in Verbindung setzen? Ich selbst kann leider nicht vor Ort sein. Wenn noch etwas unklar ist, melde dich bitte bei {{$event->contact->firstname}} (Kontaktdaten unten) oder bei mir. Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
+				  Und leider ist der Anlass - zumindest laut unserem System - immer noch provisorisch.
+					@if ($event->contact->email == $user->email)
+						Falls wir eigentlich schon geklärt haben, wie wir das machen, kannst du dieses automatische E-Mail gerne ignorieren. Sonst ist mir das vielleicht untergegangen und ich wäre froh, wenn du dich bei mir melden könntest. Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
+					@else
+            Konnten {{$event->contact->firstname}} und du schon klären, wie ihr das macht? Falls nicht, melde dich am besten bei {{$event->contact->firstname}} (Kontaktdaten unten) oder bei mir. Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
+					@endif
 				@endif
 				<br>
 				<br>
@@ -144,7 +153,13 @@ body {
 				<p>
 					<ul>
 						<li>
-							<b>Kontaktperson vor Ort:</b> {{$event->contact->firstname}} {{$event->contact->lastname}}
+							<b>
+								@if ($event->definitive)
+									Kontaktperson vor Ort:
+								@else
+								  Verantwortlich für Organisation:
+								@endif
+							</b> {{$event->contact->firstname}} {{$event->contact->lastname}}
 						</li>
 						<ul>
 							@if ($event->contact->phone)

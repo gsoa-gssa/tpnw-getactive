@@ -132,19 +132,33 @@ body {
         <b>Vielen Dank!</b>
 				<br>
 				<br>
-				@if ($event->contact->email == $user->email)
-					Wir sehen uns spätestens vor Ort, aber am besten meldest Du dich bei mir, damit wir noch alle Details besprechen können und sicher sind, dass wir uns erreichen können.
+				@if ($event->definitive)
+					@if ($event->contact->email == $user->email)
+						Wir sehen uns spätestens vor Ort, aber am besten meldest Du dich bei mir, damit wir noch alle Details besprechen können und sicher sind, dass wir uns erreichen können.
+					@else
+						Ich kann leider nicht selbst vor Ort sein, die Details zur Kontaktperson vor Ort findest du unten. Melde dich am besten bei ihr, damit ihr noch alle Details besprechen könnt und euch sicher erreichen könnt. Falls irgendwas nicht klappt oder du sonst ein Anliegen hast, kannst du dich auch gerne an mich wenden.
+					@endif
+					Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
 				@else
-					Ich kann leider nicht selbst vor Ort sein, die Details zur Kontaktperson vor Ort findest du unten. Melde dich am besten bei ihr, damit ihr noch alle Details besprechen könnt und euch sicher erreichen könnt. Falls irgendwas nicht klappt oder du sonst ein Anliegen hast, kannst du dich auch gerne an mich wenden.
+				  Leider haben wir noch keine Person gefunden, die den Anlass definitv betreuen kann. Es wäre dann aber eine gute Gelegenheit. Jetzt wo wir mit dir eine Person gefunden haben, die dann könnte, werden wir uns noch einmal stärker bemühen, auch eine weitere Person zu finden, damit du nicht alleine bleibst.
+					@if ($event->contact->email == $user->email)
+						Ich melde mich bei dir, sobald ich mehr weiss. Du kannst dich auch gerne direkt bei mir melden, falls du Fragen hast oder etwas unklar ist. Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
+					@else
+						{{$event->contact->firstname}} ist für den Anlass verantwortlich und wird sich so bald wie möglich bei dir melden. Wenn du nicht innerhalb von einigen Tagen etwas hörst, melde dich doch am besten selbst bei {{$event->contact->firstname}}.
 				@endif
-				Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
 				<br>
 				<br>
 				<p>Hier noch die Details zu deiner Anmeldung:</p>
 				<p>
 					<ul>
 						<li>
-							<b>Kontaktperson vor Ort:</b> {{$event->contact->firstname}} {{$event->contact->lastname}}
+							<b>
+								@if ($event->definitive)
+									Kontaktperson vor Ort:
+								@else
+								  Verantwortlich für Organisation:
+								@endif
+							</b> {{$event->contact->firstname}} {{$event->contact->lastname}}
 						</li>
 						<ul>
 							@if ($event->contact->phone)

@@ -11,10 +11,17 @@ class EventGrid extends Component
     public $filters = [];
     public $eventCounter = 0;
     public $selectedEvents = [];
+    public $cantons = [];
 
     public function mount($events)
     {
         $this->events = $events;
+        $this->cantons = Event::whereDate('date', '>=', now())
+            ->where('visibility', true)
+            ->pluck('canton')
+            ->unique()
+            ->values()
+            ->all();
     }
 
     public function changeFilter($filter, $value)

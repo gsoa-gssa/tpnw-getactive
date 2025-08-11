@@ -151,6 +151,13 @@ class EventResource extends Resource
                     ->helperText(__('events.create.visibility_helper'))
                     ->columnSpanFull()
                     ->label(__('events.create.visibility')),
+                Forms\Components\Toggle::make('definitive')
+                    ->default(true)
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->helperText(__('events.create.definitive_helper'))
+                    ->columnSpanFull()
+                    ->label(__('events.create.definitive')),
                 Forms\Components\Toggle::make('reassign')
                     ->default(false)
                     ->onColor('success')
@@ -191,6 +198,14 @@ class EventResource extends Resource
                         'certification' => 'heroicon-o-document-check',
                     })
                     ->sortable(),
+                Tables\Columns\IconColumn::make('visibility')
+                    ->boolean()
+                    ->label('Vis.')
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('definitive')
+                    ->boolean()
+                    ->label('Def.')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('number_of_signups')
                     ->label(__("tablecolumns.events.number_of_signups"))
                     ->getStateUsing(fn (Event $event) => $event->signups->count())
@@ -219,7 +234,7 @@ class EventResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->where('date', '>=', date('Y-m-d', strtotime('today')))),
                 Filters\Filter::make("my_events")
                     ->label(__("filterlabels.events.my_events"))
-                    ->default(true)
+                    ->default(false)
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->whereHas('users', fn (Builder $query) => $query->where('user_id', auth()->id()))),
                 Filters\SelectFilter::make("canton")
@@ -329,6 +344,9 @@ class EventResource extends Resource
                         InfoLists\Components\IconEntry::make('visibility')
                             ->icon(fn($state) => $state ? 'heroicon-o-eye' : 'heroicon-o-eye-slash')
                             ->label('Visibility'),
+                        InfoLists\Components\IconEntry::make('definitive')
+                            ->icon(fn($state) => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
+                            ->label('Definitive'),
                         Infolists\Components\Tabs::make("Event Content")
                             ->tabs([
                                 Infolists\Components\Tabs\Tab::make('German')

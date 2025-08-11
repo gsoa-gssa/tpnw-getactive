@@ -18,6 +18,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
+use Filament\Navigation\NavigationItem;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -61,6 +62,20 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(asset('images/favicon/favicon.png'))
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Filter: Nur beglaubigen')
+                    ->url('/?eventtype=certification', shouldOpenInNewTab: false)
+                    ->icon('heroicon-o-home')
+                    ->group('Beispielfilter'),
+                NavigationItem::make('Filter: Nur sammeln')
+                    ->url('/?eventtype=signaturecollection', shouldOpenInNewTab: false)
+                    ->icon('heroicon-o-home')
+                    ->group('Beispielfilter'),
+                NavigationItem::make('Filter: Nur ZH')
+                    ->url('/?canton=ZH', shouldOpenInNewTab: false)
+                    ->icon('heroicon-o-home')
+                    ->group('Beispielfilter'),
             ]);
     }
 }
