@@ -61,6 +61,9 @@
     "misc.languages.it": "Italien",
     "filterlabels.events.my_events": "Mes événements",
     "filterlabels.events.only_future": "Seulement les événements futurs",
+    "filterlabels.events.type": "Récolte/Certification",
+    "events.types.signaturecollection": "Récolte de signatures",
+    "events.types.certification": "Certification",
     "actionlabels.signups.quick_edit": "Basics",
     "events.create.visibility_helper": "Les gens peuvent-ils s'inscrire à cet événement?",
     "events.create.visibility": "Événement public?",
@@ -68,7 +71,7 @@
     "events.create.definitive": "Quelqu'un de responsable sur place?",
     "events.create.reassign_helper": "Souhaitez-vous réaffecter les inscriptions de cet événement à un autre événement?",
     "events.create.reassign": "Réaffecter les inscriptions",
-    "tablecolumns.events.number_of_signups": "Nombre d'inscriptions",
+    "tablecolumns.events.number_of_signups": "Nombre d'inscriptions confirmées",
     "filterlabels.events.canton": "Canton de l'événement",
     "cantons.national": "National",
     "filterlabels.contacts.users": "Users",
@@ -196,6 +199,7 @@
     "signup.eventDetails": "Détails de l'événement",
     "signup.eventDetails.location": "Lieu",
     "signup.eventDetails.time": "Heure",
+    "signup.eventDetails.date": "Date",
     "signup.eventDetails.responsible": "Personne responsable",
     "signup.eventDetails.numberOfSignups": "Nombre d'inscriptions"
 }

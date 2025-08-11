@@ -237,6 +237,13 @@ class EventResource extends Resource
                     ->default(false)
                     ->toggle()
                     ->query(fn (Builder $query): Builder => $query->whereHas('users', fn (Builder $query) => $query->where('user_id', auth()->id()))),
+                Filters\SelectFilter::make("type")
+                    ->label(__("filterlabels.events.type"))
+                    ->multiple()
+                    ->options([
+                        "signaturecollection" => __("events.types.signaturecollection"),
+                        "certification" => __("events.types.certification")
+                    ]),
                 Filters\SelectFilter::make("canton")
                     ->label(__("filterlabels.events.canton"))
                     ->multiple()
