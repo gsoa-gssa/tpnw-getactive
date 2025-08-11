@@ -132,19 +132,34 @@ body {
         <b>Merci pour cela !</b>
 				<br>
 				<br>
-				@if ($event->contact->email == $user->email)
-					Nous nous verrons au plus tard sur place, mais il est préférable que vous me contactiez afin que nous puissions discuter de tous les détails et nous assurer que nous pourrons nous rejoindre.
+				@if ($event->definitive)
+					@if ($event->contact->email == $user->email)
+						Nous nous verrons au plus tard sur place, mais il est préférable que vous me contactiez afin que nous puissions discuter de tous les détails et nous assurer que nous pourrons nous rejoindre.
+					@else
+						Je ne pourrai malheureusement pas être présent, mais vous trouverez ci-dessous les coordonnées de la personne responsable sur place. Je vous invite à la contacter afin de discuter des détails et de vous assurer que vous pourrez vous rejoindre. Si quelque chose ne fonctionne pas ou si vous avez d'autres questions, n'hésitez pas à me contacter.
+					@endif
+					Mon numéro de portable est le {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
 				@else
-					Je ne pourrai malheureusement pas être présent, mais vous trouverez ci-dessous les coordonnées de la personne responsable sur place. Je vous invite à la contacter afin de discuter des détails et de vous assurer que vous pourrez vous rejoindre. Si quelque chose ne fonctionne pas ou si vous avez d'autres questions, n'hésitez pas à me contacter.
+					Malheureusement, nous n'avons pas encore trouvé de personne qui puisse s'occuper définitivement de cet événement. Ce serait pourtant une bonne occasion. Maintenant que nous avons trouvé en vous une personne qui pourrait le faire, nous allons redoubler d'efforts pour trouver une autre personne afin que vous ne restiez pas seul.
+					@if ($event->contact->email == $user->email)
+						Je vous contacterai dès que j'en saurai plus. N'hésitez pas à me contacter directement si vous avez des questions ou si quelque chose n'est pas clair. Mon numéro de portable est le {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
+					@else
+						{{$event->contact->firstname}} est responsable de l'événement et vous contactera dès que possible. Si vous n'avez pas de nouvelles dans les prochains jours, n'hésitez pas à prendre contact avec {{$event->contact->firstname}}.
+					@endif
 				@endif
-				Mon numéro de portable est le {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
 				<br>
 				<br>
 				<p>Voici les détails de votre inscription :</p>
 				<p>
 					<ul>
 						<li>
-							<b>Personne responsable sur place :</b> {{$event->contact->firstname}} {{$event->contact->lastname}}
+							<b>
+								@if ($event->definitive)
+									Personne responsable sur place :
+								@else
+									Responsable de l'organisation :
+								@endif
+							</b> {{$event->contact->firstname}} {{$event->contact->lastname}}
 						</li>
 						<ul>
 							@if ($event->contact->phone)

@@ -133,12 +133,22 @@ body {
 				<br>
 				<br>
         C'est déjà bientôt. 
-				@if ($event->contact->email == $user->email)
-					Si vous avez encore des questions, n'hésitez pas à me contacter. Ma numéro de portable est {{$user->phone}} et mon adresse e-mail est {{$user->email}}. Sinon, on se voit sur place !
+				@if ($event->definitive)
+					@if ($event->contact->email == $user->email)
+						Si vous avez encore des questions, n'hésitez pas à me contacter. Ma numéro de portable est {{$user->phone}} et mon adresse e-mail est {{$user->email}}. Sinon, on se voit sur place !
+					@else
+						Avez-vous déjà pu contacter {{$event->contact->firstname}} ? Je ne pourrai malheureusement pas être présent.
+						Si quelque chose n'est pas clair, veuillez contacter {{$event->contact->firstname}} (coordonnées ci-dessous) ou moi.
+						Mon numéro de portable est le {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
+					@endif
 				@else
-          Avez-vous déjà pu contacter {{$event->contact->firstname}} ? Je ne pourrai malheureusement pas être présent.
-          Si quelque chose n'est pas clair, veuillez contacter {{$event->contact->firstname}} (coordonnées ci-dessous) ou moi.
-          Mon numéro de portable est le {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
+				  Et malheureusement, l'événement est toujours provisoire, du moins selon notre système.
+					@if ($event->contact->email == $user->email)
+						Si nous avons déjà clarifié la manière dont nous allons procéder, vous pouvez ignorer cet e-mail automatique. Sinon, cela m'a peut-être échappé et je vous serais reconnaissant de bien vouloir me contacter. Mon numéro de portable est {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
+					@else
+            {{$event->contact->firstname}} et vous avez-vous déjà décidé comment vous allez procéder ? Si ce n'est pas le cas, veuillez contacter {{$event->contact->firstname}} (coordonnées ci-dessous) ou moi-même.
+						Mon numéro de portable est {{$user->phone}} et mon adresse e-mail est {{$user->email}}.
+					@endif
 				@endif
 				<br>
 				<br>
@@ -146,7 +156,13 @@ body {
 				<p>
 					<ul>
 						<li>
-							<b>Personne responsable sur place :</b> {{$event->contact->firstname}} {{$event->contact->lastname}}
+							<b>
+								@if ($event->definitive)
+									Personne responsable sur place :
+								@else
+									Responsable de l'organisation :
+								@endif
+							</b> {{$event->contact->firstname}} {{$event->contact->lastname}}
 						</li>
 						<ul>
 							@if ($event->contact->phone)

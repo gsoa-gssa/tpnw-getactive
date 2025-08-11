@@ -136,7 +136,7 @@ body {
 					@if ($event->contact->email == $user->email)
 						Wir sehen uns spätestens vor Ort, aber am besten meldest Du dich bei mir, damit wir noch alle Details besprechen können und sicher sind, dass wir uns erreichen können.
 					@else
-						Ich kann leider nicht selbst vor Ort sein, die Details zur Kontaktperson vor Ort findest du unten. Melde dich am besten bei ihr, damit ihr noch alle Details besprechen könnt und euch sicher erreichen könnt. Falls irgendwas nicht klappt oder du sonst ein Anliegen hast, kannst du dich auch gerne an mich wenden.
+						Ich kann leider nicht selbst vor Ort sein, die Details zur Kontaktperson vor Ort findest du unten. Melde dich am besten bei ihr (falls noch nicht geschehen), damit ihr noch alle Details besprechen könnt und euch sicher erreichen könnt. Falls irgendwas nicht klappt oder du sonst ein Anliegen hast, kannst du dich auch gerne an mich wenden.
 					@endif
 					Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
 				@else
@@ -145,7 +145,7 @@ body {
 						Ich melde mich bei dir, sobald ich mehr weiss. Du kannst dich auch gerne direkt bei mir melden, falls du Fragen hast oder etwas unklar ist. Meine Handynummer ist {{$user->phone}} und meine E-Mail-Adresse {{$user->email}}.
 					@else
 						{{$event->contact->firstname}} ist für den Anlass verantwortlich und wird sich so bald wie möglich bei dir melden. Wenn du nicht innerhalb von einigen Tagen etwas hörst, melde dich doch am besten selbst bei {{$event->contact->firstname}}.
-                                  @endif
+					@endif
 				@endif
 				<br>
 				<br>

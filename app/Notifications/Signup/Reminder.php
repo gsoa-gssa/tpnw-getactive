@@ -80,6 +80,7 @@ class Reminder extends Notification
                     ->from($this->user->email, $this->user->name)
                     ->cc($this->ccEmails)
                     ->bcc($this->bccEmails)
+                    ->reply_to($this->event->contact->email, $this->event->contact->name)
                     ->view('emails.signup.reminder.' . $this->language, [
                         "event" => $this->event,
                         "contact" => $this->contact,
