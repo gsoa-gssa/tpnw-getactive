@@ -81,7 +81,7 @@ class Confirmation extends Notification
                     ->from($this->user->email, $this->user->name)
                     ->cc($this->ccEmails)
                     ->bcc($this->bccEmails)
-                    ->reply_to($this->event->contact->email, $this->event->contact->name)
+                    ->replyTo($this->event->contact->email, $this->event->contact->name)
                     ->view('emails.signup.confirmation.' . $this->language, [
                         "event" => $this->event,
                         "contact" => $this->contact,
