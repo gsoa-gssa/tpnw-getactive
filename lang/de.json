@@ -22,6 +22,8 @@
     "buttonlabels.copy.signuplink": "Anmeldelink kopieren",
     "buttonlabels.edit.event": "Ändern",
     "buttonlabels.duplicate.event": "Duplizieren",
+    "filterlabels.contacts.has_certification_activity": "Kontaktaktivität: Beglaubigung",
+    "filterlabels.contacts.has_signaturecollection_activity": "Kontaktaktivität: Sammlung",
     "buttonlabels.export.contacts": "Kontakte exportieren",
     "buttonlabels.import.contacts": "Kontakte importieren",
     "buttonlabels.print.signups": "Anmeldungen drucken",

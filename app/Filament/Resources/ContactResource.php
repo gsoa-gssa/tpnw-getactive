@@ -228,6 +228,18 @@ class ContactResource extends Resource
                             $eventQuery->where('type', 'signaturecollection');
                         });
                     }),
+                Filters\Filter::make("has_certification_activity")
+                    ->label(__("filterlabels.contacts.has_certification_activity"))
+                    ->toggle()
+                    ->query(function (Builder $query) {
+                        $query->whereJsonContains('activities', 'certification');
+                    }),
+                Filters\Filter::make("has_signaturecollection_activity")
+                    ->label(__("filterlabels.contacts.has_signaturecollection_activity"))
+                    ->toggle()
+                    ->query(function (Builder $query) {
+                        $query->whereJsonContains('activities', 'signaturecollection');
+                    }),
                 Filters\Filter::make("orphans")
                     ->label(__("filterlabels.contacts.orphans"))
                     ->toggle()
