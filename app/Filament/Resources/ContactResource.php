@@ -190,7 +190,45 @@ class ContactResource extends Resource
                     ->label(__("filterlabels.contacts.has_signups"))
                     ->toggle()
                     ->query(fn (Builder $query) => $query->has('signups')),
-                Filters\Filter::make("orpahns")
+                Filters\Filter::make("has_signups_future")
+                    ->label(__("filterlabels.contacts.has_signups_future"))
+                    ->toggle()
+                    ->query(function (Builder $query) {
+                        $now = now();
+                        $query->whereHas('signups', function ($q) use ($now) {
+                            $q->whereHas('event', function ($eventQuery) use ($now) {
+                                $eventQuery->where('date', '>=', $now->copy()->addDay()->startOfDay());
+                            });
+                        });
+                    }),
+                Filters\Filter::make("no_signups_future")
+                    ->label(__("filterlabels.contacts.no_signups_future"))
+                    ->toggle()
+                    ->query(function (Builder $query) {
+                        $now = now();
+                        $query->whereDoesntHave('signups', function ($q) use ($now) {
+                            $q->whereHas('event', function ($eventQuery) use ($now) {
+                                $eventQuery->where('date', '>=', $now->copy()->addDay()->startOfDay());
+                            });
+                        });
+                    }),
+                Filters\Filter::make("has_signups_certification")
+                    ->label(__("filterlabels.contacts.has_signups_certification"))
+                    ->toggle()
+                    ->query(function (Builder $query) {
+                        $query->whereHas('signups.event', function ($eventQuery) {
+                            $eventQuery->where('type', 'certification');
+                        });
+                    }),
+                Filters\Filter::make("has_signups_signaturecollection")
+                    ->label(__("filterlabels.contacts.has_signups_signaturecollection"))
+                    ->toggle()
+                    ->query(function (Builder $query) {
+                        $query->whereHas('signups.event', function ($eventQuery) {
+                            $eventQuery->where('type', 'signaturecollection');
+                        });
+                    }),
+                Filters\Filter::make("orphans")
                     ->label(__("filterlabels.contacts.orphans"))
                     ->toggle()
                     ->query(function (Builder $query) {

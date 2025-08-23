@@ -77,7 +77,7 @@ class SignupResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -235,6 +235,8 @@ class SignupResource extends Resource
                                 Infolists\Components\TextEntry::make('event.name')
                                     ->url(fn (Signup $signup) => route('filament.admin.resources.events.view', $signup->event ?? 1))
                                     ->label(__("signup.infolist.event")),
+                                Infolists\Components\TextEntry::make('created_at')
+                                    ->label(__("signup.created_at")),
                             ]),
                     ]),
                 Infolists\Components\Section::make('Comments')

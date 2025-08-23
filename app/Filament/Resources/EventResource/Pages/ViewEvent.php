@@ -20,7 +20,18 @@ class ViewEvent extends viewRecord
         return [
             Action::make('Edit Event')
                 ->icon('heroicon-o-pencil')
+                ->label(__('buttonlabels.edit.event'))
                 ->url(route('filament.admin.resources.events.edit', ['record' => $this->record])),
+            Action::make('Duplicate Event')
+                ->icon('heroicon-o-document-duplicate')
+                ->label(__('buttonlabels.duplicate.event'))
+                ->action(function (Event $event) {
+                    $newEvent = $event->replicate();
+                    $newEvent->name = $event->name;
+                    $newEvent->save();
+
+                    return redirect()->route('filament.admin.resources.events.edit', ['record' => $newEvent->id]);
+                }),
             CopyAction::make()->copyable(
                 function (Event $event) {
                     return route('signup.events', ["events" => $event->id]);

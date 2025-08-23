@@ -182,14 +182,18 @@ class EventResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable(query: function (Builder $query, string $search) {
+                        $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($search) . '%']);
+                    }),
                 Tables\Columns\TextColumn::make('date')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('canton'),
                 Tables\Columns\TextColumn::make('location')
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->searchable(),
+                    ->searchable(query: function (Builder $query, string $search) {
+                        $query->whereRaw('LOWER(location) LIKE ?', ['%' . strtolower($search) . '%']);
+                    }),
                 Tables\Columns\TextColumn::make('contact')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('type')
