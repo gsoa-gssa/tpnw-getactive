@@ -12,6 +12,8 @@
     "signup.confirmation_email": "Email di conferma",
     "signup.reminder_email": "Email di promemoria",
     "signup.email": "Indirizzo e-mail",
+    "signup.sheet_dl": "Scarica il foglio delle firme.",
+    "signup.sheet_dl_link": "https://atomwaffenverbot.ch/wp-content/uploads/2024/07/ALL_A4_10_IT.pdf",
     "signup.firstname": "Nome",
     "signup.lastname": "Cognome",
     "signup.phone": "Numero di telefono",

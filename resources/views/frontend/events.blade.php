@@ -7,6 +7,9 @@
                 <p class="mt-4">
                     <a href="/event/create" class="tpnw-getactive-new-event text-sm underline text-highlight">{{__("signup.new_event")}}</a>
                 </p>
+                <p class="mt-4">
+                    <a href="{{__('signup.sheet_dl_link')}}" class="tpnw-getactive-new-event text-sm underline text-highlight">{{__("signup.sheet_dl")}}</a>
+                </p>
             </div>
         </div>
     </div>
