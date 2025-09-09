@@ -186,6 +186,7 @@
     "signup.status.attended": "Participé",
     "signup.status.cancelled": "Annulé",
     "signup.status.confirmed": "Confirmé",
+    "label.numberOfSignups": "Inscriptions :",
     "signup.status.no-show": "Non présent",
     "signup.status.signup": "Inscription",
     "signup.subevent": "Événement",

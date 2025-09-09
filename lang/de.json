@@ -27,6 +27,7 @@
     "buttonlabels.print.signups": "Anmeldungen drucken",
     "buttonlabels.publish": "Event veröffentlichen",
     "cantons.$event->canton": "cantons.$event->canton",
+    "label.numberOfSignups": "Anmeldungen:",
     "cantons.AG": "Aargau",
     "cantons.AI": "Appenzell Innerrhoden",
     "cantons.all": "Alle Kantone",

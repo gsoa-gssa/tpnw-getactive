@@ -41,6 +41,7 @@
                     <p class="text-sm"><b>{{__("label.location")}}</b> {{$event->getTranslatable("location", app()->getLocale())}}</p>
                     <p class="text-sm"><b>{{__("label.time")}}</b> {{$event->getTranslatable("time", app()->getLocale())}}</p>
                     <p class="text-sm"><b>{{__("label.contact")}}</b> {{$event->contact->firstname}} {{$event->contact->lastname}}</p>
+                    <p class="text-sm"><b>{{__("label.numberOfSignups")}}</b> {{$event->signups()->where("status", "confirmed")->count()}}</p>
                     @if(!$event->definitive)
                         <p class="text-xs">{{ __("label.not_definitive") }}</p>
                     @endif
