@@ -241,7 +241,20 @@ class EventResource extends Resource
                     ->label(__("filterlabels.events.my_events"))
                     ->default(false)
                     ->toggle()
-                    ->query(fn (Builder $query): Builder => $query->whereHas('users', fn (Builder $query) => $query->where('user_id', auth()->id()))),
+                    ->query(fn (Builder $query): Builder => 
+                        $query->where(function ($query) {
+                            // Events where current user is assigned
+                            $query->whereHas('users', fn (Builder $query) => $query->where('user_id', auth()->id()))
+                            // OR events where contact email matches current user email
+                            ->orWhereHas('contact', fn (Builder $query) => $query->where('email', auth()->user()->email))
+                            // OR events where contact name matches current user name
+                            ->orWhereHas('contact', function (Builder $query) {
+                                $userName = auth()->user()->name;
+                                $query->whereRaw("CONCAT(firstname, ' ', lastname) = ?", [$userName])
+                                      ->orWhereRaw("CONCAT(lastname, ' ', firstname) = ?", [$userName]);
+                            });
+                        })
+                    ),
                 Filters\SelectFilter::make("type")
                     ->label(__("filterlabels.events.type"))
                     ->multiple()
@@ -291,7 +304,26 @@ class EventResource extends Resource
                         if (!$state['values']) {
                             return $query;
                         }
-                        return $query->whereHas('users', fn($query) => $query->whereIn('user_id', $state['values']));
+                        $userIds = $state['values'];
+                        $users = \App\Models\User::whereIn('id', $userIds)->get();
+                        
+                        return $query->where(function ($query) use ($userIds, $users) {
+                            // Events where selected users are assigned
+                            $query->whereHas('users', fn($query) => $query->whereIn('user_id', $userIds));
+                            
+                            // OR events where contact email matches any selected user's email
+                            foreach ($users as $user) {
+                                $query->orWhereHas('contact', fn (Builder $query) => $query->where('email', $user->email));
+                            }
+                            
+                            // OR events where contact name matches any selected user's name
+                            foreach ($users as $user) {
+                                $query->orWhereHas('contact', function (Builder $query) use ($user) {
+                                    $query->whereRaw("CONCAT(firstname, ' ', lastname) = ?", [$user->name])
+                                          ->orWhereRaw("CONCAT(lastname, ' ', firstname) = ?", [$user->name]);
+                                });
+                            }
+                        });
                     }),
                 Filters\TrashedFilter::make(),
             ])
@@ -423,6 +455,20 @@ class EventResource extends Resource
                     ]
                 )
                     ->columns(2),
+                Infolists\Components\Section::make("Assigned Users")
+                    ->schema([
+                        Infolists\Components\RepeatableEntry::make('users')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('name')
+                                    ->label('User Name'),
+                                Infolists\Components\TextEntry::make('email')
+                                    ->label('Email'),
+                            ])
+                            ->columns(2)
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible(),
+
             ]);
         }
 }
