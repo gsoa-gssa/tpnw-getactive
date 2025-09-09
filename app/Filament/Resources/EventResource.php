@@ -331,6 +331,58 @@ class EventResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('activities')->url(fn($record) => EventResource::getUrl('activities', ['record' => $record])),
+                Tables\Actions\Action::make('publish_event')
+                    ->label('Publish')
+                    ->icon('heroicon-o-eye')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->visible(fn($record) => !$record->visibility)
+                    ->action(function($record) {
+                        $record->update(['visibility' => true]);
+                        \Filament\Notifications\Notification::make()
+                            ->title('Event Published')
+                            ->success()
+                            ->send();
+                    }),
+                Tables\Actions\Action::make('hide_event')
+                    ->label('Hide')
+                    ->icon('heroicon-o-eye-slash')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->visible(fn($record) => $record->visibility)
+                    ->action(function($record) {
+                        $record->update(['visibility' => false]);
+                        \Filament\Notifications\Notification::make()
+                            ->title('Event Hidden')
+                            ->success()
+                            ->send();
+                    }),
+                Tables\Actions\Action::make('set_definitive')
+                    ->label('Definitive')
+                    ->icon('heroicon-o-document-check')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->visible(fn($record) => !$record->definitive)
+                    ->action(function($record) {
+                        $record->update(['definitive' => true]);
+                        \Filament\Notifications\Notification::make()
+                            ->title('Event Set as Definitive')
+                            ->success()
+                            ->send();
+                    }),
+                Tables\Actions\Action::make('set_provisional')
+                    ->label('Provisional')
+                    ->icon('heroicon-o-document-minus')
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->visible(fn($record) => $record->definitive)
+                    ->action(function($record) {
+                        $record->update(['definitive' => false]);
+                        \Filament\Notifications\Notification::make()
+                            ->title('Event Set as Draft')
+                            ->success()
+                            ->send();
+                    }),
                 Tables\Actions\RestoreAction::make()
                     ->visible(fn($record) => $record->trashed())
             ])
@@ -339,6 +391,62 @@ class EventResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('publish_events')
+                        ->label('Publish Selected')
+                        ->icon('heroicon-o-eye')
+                        ->color('success')
+                        ->requiresConfirmation()
+                        ->action(function($records) {
+                            $records->each(function($record) {
+                                $record->update(['visibility' => true]);
+                            });
+                            \Filament\Notifications\Notification::make()
+                                ->title('Selected events published')
+                                ->success()
+                                ->send();
+                        }),
+                    Tables\Actions\BulkAction::make('hide_events')
+                        ->label('Hide Selected')
+                        ->icon('heroicon-o-eye-slash')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->action(function($records) {
+                            $records->each(function($record) {
+                                $record->update(['visibility' => false]);
+                            });
+                            \Filament\Notifications\Notification::make()
+                                ->title('Selected events hidden')
+                                ->success()
+                                ->send();
+                        }),
+                    Tables\Actions\BulkAction::make('set_definitive')
+                        ->label('Set as Definitive')
+                        ->icon('heroicon-o-document-check')
+                        ->color('success')
+                        ->requiresConfirmation()
+                        ->action(function($records) {
+                            $records->each(function($record) {
+                                $record->update(['definitive' => true]);
+                            });
+                            \Filament\Notifications\Notification::make()
+                                ->title('Selected events set as definitive')
+                                ->success()
+                                ->send();
+                        }),
+                    Tables\Actions\BulkAction::make('set_provisional')
+                        ->label('Set as Provisional')
+                        ->icon('heroicon-o-document-minus')
+                        ->color('warning')
+                        ->requiresConfirmation()
+                        ->action(function($records) {
+                            $records->each(function($record) {
+                                $record->update(['definitive' => false]);
+                            });
+                            \Filament\Notifications\Notification::make()
+                                ->title('Selected events set as draft')
+                                ->success()
+                                ->send();
+                        }),
                 ]),
             ]);
     }
